@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Favicon JP>  PLACEHOLDER EDITABLE. Copiado también a /public/favicon.svg -->
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="64" height="64" rx="14" fill="#111111"/>
+  <text x="11" y="42" font-family="system-ui,sans-serif" font-size="26" font-weight="700" fill="#FFFFFF" letter-spacing="-1">JP</text>
+  <path d="M45 22 L54 32 L45 42" stroke="#FF6B00" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

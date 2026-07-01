@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+/*
+  ============================================================
+  Performance OS — Sistema visual
+  Paleta oficial + tipografías registradas como theme tokens
+  de TailwindCSS v4 (@theme). Uso: bg-white, text-carbon,
+  text-tech, text-orange, border-line, font-heading, etc.
+  ============================================================
+*/
+@theme {
+  /* Colores oficiales */
+  --color-white: #ffffff;
+  --color-soft: #f8fafc; /* Soft white / fondo alterno */
+  --color-carbon: #111111; /* Negro carbón / texto principal */
+  --color-tech: #6b7280; /* Gris técnico / texto secundario */
+  --color-orange: #ff6b00; /* Naranja conversión / acento */
+  --color-line: #e5e7eb; /* Borde claro */
+  --color-cool: #d1d5db; /* Borde frío */
+
+  /* Tipografías */
+  --font-heading: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Respeta preferencia de movimiento reducido a nivel global */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-white);
+  color: var(--color-carbon);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Foco visible y accesible (naranja) para todo elemento interactivo */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Compensa el header fijo cuando se navega por anclas */
+:target {
+  scroll-margin-top: 90px;
+}
+
+section[id] {
+  scroll-margin-top: 90px;
+}
+
+::selection {
+  background: var(--color-orange);
+  color: #fff;
+}
+
+/* Utilidad: grid de puntos (dot grid) reutilizable */
+.pos-dotgrid {
+  background-image: radial-gradient(var(--color-cool) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
