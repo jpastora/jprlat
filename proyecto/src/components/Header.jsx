@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { Menu, X, ChevronRight } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import AnimatedLogoMark from './AnimatedLogoMark.jsx'
 import LanguageToggle from './LanguageToggle.jsx'
-import SignalNode from './SignalNode.jsx'
 import { useLanguage } from '../context/LanguageContext.js'
 import { scrollToSection } from '../utils/scroll.js'
 import { SECTIONS } from '../data/navigation.js'
@@ -13,12 +12,30 @@ export default function Header() {
   const reduce = useReducedMotion()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [active, setActive] = useState('inicio')
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const observers = []
+    for (const s of SECTIONS) {
+      const el = document.getElementById(s.id)
+      if (!el) continue
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActive(s.id)
+        },
+        { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
+      )
+      obs.observe(el)
+      observers.push(obs)
+    }
+    return () => observers.forEach((o) => o.disconnect())
   }, [])
 
   useEffect(() => {
@@ -37,54 +54,54 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'border-line bg-white/90 shadow-[0_1px_0_0_rgba(229,231,235,1)] backdrop-blur-md'
-          : 'border-transparent bg-white/50 backdrop-blur-sm'
+          ? 'border-b border-line/80 bg-white/85 backdrop-blur-md'
+          : 'bg-white/60 backdrop-blur-sm'
       }`}
     >
-      {/* Línea naranja activa al hacer scroll */}
-      <motion.div
-        className="absolute inset-x-0 bottom-0 h-px origin-left bg-orange"
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: scrolled ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        aria-hidden="true"
-      />
-
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
+      <div className="mx-auto flex h-[4.25rem] max-w-[76rem] items-center justify-between px-5">
         <button
           type="button"
           onClick={() => go('inicio')}
-          className="group flex items-center gap-2.5"
+          className="flex items-center gap-3"
           aria-label="Joseph Pastora — inicio"
         >
-          <AnimatedLogoMark size={36} />
-          <span className="hidden font-heading text-sm font-semibold tracking-tight text-carbon sm:block">
-            Joseph Pastora
-            <span className="ml-1.5 inline-flex items-center gap-1 font-mono text-[10px] font-medium uppercase tracking-widest text-tech">
-              <SignalNode active={scrolled} pulse={scrolled} size="sm" />
-              Performance OS
+          <AnimatedLogoMark size={32} className="shrink-0" />
+          <span className="hidden flex-col items-start sm:flex">
+            <span className="font-heading text-sm font-semibold leading-none text-carbon">
+              Joseph Pastora
+            </span>
+            <span className="mt-1 font-body text-xs leading-none text-tech">
+              {t.meta.role}
             </span>
           </span>
         </button>
 
-        <nav className="hidden items-center gap-0.5 md:flex" aria-label="Navegación principal">
-          {SECTIONS.map((s) => (
-            <button
-              key={s.id}
-              type="button"
-              onClick={() => go(s.id)}
-              className="group relative rounded-md px-3 py-2 font-body text-sm text-tech transition-colors duration-200 hover:text-orange"
-            >
-              <span className="relative z-10 flex items-center gap-1.5">
-                <span className="font-mono text-[9px] text-orange opacity-0 transition-opacity group-hover:opacity-100">
-                  {'>'}
-                </span>
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Navegación principal">
+          {SECTIONS.map((s) => {
+            const isActive = active === s.id
+            return (
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => go(s.id)}
+                aria-current={isActive ? 'true' : undefined}
+                className={`relative px-3.5 py-2 font-body text-sm transition-colors duration-200 ${
+                  isActive ? 'text-carbon' : 'text-tech hover:text-carbon'
+                }`}
+              >
                 {t.nav[s.key]}
-              </span>
-            </button>
-          ))}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-underline"
+                    className="absolute inset-x-2.5 -bottom-0.5 h-0.5 bg-orange"
+                    transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                  />
+                )}
+              </button>
+            )
+          })}
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
@@ -92,10 +109,9 @@ export default function Header() {
           <button
             type="button"
             onClick={() => go('contacto')}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-carbon px-4 py-2 font-body text-sm font-medium text-white transition-colors duration-300 hover:bg-orange"
+            className="rounded-lg bg-orange px-4 py-2 font-body text-sm font-medium text-white transition-colors duration-300 hover:bg-carbon"
           >
             {t.cta.talk}
-            <ChevronRight size={15} aria-hidden="true" />
           </button>
         </div>
 
@@ -107,7 +123,7 @@ export default function Header() {
             aria-label={open ? t.cta.closeMenu : t.cta.openMenu}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-line text-carbon transition-colors hover:border-orange hover:text-orange"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-line text-carbon transition-colors hover:border-carbon"
           >
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -125,27 +141,27 @@ export default function Header() {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden border-t border-line bg-white md:hidden"
           >
-            <ul className="mx-auto flex max-w-6xl flex-col px-5 py-3">
+            <ul className="mx-auto flex max-w-[76rem] flex-col px-5 py-3">
               {SECTIONS.map((s) => (
                 <li key={s.id}>
                   <button
                     type="button"
                     onClick={() => go(s.id)}
-                    className="flex w-full items-center gap-2 rounded-md px-2 py-3 text-left font-body text-base text-carbon transition-colors hover:text-orange"
+                    className={`w-full rounded-md px-2 py-3 text-left font-body text-base transition-colors ${
+                      active === s.id ? 'text-orange' : 'text-carbon hover:text-orange'
+                    }`}
                   >
-                    <SignalNode active size="sm" />
                     {t.nav[s.key]}
                   </button>
                 </li>
               ))}
-              <li className="mt-2">
+              <li className="mt-2 pb-2">
                 <button
                   type="button"
                   onClick={() => go('contacto')}
-                  className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-carbon px-4 py-3 font-body text-sm font-medium text-white transition-colors hover:bg-orange"
+                  className="inline-flex w-full items-center justify-center rounded-lg bg-orange px-4 py-3 font-body text-sm font-medium text-white"
                 >
                   {t.cta.talk}
-                  <ChevronRight size={15} aria-hidden="true" />
                 </button>
               </li>
             </ul>

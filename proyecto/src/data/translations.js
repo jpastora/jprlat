@@ -1,10 +1,6 @@
 /*
-  ============================================================
-  Sistema de idiomas — Performance OS
-  Idioma por defecto: ESPAÑOL ("es"). El inglés ("en") es
-  secundario y solo aparece si el usuario usa el switch ES/EN.
-  Si falta una clave de traducción, el fallback es español.
-  ============================================================
+  Sistema de idiomas — Joseph Pastora portfolio
+  Idioma por defecto: ESPAÑOL ("es").
 */
 
 export const DEFAULT_LANGUAGE = 'es'
@@ -13,9 +9,9 @@ export const translations = {
   es: {
     meta: {
       brand: 'Joseph Pastora',
-      role: 'Performance OS',
+      role: 'Marketing · Software · Datos',
       slogan: 'Estrategia digital con lógica de sistema.',
-      secondary: 'Foco • Claridad • Sistema • Resultados',
+      secondary: 'Foco · Claridad · Sistema · Resultados',
     },
     nav: {
       home: 'Inicio',
@@ -32,61 +28,36 @@ export const translations = {
       closeMenu: 'Cerrar menú',
       scrollTop: 'Volver arriba',
     },
-    sections: {
-      hero: { number: '01', label: 'COMMAND CENTER' },
-      profile: { number: '02', label: 'SYSTEM ARCHITECTURE' },
-      services: { number: '03', label: 'CAPABILITY STACK' },
-      projects: { number: '04', label: 'WORKBENCH / LAB' },
-      contact: { number: '05', label: 'EXECUTION CONSOLE' },
-    },
     hero: {
-      eyebrow: 'Freelance estratégico en software, marketing y datos',
-      title: 'Desarrollo soluciones digitales con lógica de negocio.',
-      paragraph:
+      eyebrow: 'Freelance estratégico',
+      title: 'Estrategia digital con lógica de sistema.',
+      subtitle:
         'Combino ingeniería de software, marketing digital y análisis de datos para crear productos web funcionales, medibles y orientados al crecimiento.',
-      systemLabel: 'Sistema activo',
-      flow: { input: 'Entrada', process: 'Proceso', output: 'Salida' },
-      pipeline: ['Estrategia', 'Software', 'Datos', 'Crecimiento'],
-      proofPoints: [
-        '+15 años de experiencia',
-        'Marketing + Software',
-        'Data-driven execution',
-        'Freelance estratégico',
-      ],
-      metrics: [
-        { label: 'Foco', value: 'Alto' },
-        { label: 'Sistema', value: 'On' },
-        { label: 'Resultados', value: '↑' },
-      ],
-      kpi: [
-        { label: 'Experiencia', value: '15+' },
-        { label: 'Áreas', value: '3' },
-        { label: 'Ejecución', value: '100%' },
-      ],
     },
     profile: {
-      tag: '02 · Perfil estratégico',
-      title: 'Perfil estratégico',
+      title: 'Estrategia con experiencia real',
       subtitle:
-        'Ingeniería de software, marketing y datos integrados en una sola visión.',
-      systemLabels: {
-        about: 'SYSTEM INPUT',
-        technical: 'BUSINESS LOGIC',
-        human: 'EXECUTION LAYER',
-        mission: 'OUTPUT VALUE',
-        vision: 'STRATEGIC OUTPUT',
-      },
+        'Más de quince años conectando marketing, tecnología y resultados de negocio en Centroamérica.',
       about:
         'Soy Joseph Pastora Ramos, profesional costarricense con más de quince años de experiencia en marketing digital, performance media y estrategia de crecimiento para marcas líderes de Centroamérica. Mi formación en Ingeniería de Software complementa esta trayectoria y me permite construir soluciones digitales con una visión integral: estrategia, tecnología, datos y resultados de negocio.',
+      experience: '15+ años',
+      credibilityLabel: 'Experiencia con marcas y agencias como',
+      credibility: [
+        'Tigo',
+        'Gollo',
+        'Coca-Cola',
+        'Nestlé',
+        'McCann',
+        'Havas',
+        'Y&R',
+      ],
       technical: {
-        label: 'Diferenciador técnico',
         title: 'Pensamiento técnico con visión comercial',
         text: 'Conecto programación, analítica, plataformas digitales y medición para construir soluciones funcionales, medibles y escalables.',
       },
       human: {
-        label: 'Diferenciador humano',
         title: 'Liderazgo que conecta áreas',
-        text: 'Tengo experiencia articulando equipos multidisciplinarios, proveedores, agencias y áreas comerciales para transformar necesidades de negocio en soluciones concretas.',
+        text: 'Articulo equipos multidisciplinarios, proveedores, agencias y áreas comerciales para transformar necesidades de negocio en soluciones concretas.',
       },
       mission: {
         title: 'Misión',
@@ -94,44 +65,29 @@ export const translations = {
       },
       vision: {
         title: 'Visión',
-        text: 'Consolidarme como un freelance de referencia por la integración entre ingeniería de software y marketing digital, ofreciendo un portafolio diversificado de servicios —web, automatización, APIs y analítica— que entreguen valor real y diferenciado a cada cliente.',
+        text: 'Consolidarme como un freelance de referencia por la integración entre ingeniería de software y marketing digital, ofreciendo un portafolio diversificado de servicios que entreguen valor real a cada cliente.',
       },
-      valuesTitle: 'Valores',
-      valuesLabel: 'Principios operativos',
     },
     services: {
-      tag: '03 · Servicios',
       title: 'Servicios freelance',
-      subtitle: 'Soluciones digitales diseñadas para ordenar, medir y escalar.',
-      techLabel: 'Stack',
-      stackLabels: ['01 WEB', '02 API', '03 DATA', '04 OPT'],
-      operatingLogic: 'Entender → Construir → Medir → Optimizar',
+      subtitle:
+        'Cuatro capacidades integradas para ordenar, construir, medir y escalar tu presencia digital.',
     },
     projects: {
-      tag: '04 · Proyectos',
-      title: 'Proyectos',
+      title: 'Proyectos seleccionados',
       subtitle:
-        'Galería en construcción con casos que integran software, experiencia y lógica de negocio.',
+        'Casos en preparación. La estructura está lista para integrar demos, repositorios y resultados.',
       statusBadge: 'En construcción',
-      labPhrase:
-        'Casos en preparación. La estructura ya está lista para integrar demos, repositorios y resultados.',
       filterLabel: 'Filtrar por categoría',
       all: 'Todos',
       viewDemo: 'Ver demo',
       repo: 'Repositorio',
-      placeholder: 'Vista previa en construcción',
+      placeholder: 'Vista previa',
     },
     contact: {
-      tag: '05 · Contacto',
-      title: 'Contacto',
-      text: '¿Tenés una idea, proceso o proyecto digital que necesita estructura? Conversemos.',
-      console: {
-        statusReady: 'STATUS: READY',
-        statusSending: 'STATUS: PROCESSING',
-        statusSuccess: 'OUTPUT: MESSAGE SENT',
-        statusError: 'OUTPUT: ERROR',
-        inputLabel: 'INPUT: PROJECT REQUEST',
-      },
+      title: 'Hablemos de tu proyecto',
+      text: '¿Tenés una idea, proceso o proyecto digital que necesita estructura? Escríbeme y lo revisamos juntos.',
+      responseNote: 'Respuesta en horario laboral (Costa Rica, GMT-6).',
       fields: {
         name: 'Nombre',
         email: 'Correo electrónico',
@@ -156,8 +112,8 @@ export const translations = {
       success: '¡Mensaje enviado! Te responderé pronto.',
       error: 'No se pudo enviar el mensaje. Escríbeme directo a info@jpr.lat.',
       notConfigured:
-        'Formulario en modo demo: falta configurar EmailJS. Se registra en consola y puedes escribir a info@jpr.lat.',
-      directLabel: 'Canales directos',
+        'Formulario en modo demo: falta configurar EmailJS. Puedes escribir a info@jpr.lat.',
+      directLabel: 'También puedes contactarme por',
       errors: {
         nameRequired: 'Ingresa tu nombre.',
         emailRequired: 'Ingresa tu correo.',
@@ -168,13 +124,8 @@ export const translations = {
       },
     },
     footer: {
-      tagline: 'Desarrollo soluciones digitales con lógica de negocio.',
       slogan: 'Estrategia digital con lógica de sistema.',
-      navTitle: 'Navegación',
-      contactTitle: 'Contacto',
-      followTitle: 'Redes',
       rights: 'Todos los derechos reservados.',
-      builtWith: 'Construido con React, Vite, TailwindCSS y Framer Motion.',
     },
     whatsapp: {
       aria: 'Escribir por WhatsApp',
@@ -186,9 +137,9 @@ export const translations = {
   en: {
     meta: {
       brand: 'Joseph Pastora',
-      role: 'Performance OS',
+      role: 'Marketing · Software · Data',
       slogan: 'Digital strategy with system logic.',
-      secondary: 'Focus • Clarity • System • Results',
+      secondary: 'Focus · Clarity · System · Results',
     },
     nav: {
       home: 'Home',
@@ -198,68 +149,43 @@ export const translations = {
       contact: 'Contact',
     },
     cta: {
-      talk: "Let’s Talk",
+      talk: "Let's Talk",
       viewProjects: 'View Projects',
       downloadCv: 'Download CV',
       openMenu: 'Open menu',
       closeMenu: 'Close menu',
       scrollTop: 'Back to top',
     },
-    sections: {
-      hero: { number: '01', label: 'COMMAND CENTER' },
-      profile: { number: '02', label: 'SYSTEM ARCHITECTURE' },
-      services: { number: '03', label: 'CAPABILITY STACK' },
-      projects: { number: '04', label: 'WORKBENCH / LAB' },
-      contact: { number: '05', label: 'EXECUTION CONSOLE' },
-    },
     hero: {
-      eyebrow: 'Strategic freelance professional in software, marketing, and data',
-      title: 'I build digital solutions with business logic.',
-      paragraph:
+      eyebrow: 'Strategic freelance',
+      title: 'Digital strategy with system logic.',
+      subtitle:
         'I combine software engineering, digital marketing, and data analysis to create functional, measurable, growth-oriented web products.',
-      systemLabel: 'System active',
-      flow: { input: 'Input', process: 'Process', output: 'Output' },
-      pipeline: ['Strategy', 'Software', 'Data', 'Growth'],
-      proofPoints: [
-        '15+ years of experience',
-        'Marketing + Software',
-        'Data-driven execution',
-        'Strategic freelance',
-      ],
-      metrics: [
-        { label: 'Focus', value: 'High' },
-        { label: 'System', value: 'On' },
-        { label: 'Results', value: '↑' },
-      ],
-      kpi: [
-        { label: 'Experience', value: '15+' },
-        { label: 'Areas', value: '3' },
-        { label: 'Execution', value: '100%' },
-      ],
     },
     profile: {
-      tag: '02 · Strategic profile',
-      title: 'Strategic Profile',
+      title: 'Strategy backed by real experience',
       subtitle:
-        'Software engineering, marketing, and data integrated into a single vision.',
-      systemLabels: {
-        about: 'SYSTEM INPUT',
-        technical: 'BUSINESS LOGIC',
-        human: 'EXECUTION LAYER',
-        mission: 'OUTPUT VALUE',
-        vision: 'STRATEGIC OUTPUT',
-      },
+        'Over fifteen years connecting marketing, technology, and business results across Central America.',
       about:
         'I am Joseph Pastora Ramos, a Costa Rican professional with more than fifteen years of experience in digital marketing, performance media, and growth strategy for leading brands in Central America. My Software Engineering background complements this experience and allows me to build digital solutions with an integrated vision: strategy, technology, data, and business results.',
+      experience: '15+ years',
+      credibilityLabel: 'Experience with brands and agencies such as',
+      credibility: [
+        'Tigo',
+        'Gollo',
+        'Coca-Cola',
+        'Nestlé',
+        'McCann',
+        'Havas',
+        'Y&R',
+      ],
       technical: {
-        label: 'Technical differentiator',
         title: 'Technical thinking with business vision',
         text: 'I connect programming, analytics, digital platforms, and measurement to build functional, measurable, and scalable solutions.',
       },
       human: {
-        label: 'Human differentiator',
         title: 'Leadership that connects teams',
-        text: 'I have experience aligning multidisciplinary teams, vendors, agencies, and commercial areas to transform business needs into concrete solutions.',
+        text: 'I align multidisciplinary teams, vendors, agencies, and commercial areas to transform business needs into concrete solutions.',
       },
       mission: {
         title: 'Mission',
@@ -267,44 +193,29 @@ export const translations = {
       },
       vision: {
         title: 'Vision',
-        text: 'To become a reference freelance professional by integrating software engineering and digital marketing, offering a diversified portfolio of services —web, automation, APIs, and analytics— that delivers real and differentiated value to each client.',
+        text: 'To become a reference freelance professional by integrating software engineering and digital marketing, offering a diversified portfolio of services that delivers real value to each client.',
       },
-      valuesTitle: 'Values',
-      valuesLabel: 'Operating principles',
     },
     services: {
-      tag: '03 · Services',
-      title: 'Freelance Services',
-      subtitle: 'Digital solutions designed to organize, measure, and scale.',
-      techLabel: 'Stack',
-      stackLabels: ['01 WEB', '02 API', '03 DATA', '04 OPT'],
-      operatingLogic: 'Understand → Build → Measure → Optimize',
+      title: 'Freelance services',
+      subtitle:
+        'Four integrated capabilities to organize, build, measure, and scale your digital presence.',
     },
     projects: {
-      tag: '04 · Projects',
-      title: 'Projects',
+      title: 'Selected projects',
       subtitle:
-        'Gallery under construction with cases that integrate software, experience, and business logic.',
-      statusBadge: 'Under construction',
-      labPhrase:
         'Cases in preparation. The structure is ready to integrate demos, repositories, and results.',
+      statusBadge: 'Under construction',
       filterLabel: 'Filter by category',
       all: 'All',
       viewDemo: 'View demo',
       repo: 'Repository',
-      placeholder: 'Preview under construction',
+      placeholder: 'Preview',
     },
     contact: {
-      tag: '05 · Contact',
-      title: 'Contact',
-      text: 'Do you have an idea, process, or digital project that needs structure? Let’s talk.',
-      console: {
-        statusReady: 'STATUS: READY',
-        statusSending: 'STATUS: PROCESSING',
-        statusSuccess: 'OUTPUT: MESSAGE SENT',
-        statusError: 'OUTPUT: ERROR',
-        inputLabel: 'INPUT: PROJECT REQUEST',
-      },
+      title: "Let's talk about your project",
+      text: 'Do you have an idea, process, or digital project that needs structure? Write to me and we can review it together.',
+      responseNote: 'Response within business hours (Costa Rica, GMT-6).',
       fields: {
         name: 'Name',
         email: 'Email',
@@ -326,11 +237,11 @@ export const translations = {
       ],
       submit: 'Send message',
       sending: 'Sending…',
-      success: 'Message sent! I’ll get back to you soon.',
+      success: "Message sent! I'll get back to you soon.",
       error: 'The message could not be sent. Write to me directly at info@jpr.lat.',
       notConfigured:
-        'Form in demo mode: EmailJS is not configured. It is logged to the console and you can email info@jpr.lat.',
-      directLabel: 'Direct channels',
+        'Form in demo mode: EmailJS is not configured. You can email info@jpr.lat.',
+      directLabel: 'You can also reach me via',
       errors: {
         nameRequired: 'Please enter your name.',
         emailRequired: 'Please enter your email.',
@@ -341,13 +252,8 @@ export const translations = {
       },
     },
     footer: {
-      tagline: 'I build digital solutions with business logic.',
       slogan: 'Digital strategy with system logic.',
-      navTitle: 'Navigation',
-      contactTitle: 'Contact',
-      followTitle: 'Social',
       rights: 'All rights reserved.',
-      builtWith: 'Built with React, Vite, TailwindCSS and Framer Motion.',
     },
     whatsapp: {
       aria: 'Message on WhatsApp',
@@ -357,7 +263,6 @@ export const translations = {
   },
 }
 
-// Datos de contacto reales (compartidos entre idiomas)
 export const contactInfo = {
   email: 'info@jpr.lat',
   whatsapp: '+50660427930',
@@ -367,10 +272,6 @@ export const contactInfo = {
   website: 'https://jpr.lat',
 }
 
-/*
-  Deep-merge con fallback a español: cualquier clave ausente en el
-  idioma solicitado se completa con el valor en "es".
-*/
 function deepMerge(base, override) {
   if (Array.isArray(base)) return override ?? base
   if (typeof base !== 'object' || base === null) {
@@ -384,10 +285,6 @@ function deepMerge(base, override) {
   return result
 }
 
-/**
- * Devuelve el diccionario para el idioma dado con fallback a español.
- * @param {'es'|'en'} language
- */
 export function getContent(language) {
   const lang = language === 'en' ? 'en' : DEFAULT_LANGUAGE
   return deepMerge(translations.es, translations[lang])
