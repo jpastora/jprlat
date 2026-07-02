@@ -6,8 +6,7 @@ import { track } from '../lib/analytics.js'
 
 /*
   WhatsAppButton — botón flotante en la esquina inferior derecha.
-  Sigue la identidad Performance OS (negro + acento naranja), NO el verde
-  genérico de WhatsApp. No se solapa con ScrollTop (queda debajo de él).
+  Botón flotante de WhatsApp. Negro + acento naranja, no verde genérico.
 */
 export default function WhatsAppButton() {
   const { t } = useLanguage()

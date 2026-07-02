@@ -10,7 +10,12 @@
             t = window.matchMedia("(prefers-color-scheme: dark)").matches
               ? "dark"
               : "light";
-          if (t === "dark") document.documentElement.classList.add("dark");
+          if (t === "dark") {
+            document.documentElement.classList.add("dark");
+            document.documentElement.style.backgroundColor = "#0a0a0a";
+          } else {
+            document.documentElement.style.backgroundColor = "#ffffff";
+          }
           document.documentElement.style.colorScheme = t;
         } catch (e) {}
       })();

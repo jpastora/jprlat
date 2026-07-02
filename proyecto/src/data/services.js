@@ -1,5 +1,5 @@
 /*
-  Servicios freelance — Performance OS
+  Servicios freelance
   El campo "icon" referencia un ícono de lucide-react (se resuelve en ServiceCard).
 */
 export const services = [

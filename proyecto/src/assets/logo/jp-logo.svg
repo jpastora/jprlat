@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Logo horizontal JP> + wordmark  Performance OS
+  Logo horizontal JP> + wordmark
   PLACEHOLDER EDITABLE: reemplazar por el asset final.
 -->
-<svg width="240" height="64" viewBox="0 0 240 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Joseph Pastora  JP>">
+<svg width="240" height="64" viewBox="0 0 240 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Joseph Pastora — JP>">
   <rect x="0" y="0" width="64" height="64" rx="14" fill="#111111"/>
   <text x="12" y="42" font-family="'Geist','Segoe UI',system-ui,sans-serif" font-size="26" font-weight="700" fill="#FFFFFF" letter-spacing="-1">JP</text>
   <path d="M45 22 L54 32 L45 42" stroke="#FF6B00" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
   <text x="80" y="30" font-family="'Geist','Segoe UI',system-ui,sans-serif" font-size="20" font-weight="700" fill="#111111" letter-spacing="-0.5">Joseph Pastora</text>
-  <text x="80" y="48" font-family="'Geist Mono',ui-monospace,monospace" font-size="11" font-weight="500" fill="#6B7280" letter-spacing="1">PERFORMANCE OS</text>
+  <text x="80" y="48" font-family="'Geist Mono',ui-monospace,monospace" font-size="11" font-weight="500" fill="#6B7280" letter-spacing="0.5">Estrategia digital</text>
 </svg>

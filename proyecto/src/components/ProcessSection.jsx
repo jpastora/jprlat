@@ -1,5 +1,11 @@
-import { useRef } from 'react'
-import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { useRef, useState } from 'react'
+import {
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from 'framer-motion'
 import PageSection from './PageSection.jsx'
 import MaskReveal from './MaskReveal.jsx'
 import { processSteps } from '../data/process.js'
@@ -13,8 +19,7 @@ const ICONS = {
   measure: 'M8 32 L22 24 L34 28 L52 14',
 }
 
-function StepIcon({ type, active }) {
-  const reduce = useReducedMotion()
+function StepIcon({ type, active, reduce }) {
   const d = ICONS[type] ?? ICONS.diagnose
 
   return (
@@ -26,46 +31,76 @@ function StepIcon({ type, active }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         className={active ? 'text-orange' : 'text-tech'}
-        initial={reduce ? false : { pathLength: 0 }}
-        animate={active ? { pathLength: 1 } : { pathLength: 0 }}
-        transition={{ duration: 0.65, ease: EASE_EXPO }}
+        initial={false}
+        animate={reduce ? { pathLength: 1 } : { pathLength: active ? 1 : 0 }}
+        transition={{ duration: 0.55, ease: EASE_EXPO }}
       />
     </svg>
   )
 }
 
-function ProcessStep({ step, copy, index, total }) {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, amount: 0.5 })
-  const reduce = useReducedMotion()
+function ProcessStep({ step, copy, index, activeIndex, reduce, staticAll = false }) {
+  const isActive = index === activeIndex
+  const isPast = index < activeIndex
+  const isLit = staticAll || isActive || isPast
 
   return (
     <motion.li
-      ref={ref}
-      initial={reduce ? false : { opacity: 0, y: 10 }}
-      animate={inView ? { opacity: 1, y: 0 } : undefined}
-      transition={{ delay: index * 0.08, duration: 0.5, ease: EASE_EXPO }}
-      className="relative flex flex-col gap-3 lg:flex-1"
+      layout
+      animate={{
+        opacity: isLit ? 1 : 0.42,
+        scale: isActive && !reduce && !staticAll ? 1.02 : 1,
+      }}
+      transition={{ duration: 0.45, ease: EASE_EXPO }}
+      className="relative flex flex-1 flex-col"
     >
-      {index < total - 1 && (
-        <span
-          className="pointer-events-none absolute left-4 top-8 hidden h-px w-[calc(100%+1rem)] bg-line lg:block"
-          aria-hidden="true"
-        />
-      )}
-      <div className="flex items-start gap-4">
-        <span className="relative flex h-8 w-8 shrink-0 items-center justify-center">
-          <span
-            className={`h-2 w-2 rounded-full ${inView ? 'bg-orange' : 'bg-cool'}`}
+      <div className="flex items-start gap-4 lg:flex-col lg:gap-3">
+        <span className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center">
+          <motion.span
+            className="h-2.5 w-2.5 rounded-full"
+            animate={{
+              backgroundColor: isLit ? '#FF6B00' : '#D1D5DB',
+              scale: isActive && !reduce && !staticAll ? 1.35 : 1,
+            }}
+            transition={{ duration: 0.35, ease: EASE_EXPO }}
             aria-hidden="true"
           />
         </span>
+
         <div className="min-w-0 flex-1">
-          <span className="font-mono text-xs text-tech">{step.number}</span>
-          <h3 className="mt-1 font-heading text-lg font-medium text-carbon">{copy.title}</h3>
-          <p className="mt-2 font-body text-sm leading-relaxed text-tech">{copy.text}</p>
+          <motion.span
+            key={staticAll ? step.number : `${step.number}-${isActive}`}
+            initial={reduce || staticAll || !isActive ? false : { opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-block font-mono text-xs text-tech"
+          >
+            {step.number}
+          </motion.span>
+
+          <div className="overflow-hidden">
+            <motion.h3
+              initial={false}
+              animate={{
+                y: isLit || reduce || staticAll ? 0 : '100%',
+                color: isLit ? 'var(--color-carbon)' : '#6B7280',
+              }}
+              transition={{ duration: 0.5, ease: EASE_EXPO }}
+              className="mt-1 font-heading text-lg font-medium"
+            >
+              {copy.title}
+            </motion.h3>
+          </div>
+
+          <motion.p
+            animate={{ color: isLit ? 'var(--color-tech)' : '#6B7280' }}
+            transition={{ duration: 0.35 }}
+            className="mt-2 font-body text-sm leading-relaxed"
+          >
+            {copy.text}
+          </motion.p>
+
           <div className="mt-4">
-            <StepIcon type={step.icon} active={inView} />
+            <StepIcon type={step.icon} active={isLit} reduce={reduce || staticAll} />
           </div>
         </div>
       </div>
@@ -73,47 +108,123 @@ function ProcessStep({ step, copy, index, total }) {
   )
 }
 
-export default function ProcessSection() {
-  const { t } = useLanguage()
-  const ref = useRef(null)
-  const reduce = useReducedMotion()
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-  const progress = useTransform(scrollYProgress, [0.1, 0.9], [0, 1])
+function ProcessTimeline({ lineProgress, nodePosition, reduce }) {
+  if (reduce) {
+    return (
+      <>
+        <div className="relative mt-12 hidden h-px bg-orange lg:block" aria-hidden="true" />
+        <div className="relative mt-10 lg:hidden">
+          <div className="absolute bottom-0 left-4 top-0 w-px bg-orange" aria-hidden="true" />
+        </div>
+      </>
+    )
+  }
 
   return (
-    <PageSection id="proceso" wide className="pb-28 pt-16 sm:pb-36 sm:pt-20">
-      <div ref={ref}>
+    <>
+      <div className="relative mt-12 hidden lg:block">
+        <div className="relative h-px bg-line" aria-hidden="true">
+          <motion.div
+            className="absolute left-0 top-0 h-px origin-left bg-orange"
+            style={{ scaleX: lineProgress, width: '100%' }}
+          />
+          <motion.span
+            className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange shadow-[0_0_0_4px_var(--color-white)] dark:shadow-[0_0_0_4px_var(--color-soft)]"
+            style={{ left: nodePosition }}
+            aria-hidden="true"
+          />
+        </div>
+      </div>
+
+      <div className="relative mt-10 lg:hidden">
+        <div className="absolute bottom-0 left-4 top-0 w-px bg-line" aria-hidden="true">
+          <motion.div
+            className="absolute left-0 top-0 w-px origin-top bg-orange"
+            style={{ scaleY: lineProgress, height: '100%' }}
+          />
+          <motion.span
+            className="absolute left-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange"
+            style={{ top: nodePosition }}
+            aria-hidden="true"
+          />
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default function ProcessSection() {
+  const { t } = useLanguage()
+  const reduce = useReducedMotion()
+  const scrollRef = useRef(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const { scrollYProgress } = useScroll({
+    target: scrollRef,
+    offset: ['start start', 'end end'],
+  })
+
+  const lineProgress = useTransform(scrollYProgress, [0.08, 0.92], [0, 1])
+  const nodePosition = useTransform(lineProgress, (v) => `${Math.min(100, Math.max(0, v * 100))}%`)
+
+  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    if (reduce) return
+    const idx = Math.min(
+      processSteps.length - 1,
+      Math.floor(v * processSteps.length),
+    )
+    setActiveIndex(idx)
+  })
+
+  const steps = (
+    <ol className="relative mt-10 flex flex-col gap-12 pl-0 lg:mt-14 lg:flex-row lg:gap-6">
+      {processSteps.map((step, i) => (
+        <ProcessStep
+          key={step.id}
+          step={step}
+          copy={t.process.steps[step.id]}
+          index={i}
+          activeIndex={reduce ? processSteps.length - 1 : activeIndex}
+          reduce={reduce}
+          staticAll={reduce}
+        />
+      ))}
+    </ol>
+  )
+
+  if (reduce) {
+    return (
+      <PageSection id="proceso" wide className="pb-28 pt-16 sm:pb-36 sm:pt-20">
         <MaskReveal>
           <h2 className="max-w-[18ch] font-heading text-3xl font-semibold tracking-tight text-carbon sm:text-4xl">
             {t.process.title}
           </h2>
           <p className="mt-4 max-w-prose font-body text-base text-tech">{t.process.subtitle}</p>
         </MaskReveal>
+        <ProcessTimeline lineProgress={lineProgress} nodePosition={nodePosition} reduce />
+        {steps}
+      </PageSection>
+    )
+  }
 
-        <div className="relative mt-12 hidden h-px bg-line lg:block" aria-hidden="true">
-          {!reduce && (
-            <motion.span
-              className="absolute left-0 top-0 h-px origin-left bg-orange"
-              style={{ scaleX: progress, width: '100%' }}
-            />
-          )}
+  return (
+    <PageSection id="proceso" wide className="pb-0 pt-16 sm:pt-20">
+      <div ref={scrollRef} className="relative min-h-[200vh] lg:min-h-[180vh]">
+        <div className="sticky top-[5.5rem] pb-28 sm:pb-36">
+          <MaskReveal>
+            <h2 className="max-w-[18ch] font-heading text-3xl font-semibold tracking-tight text-carbon sm:text-4xl">
+              {t.process.title}
+            </h2>
+            <p className="mt-4 max-w-prose font-body text-base text-tech">{t.process.subtitle}</p>
+          </MaskReveal>
+
+          <ProcessTimeline
+            lineProgress={lineProgress}
+            nodePosition={nodePosition}
+            reduce={reduce}
+          />
+          {steps}
         </div>
-
-        <ol className="mt-10 flex flex-col gap-10 lg:mt-12 lg:flex-row lg:gap-6">
-          {processSteps.map((step, i) => (
-            <ProcessStep
-              key={step.id}
-              step={step}
-              copy={t.process.steps[step.id]}
-              index={i}
-              total={processSteps.length}
-            />
-          ))}
-        </ol>
       </div>
     </PageSection>
   )

@@ -60,11 +60,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-body.signature-cursor-active,
-body.signature-cursor-active * {
-  cursor: none !important;
-}
-
 :where(a, button, input, textarea, select, [tabindex]):focus-visible {
   outline: 2px solid var(--color-orange);
   outline-offset: 2px;
