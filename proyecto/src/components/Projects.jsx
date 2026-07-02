@@ -3,6 +3,7 @@ import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 import PageSection from './PageSection.jsx'
 import SectionTitle from './SectionTitle.jsx'
 import ProjectCard from './ProjectCard.jsx'
+import Testimonials from './Testimonials.jsx'
 import { itemVariants } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 import { projects } from '../data/projects.js'
@@ -85,6 +86,8 @@ export default function Projects() {
           </AnimatePresence>
         </motion.div>
       </LayoutGroup>
+
+      <Testimonials />
     </PageSection>
   )
 }

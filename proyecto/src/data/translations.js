@@ -24,6 +24,7 @@ export const translations = {
       talk: 'Hablemos',
       viewProjects: 'Ver proyectos',
       downloadCv: 'Descargar CV',
+      schedule: 'Agenda 30 min',
       openMenu: 'Abrir menú',
       closeMenu: 'Cerrar menú',
       scrollTop: 'Volver arriba',
@@ -99,9 +100,38 @@ export const translations = {
       repo: 'Repositorio',
       placeholder: 'Vista previa',
     },
+    testimonials: {
+      title: 'Lo que dicen quienes han trabajado conmigo',
+      subtitle: 'Testimonios en revisión — reemplazar con citas reales.',
+      todo: 'TODO · testimonio de ejemplo',
+    },
+    process: {
+      title: 'Cómo trabajo',
+      subtitle:
+        'Un proceso claro que conecta diagnóstico, estrategia, construcción y medición.',
+      steps: {
+        diagnose: {
+          title: 'Diagnóstico',
+          text: 'Entiendo el negocio, el contexto y las prioridades antes de proponer soluciones.',
+        },
+        strategy: {
+          title: 'Estrategia',
+          text: 'Defino arquitectura digital, foco y métricas con lógica de sistema y negocio.',
+        },
+        build: {
+          title: 'Construcción',
+          text: 'Desarrollo web, integraciones y automatización con calidad técnica y claridad.',
+        },
+        measure: {
+          title: 'Medición y optimización',
+          text: 'Implemento analítica, aprendo del uso real y optimizo para crecer con datos.',
+        },
+      },
+    },
     contact: {
       title: 'Hablemos de tu proyecto',
       text: '¿Tenés una idea, proceso o proyecto digital que necesita estructura? Escríbeme y lo revisamos juntos.',
+      calendlyLead: '¿Preferís agendar una llamada de 30 minutos?',
       responseNote: 'Respuesta en horario laboral (Costa Rica, GMT-6).',
       fields: {
         name: 'Nombre',
@@ -167,6 +197,7 @@ export const translations = {
       talk: "Let's Talk",
       viewProjects: 'View Projects',
       downloadCv: 'Download CV',
+      schedule: 'Book 30 min',
       openMenu: 'Open menu',
       closeMenu: 'Close menu',
       scrollTop: 'Back to top',
@@ -242,9 +273,38 @@ export const translations = {
       repo: 'Repository',
       placeholder: 'Preview',
     },
+    testimonials: {
+      title: 'What clients say about working with me',
+      subtitle: 'Testimonials under review — replace with real quotes.',
+      todo: 'TODO · sample testimonial',
+    },
+    process: {
+      title: 'How I work',
+      subtitle:
+        'A clear process connecting diagnosis, strategy, build, and measurement.',
+      steps: {
+        diagnose: {
+          title: 'Diagnosis',
+          text: 'I understand the business, context, and priorities before proposing solutions.',
+        },
+        strategy: {
+          title: 'Strategy',
+          text: 'I define digital architecture, focus, and metrics with system and business logic.',
+        },
+        build: {
+          title: 'Build',
+          text: 'I deliver web, integrations, and automation with technical quality and clarity.',
+        },
+        measure: {
+          title: 'Measurement & optimization',
+          text: 'I implement analytics, learn from real usage, and optimize for data-driven growth.',
+        },
+      },
+    },
     contact: {
       title: "Let's talk about your project",
       text: 'Do you have an idea, process, or digital project that needs structure? Write to me and we can review it together.',
+      calendlyLead: 'Prefer to book a 30-minute call?',
       responseNote: 'Response within business hours (Costa Rica, GMT-6).',
       fields: {
         name: 'Name',

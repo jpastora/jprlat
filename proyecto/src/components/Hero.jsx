@@ -10,9 +10,12 @@ import { ArrowRight, Download } from 'lucide-react'
 import HeroDiagram from './HeroDiagram.jsx'
 import MagneticButton from './MagneticButton.jsx'
 import RevealText from './RevealText.jsx'
+import CalendlyButton from './CalendlyButton.jsx'
+import ScrollChevron from './ScrollChevron.jsx'
 import { EASE_EXPO, fadeUp } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 import { scrollToSection } from '../utils/scroll.js'
+import { track } from '../lib/analytics.js'
 import cvUrl from '../assets/cv/joseph-pastora-cv.pdf'
 
 export default function Hero() {
@@ -69,7 +72,11 @@ export default function Hero() {
             <motion.div variants={fadeUp}>
               <MagneticButton
                 type="button"
-                onClick={() => scrollToSection('contacto')}
+                onClick={() => {
+                  track('cta_click', { label: 'talk', source: 'hero' })
+                  scrollToSection('contacto')
+                }}
+                data-cursor="cta"
                 className="group inline-flex items-center gap-2 rounded-lg bg-orange px-6 py-3 font-body text-sm font-semibold text-white transition-colors duration-300 hover:bg-carbon"
               >
                 {t.cta.talk}
@@ -83,16 +90,23 @@ export default function Hero() {
             <motion.div variants={fadeUp}>
               <MagneticButton
                 type="button"
-                onClick={() => scrollToSection('proyectos')}
+                onClick={() => {
+                  track('cta_click', { label: 'projects', source: 'hero' })
+                  scrollToSection('proyectos')
+                }}
                 className="inline-flex items-center gap-2 rounded-lg border border-cool px-6 py-3 font-body text-sm font-semibold text-carbon transition-colors duration-300 hover:border-carbon"
               >
                 {t.cta.viewProjects}
               </MagneticButton>
             </motion.div>
+            <motion.div variants={fadeUp}>
+              <CalendlyButton source="hero" />
+            </motion.div>
             <motion.a
               variants={fadeUp}
               href={cvUrl}
               download="joseph-pastora-cv.pdf"
+              onClick={() => track('cv_download', { source: 'hero' })}
               className="inline-flex items-center gap-2 px-2 py-3 font-body text-sm font-medium text-tech transition-colors duration-300 hover:text-orange"
             >
               <Download size={15} aria-hidden="true" />
@@ -106,6 +120,7 @@ export default function Hero() {
           className="lg:col-span-5 lg:pl-8"
         >
           <HeroDiagram />
+          <ScrollChevron />
         </motion.div>
       </div>
     </section>

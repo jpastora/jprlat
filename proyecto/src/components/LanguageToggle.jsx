@@ -1,4 +1,5 @@
 import { useLanguage } from '../context/LanguageContext.js'
+import { track } from '../lib/analytics.js'
 
 /*
   LanguageToggle — switch ES / EN.
@@ -17,7 +18,7 @@ export default function LanguageToggle({ className = '' }) {
     <div
       role="group"
       aria-label="Cambiar idioma / Change language"
-      className={`inline-flex items-center rounded-full border border-line bg-white p-0.5 font-mono text-xs ${className}`}
+      className={`inline-flex items-center rounded-full border border-line bg-white p-0.5 font-mono text-xs dark:bg-soft ${className}`}
     >
       {options.map((opt) => {
         const active = language === opt.code
@@ -27,7 +28,12 @@ export default function LanguageToggle({ className = '' }) {
             type="button"
             aria-pressed={active}
             aria-label={opt.code === 'es' ? 'Español' : 'English'}
-            onClick={() => setLanguage(opt.code)}
+            onClick={() => {
+              if (!active) {
+                track('lang_toggle', { language: opt.code })
+                setLanguage(opt.code)
+              }
+            }}
             className={`rounded-full px-2.5 py-1 transition-colors duration-300 ${
               active
                 ? 'bg-carbon text-white'

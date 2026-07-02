@@ -1,10 +1,9 @@
-# Joseph Pastora — Portafolio freelance · Performance OS
+# Joseph Pastora — Portafolio freelance
 
 Portafolio one-page, responsivo e interactivo para **Joseph Pastora Ramos**, freelance
 estratégico que integra **ingeniería de software, marketing digital y análisis de datos**.
 
-> **Desarrollo soluciones digitales con lógica de negocio.**
-> Estrategia digital con lógica de sistema · Foco • Claridad • Sistema • Resultados
+> **Estrategia digital con lógica de sistema.**
 
 El sitio carga **en español por defecto**; el inglés aparece solo al usar el switch **ES / EN**.
 
@@ -17,6 +16,7 @@ El sitio carga **en español por defecto**; el inglés aparece solo al usar el s
 - **Framer Motion** (sistema de movimiento)
 - **@emailjs/browser** (formulario de contacto)
 - **lucide-react** (íconos de línea)
+- Tipografías self-hosted vía **@fontsource**
 - Despliegue en **Vercel**
 
 ---
@@ -39,14 +39,15 @@ Abre la URL que muestra Vite (por defecto `http://localhost:5173`).
 Otros comandos:
 
 ```bash
-npm run build     # build de producción -> dist/
-npm run preview   # sirve el build de producción
-npm run lint      # análisis estático con oxlint
+npm run build            # genera assets + build de producción -> dist/
+npm run generate:assets  # og.png, favicon.ico, apple-touch-icon
+npm run preview          # sirve el build de producción
+npm run lint             # análisis estático con oxlint
 ```
 
 ---
 
-## Variables de entorno (EmailJS)
+## Variables de entorno
 
 Crea un archivo `.env` a partir de `.env.example`:
 
@@ -54,20 +55,40 @@ Crea un archivo `.env` a partir de `.env.example`:
 cp .env.example .env
 ```
 
+### EmailJS (formulario de contacto)
+
 ```txt
 VITE_EMAILJS_SERVICE_ID=
 VITE_EMAILJS_TEMPLATE_ID=
 VITE_EMAILJS_PUBLIC_KEY=
 ```
 
-Consigue estos valores en [emailjs.com](https://www.emailjs.com):
+Consigue estos valores en [emailjs.com](https://www.emailjs.com). Si faltan, el formulario funciona en **modo demo**.
 
-1. Crea una cuenta y un **Email Service** → obtén el `SERVICE_ID`.
-2. Crea un **Email Template** con variables `from_name`, `reply_to`, `project_type`, `message` → obtén el `TEMPLATE_ID`.
-3. En **Account → API Keys** copia la **Public Key** → `PUBLIC_KEY`.
+### Google Analytics 4 (opcional)
 
-> Si las variables faltan, el formulario funciona en **modo demo**: valida, muestra un
-> aviso en pantalla y registra los datos en consola **sin romper la aplicación**.
+```txt
+VITE_GA4_ID=G-XXXXXXXXXX
+```
+
+El wrapper en `src/lib/analytics.js` expone `track(event, params)`:
+
+- En **desarrollo**: registra eventos en consola (`[analytics] event {…}`).
+- En **producción sin `VITE_GA4_ID`**: no-op (sin vendor lock).
+- Con **`VITE_GA4_ID`**: inyecta gtag y reenvía eventos.
+
+Eventos instrumentados: `cta_click`, `whatsapp_click`, `calendly_open`, `cv_download`, `form_submit`, `section_view`, `lang_toggle`, `theme_toggle`.
+
+---
+
+## Configuración editable sin tocar componentes
+
+| Archivo | Qué editar |
+|---------|------------|
+| `src/config/site.config.js` | URL del sitio, foto de perfil (`/public/profile.jpg`), URL de Calendly |
+| `src/data/testimonials.js` | Citas de testimonios (ES/EN) |
+| `src/data/translations.js` | Todo el copy del sitio |
+| `public/profile.jpg` | Foto de perfil (fallback: monograma JP>) |
 
 ---
 
@@ -80,7 +101,7 @@ Consigue estos valores en [emailjs.com](https://www.emailjs.com):
    - **Framework Preset**: Vite
    - **Build Command**: `npm run build`
    - **Output Directory**: `dist`
-4. Agrega las variables de entorno `VITE_EMAILJS_*` en **Settings → Environment Variables**.
+4. Agrega las variables `VITE_EMAILJS_*` y opcionalmente `VITE_GA4_ID` en **Settings → Environment Variables**.
 5. Deploy.
 
 ---
@@ -91,42 +112,22 @@ Consigue estos valores en [emailjs.com](https://www.emailjs.com):
 proyecto/
   index.html
   .env.example
-  README.md
-  entrega.txt
   public/
-    favicon.svg
+    favicon.svg, favicon.ico, apple-touch-icon.png
+    og.png, robots.txt, sitemap.xml, site.webmanifest
+    profile.jpg          # TODO: tu foto
+  scripts/
+    generate-assets.mjs  # OG + iconos desde SVG
   src/
-    main.jsx
-    App.jsx
-    assets/
-      logo/            # jp-logo.svg, jp-logo-compact.svg, favicon.svg (SVG editables)
-      images/          # placeholders de proyectos (fallback visual si no existen)
-      cv/              # joseph-pastora-cv.pdf (placeholder, reemplazar)
-    components/        # Header, Hero, secciones, tarjetas y componentes de movimiento
-    context/           # LanguageContext (idioma ES/EN)
-    data/              # translations.js, projects.js, services.js, values.js
-    utils/             # scroll.js, validation.js
-    styles/            # index.css (Tailwind v4 + tokens Performance OS)
+    config/site.config.js
+    lib/analytics.js, calendly.js
+    data/testimonials.js, process.js, translations.js
+    hooks/useTheme.jsx, useSectionTracking.js
+    components/          # secciones + cursor, testimonios, proceso, etc.
 ```
-
----
-
-## Identidad: Performance OS
-
-Interfaz premium, minimalista y técnica: fondo blanco dominante, líneas finas, dot grids,
-brackets, nodos, chevrons `>` y tarjetas modulares. El naranja `#FF6B00` se usa solo como
-señal de acción/performance (CTAs, hover, nodos activos, foco). Movimiento basado en la
-lógica **entrada → proceso → salida**, siempre respetando `prefers-reduced-motion`.
-
-### Assets a reemplazar (placeholders)
-
-- `src/assets/logo/*.svg` — logo `JP>` y favicon (SVG editables).
-- `public/favicon.svg` — copia del favicon usada por `index.html`.
-- `src/assets/cv/joseph-pastora-cv.pdf` — CV real.
-- `src/assets/images/projects/*.png` — imágenes reales de proyectos (hay fallback visual).
 
 ---
 
 ## URL del portafolio
 
-Portfolio: `[PENDIENTE]`
+Producción: [https://jpr.lat](https://jpr.lat)
