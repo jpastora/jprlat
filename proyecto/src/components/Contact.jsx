@@ -14,11 +14,13 @@ import { GithubMark, LinkedinMark } from './BrandIcons.jsx'
 import PageSection from './PageSection.jsx'
 import FloatingField from './FloatingField.jsx'
 import MagneticButton from './MagneticButton.jsx'
+import CalendlyButton from './CalendlyButton.jsx'
 import SectionTitle from './SectionTitle.jsx'
 import { itemVariants } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 import { contactInfo } from '../data/translations.js'
 import { validateContactForm } from '../utils/validation.js'
+import { track } from '../lib/analytics.js'
 
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
@@ -70,6 +72,7 @@ export default function Contact() {
       setTimeout(() => {
         setStatus('success')
         setForm(EMPTY)
+        track('form_submit', { mode: 'demo' })
       }, 800)
       return
     }
@@ -78,6 +81,7 @@ export default function Contact() {
       await emailjs.send(SERVICE_ID, TEMPLATE_ID, params, { publicKey: PUBLIC_KEY })
       setStatus('success')
       setForm(EMPTY)
+      track('form_submit', { mode: 'emailjs' })
     } catch (err) {
       console.error('[Contacto] Error al enviar con EmailJS:', err)
       setStatus('error')
@@ -85,18 +89,19 @@ export default function Contact() {
   }
 
   const channels = [
-    { icon: Mail, label: contactInfo.email, href: `mailto:${contactInfo.email}` },
+    { icon: Mail, label: contactInfo.email, href: `mailto:${contactInfo.email}`, trackLabel: 'email' },
     {
       icon: MessageCircle,
       label: 'WhatsApp',
       href: `https://wa.me/${contactInfo.whatsappDigits}`,
+      trackLabel: 'whatsapp',
     },
-    { icon: LinkedinMark, label: 'LinkedIn', href: contactInfo.linkedin },
-    { icon: GithubMark, label: 'GitHub', href: contactInfo.github },
+    { icon: LinkedinMark, label: 'LinkedIn', href: contactInfo.linkedin, trackLabel: 'linkedin' },
+    { icon: GithubMark, label: 'GitHub', href: contactInfo.github, trackLabel: 'github' },
   ]
 
   return (
-    <PageSection id="contacto" wide className="pb-32 pt-20 sm:pb-40 sm:pt-28">
+    <PageSection id="contacto" wide className="pb-32 pt-20 sm:pb-40 sm:pt-28 max-md:pb-36">
       <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-20">
         <motion.div variants={itemVariants} className="lg:col-span-5">
           <SectionTitle title={c.title} subtitle={c.text} />
@@ -104,12 +109,17 @@ export default function Contact() {
           <div className="mt-10">
             <p className="font-body text-sm text-tech">{c.directLabel}</p>
             <ul className="mt-4 space-y-1">
-              {channels.map(({ icon: Icon, label, href }) => (
+              {channels.map(({ icon: Icon, label, href, trackLabel }) => (
                 <li key={label}>
                   <a
                     href={href}
                     target={href.startsWith('http') ? '_blank' : undefined}
                     rel="noreferrer"
+                    onClick={() => {
+                      if (trackLabel === 'whatsapp') {
+                        track('whatsapp_click', { source: 'contact' })
+                      }
+                    }}
                     className="group inline-flex items-center gap-2 py-2 font-body text-sm text-carbon transition-colors hover:text-orange"
                   >
                     <Icon size={15} strokeWidth={1.6} aria-hidden="true" />
@@ -123,6 +133,12 @@ export default function Contact() {
                 </li>
               ))}
             </ul>
+            <div className="mt-8 border-t border-line pt-8">
+              <p className="font-body text-sm text-tech">{c.calendlyLead}</p>
+              <div className="mt-4">
+                <CalendlyButton variant="primary" source="contact" />
+              </div>
+            </div>
             <p className="mt-8 font-body text-sm text-tech">{c.responseNote}</p>
           </div>
         </motion.div>

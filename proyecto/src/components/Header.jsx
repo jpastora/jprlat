@@ -3,9 +3,11 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import AnimatedLogoMark from './AnimatedLogoMark.jsx'
 import LanguageToggle from './LanguageToggle.jsx'
+import ThemeToggle from './ThemeToggle.jsx'
 import MagneticButton from './MagneticButton.jsx'
 import { useLanguage } from '../context/LanguageContext.js'
 import { scrollToSection } from '../utils/scroll.js'
+import { track } from '../lib/analytics.js'
 import { SECTIONS } from '../data/navigation.js'
 
 export default function Header() {
@@ -57,8 +59,8 @@ export default function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'border-b border-line/80 bg-white/85 backdrop-blur-md'
-          : 'bg-white/60 backdrop-blur-sm'
+          ? 'border-b border-line/80 bg-white/85 backdrop-blur-md dark:bg-white/5'
+          : 'bg-white/60 backdrop-blur-sm dark:bg-white/5'
       }`}
     >
       <div className="mx-auto flex h-[4.25rem] max-w-[76rem] items-center justify-between px-5">
@@ -106,10 +108,15 @@ export default function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
           <LanguageToggle />
           <MagneticButton
             type="button"
-            onClick={() => go('contacto')}
+            onClick={() => {
+              track('cta_click', { label: 'talk', source: 'header' })
+              go('contacto')
+            }}
+            data-cursor="cta"
             className="rounded-lg bg-orange px-4 py-2 font-body text-sm font-medium text-white transition-colors duration-300 hover:bg-carbon"
           >
             {t.cta.talk}
@@ -117,6 +124,7 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
           <LanguageToggle />
           <button
             type="button"
@@ -140,7 +148,7 @@ export default function Header() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="overflow-hidden border-t border-line bg-white md:hidden"
+            className="overflow-hidden border-t border-line bg-white md:hidden dark:bg-white/5"
           >
             <ul className="mx-auto flex max-w-[76rem] flex-col px-5 py-3">
               {SECTIONS.map((s) => (

@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
 import PageSection from './PageSection.jsx'
 import CountUp from './CountUp.jsx'
+import ProfilePhoto from './ProfilePhoto.jsx'
 import { EASE_EXPO } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 
@@ -98,6 +99,9 @@ export default function StrategicProfile() {
         </div>
 
         <aside className="lg:col-span-5">
+          <div className="mb-10 lg:mb-0">
+            <ProfilePhoto />
+          </div>
           <div className="lg:sticky lg:top-28">
             <p className="font-body text-sm text-tech">{p.credibilityLabel}</p>
             <div className="mt-4 flex items-baseline gap-1">
@@ -116,7 +120,7 @@ export default function StrategicProfile() {
                 <p className="font-body text-xs font-medium uppercase tracking-wide text-tech">
                   {p.roles.agencies.title}
                 </p>
-                <ul className="mt-3 space-y-1.5">
+                <ul className="list-chevron mt-3 space-y-1.5">
                   {p.roles.agencies.items.map((item) => (
                     <li key={item} className="font-body text-sm text-carbon">
                       {item}
@@ -128,7 +132,7 @@ export default function StrategicProfile() {
                 <p className="font-body text-xs font-medium uppercase tracking-wide text-tech">
                   {p.roles.brands.title}
                 </p>
-                <ul className="mt-3 space-y-1.5">
+                <ul className="list-chevron mt-3 space-y-1.5">
                   {p.roles.brands.items.map((item) => (
                     <li key={item} className="font-body text-sm text-carbon">
                       {item}

@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { MessageCircle } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext.js'
 import { contactInfo } from '../data/translations.js'
+import { track } from '../lib/analytics.js'
 
 /*
   WhatsAppButton — botón flotante en la esquina inferior derecha.
@@ -27,7 +28,8 @@ export default function WhatsAppButton() {
       transition={{ delay: 0.6, duration: 0.3 }}
       whileHover={reduce ? undefined : { y: -3 }}
       whileTap={reduce ? undefined : { scale: 0.94 }}
-      className="group fixed bottom-6 right-5 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-carbon text-white shadow-lg transition-colors duration-300 hover:bg-orange"
+      onClick={() => track('whatsapp_click', { source: 'floating' })}
+      className="group fixed bottom-6 right-5 z-40 hidden h-14 w-14 items-center justify-center rounded-full bg-carbon text-white shadow-lg transition-colors duration-300 hover:bg-orange md:inline-flex"
     >
       <MessageCircle size={22} strokeWidth={1.8} aria-hidden="true" />
       {/* Indicador naranja (pulso sutil) */}

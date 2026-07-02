@@ -6,7 +6,7 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { SECTIONS } from '../data/navigation.js'
+import { ALL_SECTIONS } from '../data/navigation.js'
 
 export default function PageGuide() {
   const reduce = useReducedMotion()
@@ -21,7 +21,7 @@ export default function PageGuide() {
 
   useEffect(() => {
     const updateNode = () => {
-      const active = SECTIONS.find((s) => s.id === activeId)
+      const active = ALL_SECTIONS.find((s) => s.id === activeId)
       const el = active ? document.getElementById(active.id) : null
       if (!el) return
       const rect = el.getBoundingClientRect()
@@ -40,7 +40,7 @@ export default function PageGuide() {
 
   useEffect(() => {
     const observers = []
-    for (const s of SECTIONS) {
+    for (const s of ALL_SECTIONS) {
       const el = document.getElementById(s.id)
       if (!el) continue
       const obs = new IntersectionObserver(
