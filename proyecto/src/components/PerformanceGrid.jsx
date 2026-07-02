@@ -1,5 +1,5 @@
 /*
-  PerformanceGrid — fondo decorativo del sistema Performance OS.
+  PerformanceGrid — fondo decorativo de dot grid.
   Compone: dot grid, líneas finas, nodos, brackets y acentos naranja.
   Es puramente decorativo (aria-hidden). Se usa en hero, projects y footer.
 */

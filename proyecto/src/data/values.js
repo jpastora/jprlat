@@ -1,5 +1,5 @@
 /*
-  Valores / principios operativos — Performance OS
+  Valores / principios operativos
   Cada valor tiene una descripción corta en español e inglés.
 */
 export const values = [

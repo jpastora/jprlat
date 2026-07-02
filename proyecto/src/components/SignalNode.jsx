@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 
 /*
-  SignalNode — nodo del sistema Performance OS.
+  SignalNode — nodo decorativo del diagrama.
   Estados: inactive (gris), active (naranja), pulse opcional.
 */
 export default function SignalNode({

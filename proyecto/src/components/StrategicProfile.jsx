@@ -66,8 +66,8 @@ export default function StrategicProfile() {
     >
       <StatementLine parts={p.statement} />
 
-      <div className="mt-16 grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-20">
-        <div className="lg:col-span-7">
+      <div className="mt-16 grid grid-cols-1 gap-x-20 gap-y-10 lg:grid-cols-12 lg:items-start">
+        <div className="order-2 lg:order-1 lg:col-span-7">
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -98,10 +98,11 @@ export default function StrategicProfile() {
           </div>
         </div>
 
-        <aside className="lg:col-span-5">
-          <div className="mb-10 lg:mb-0">
-            <ProfilePhoto />
-          </div>
+        <div className="order-1 w-full lg:order-2 lg:col-span-5 lg:col-start-8 lg:row-start-1">
+          <ProfilePhoto />
+        </div>
+
+        <aside className="order-3 lg:col-span-5 lg:col-start-8 lg:row-start-2">
           <div className="lg:sticky lg:top-28">
             <p className="font-body text-sm text-tech">{p.credibilityLabel}</p>
             <div className="mt-4 flex items-baseline gap-1">

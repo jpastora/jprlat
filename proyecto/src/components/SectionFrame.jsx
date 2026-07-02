@@ -3,7 +3,7 @@ import { itemVariants } from '../utils/motion.js'
 import PerformanceGrid from './PerformanceGrid.jsx'
 
 /*
-  SectionFrame — wrapper editorial de sección Performance OS.
+  SectionFrame — wrapper editorial de sección.
   Incluye reveal al viewport y stagger para hijos con itemVariants.
 */
 export default function SectionFrame({

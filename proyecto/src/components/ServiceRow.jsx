@@ -46,11 +46,11 @@ export default function ServiceRow({ service, index }) {
           <div className="min-w-0 flex-1">
             <motion.h3
               animate={{
-                color: expanded ? '#111111' : '#6B7280',
+                color: expanded ? 'var(--color-carbon)' : 'var(--color-tech)',
               }}
               transition={{ duration: 0.35, ease: EASE_EXPO }}
-              className="font-heading font-semibold leading-[1.05] tracking-tight"
-              style={{ fontSize: 'clamp(2rem, 4.5vw, 3.25rem)' }}
+              className="break-words text-balance font-heading font-semibold leading-[1.05] tracking-tight"
+              style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.25rem)' }}
             >
               {service.title[language] ?? service.title.es}
             </motion.h3>
