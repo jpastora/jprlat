@@ -8,8 +8,9 @@ import {
 } from 'framer-motion'
 import { ArrowRight, Download } from 'lucide-react'
 import HeroDiagram from './HeroDiagram.jsx'
-import PageSection from './PageSection.jsx'
-import { itemVariants } from '../utils/motion.js'
+import MagneticButton from './MagneticButton.jsx'
+import RevealText from './RevealText.jsx'
+import { EASE_EXPO, fadeUp } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 import { scrollToSection } from '../utils/scroll.js'
 import cvUrl from '../assets/cv/joseph-pastora-cv.pdf'
@@ -23,72 +24,90 @@ export default function Hero() {
     target: ref,
     offset: ['start start', 'end start'],
   })
-  const yRaw = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 40])
+  const yRaw = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 48])
   const y = useSpring(yRaw, { stiffness: 100, damping: 28 })
+  const diagramScale = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 0.94])
 
   return (
-    <PageSection id="inicio" wide className="pb-24 pt-28 sm:pb-32 sm:pt-32">
-      <div ref={ref} className="grid grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-12">
+    <section id="inicio" className="relative bg-white pb-24 pt-28 sm:pb-32 sm:pt-32">
+      <div
+        ref={ref}
+        className="relative mx-auto grid max-w-[76rem] grid-cols-1 items-center gap-16 px-5 lg:grid-cols-12 lg:gap-12"
+      >
         <div className="lg:col-span-7">
           <motion.p
-            variants={itemVariants}
+            initial={reduce ? false : { opacity: 0, y: 8 }}
+            animate={reduce ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: EASE_EXPO }}
             className="font-body text-sm font-medium text-tech"
           >
             {t.hero.eyebrow}
           </motion.p>
 
-          <motion.h1
-            variants={itemVariants}
-            className="mt-4 max-w-[16ch] font-heading text-[2.75rem] font-bold leading-[1.02] tracking-tight text-carbon sm:text-5xl lg:text-[3.5rem]"
-          >
-            {t.hero.title}
-          </motion.h1>
+          <h1 className="mt-4 max-w-[16ch] font-heading text-[2.75rem] font-bold leading-[1.02] tracking-tight text-carbon sm:text-5xl lg:text-[3.5rem]">
+            <RevealText text={t.hero.title} mode="words" delay={0.08} />
+          </h1>
 
           <motion.p
-            variants={itemVariants}
+            initial={reduce ? false : { opacity: 0, y: 8 }}
+            animate={reduce ? undefined : { opacity: 1, y: 0 }}
+            transition={{ delay: 0.42, duration: 0.5, ease: EASE_EXPO }}
             className="mt-6 max-w-prose font-body text-lg leading-relaxed text-tech"
           >
             {t.hero.subtitle}
           </motion.p>
 
           <motion.div
-            variants={itemVariants}
+            initial={reduce ? false : 'hidden'}
+            animate={reduce ? undefined : 'visible'}
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.07, delayChildren: 0.72 } },
+            }}
             className="mt-10 flex flex-wrap items-center gap-3"
           >
-            <button
-              type="button"
-              onClick={() => scrollToSection('contacto')}
-              className="group inline-flex items-center gap-2 rounded-lg bg-orange px-6 py-3 font-body text-sm font-semibold text-white transition-colors duration-300 hover:bg-carbon"
-            >
-              {t.cta.talk}
-              <ArrowRight
-                size={16}
-                className="transition-transform duration-300 group-hover:translate-x-0.5"
-                aria-hidden="true"
-              />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToSection('proyectos')}
-              className="inline-flex items-center gap-2 rounded-lg border border-cool px-6 py-3 font-body text-sm font-semibold text-carbon transition-colors duration-300 hover:border-carbon"
-            >
-              {t.cta.viewProjects}
-            </button>
-            <a
+            <motion.div variants={fadeUp}>
+              <MagneticButton
+                type="button"
+                onClick={() => scrollToSection('contacto')}
+                className="group inline-flex items-center gap-2 rounded-lg bg-orange px-6 py-3 font-body text-sm font-semibold text-white transition-colors duration-300 hover:bg-carbon"
+              >
+                {t.cta.talk}
+                <ArrowRight
+                  size={16}
+                  className="transition-transform duration-300 group-hover:translate-x-0.5"
+                  aria-hidden="true"
+                />
+              </MagneticButton>
+            </motion.div>
+            <motion.div variants={fadeUp}>
+              <MagneticButton
+                type="button"
+                onClick={() => scrollToSection('proyectos')}
+                className="inline-flex items-center gap-2 rounded-lg border border-cool px-6 py-3 font-body text-sm font-semibold text-carbon transition-colors duration-300 hover:border-carbon"
+              >
+                {t.cta.viewProjects}
+              </MagneticButton>
+            </motion.div>
+            <motion.a
+              variants={fadeUp}
               href={cvUrl}
               download="joseph-pastora-cv.pdf"
               className="inline-flex items-center gap-2 px-2 py-3 font-body text-sm font-medium text-tech transition-colors duration-300 hover:text-orange"
             >
               <Download size={15} aria-hidden="true" />
               {t.cta.downloadCv}
-            </a>
+            </motion.a>
           </motion.div>
         </div>
 
-        <motion.div variants={itemVariants} style={{ y }} className="lg:col-span-5 lg:pl-8">
+        <motion.div
+          style={{ y, scale: diagramScale }}
+          className="lg:col-span-5 lg:pl-8"
+        >
           <HeroDiagram />
         </motion.div>
       </div>
-    </PageSection>
+    </section>
   )
 }

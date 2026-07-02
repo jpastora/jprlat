@@ -1,56 +1,122 @@
-import { motion, useReducedMotion } from 'framer-motion'
-import { itemVariants } from '../utils/motion.js'
+import { useRef, useState } from 'react'
+import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-motion'
+import ServiceIcon from './ServiceIcon.jsx'
+import { EASE_EXPO, lineDraw } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 
 export default function ServiceRow({ service, index }) {
   const { language } = useLanguage()
   const reduce = useReducedMotion()
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, amount: 0.35 })
+  const [hovered, setHovered] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(null)
+
+  const expanded = hovered || mobileOpen === index
   const num = String(index + 1).padStart(2, '0')
-  const reversed = index % 2 === 1
+
+  const toggleMobile = () => {
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      setMobileOpen(mobileOpen === index ? null : index)
+    }
+  }
 
   return (
-    <motion.article
-      variants={itemVariants}
-      className={`group relative border-t border-line py-10 sm:py-12 ${
-        reversed ? 'lg:pl-[12%]' : 'lg:pr-[12%]'
-      }`}
+    <article
+      ref={ref}
+      className="relative"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-[4rem_1fr] sm:gap-8">
-        <span className="font-mono text-sm text-cool transition-colors duration-300 group-hover:text-orange">
-          {num}
-        </span>
-        <div>
-          <h3 className="font-heading text-2xl font-medium text-carbon sm:text-[1.65rem]">
-            {service.title[language] ?? service.title.es}
-          </h3>
-          <p className="mt-3 max-w-prose font-body text-base leading-relaxed text-tech">
-            {service.description[language] ?? service.description.es}
-          </p>
-          <ul className="mt-5 flex flex-wrap gap-2">
-            {service.technologies.map((tech, i) => (
-              <motion.li
-                key={tech}
-                initial={reduce ? false : { opacity: 0 }}
-                whileInView={reduce ? undefined : { opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.05 + i * 0.04, duration: 0.3 }}
-                className="font-mono text-xs text-tech"
-              >
-                {tech}
-                {i < service.technologies.length - 1 && (
-                  <span className="ml-2 text-cool" aria-hidden="true">
-                    /
-                  </span>
-                )}
-              </motion.li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      <span
-        className="absolute bottom-0 left-0 h-px w-0 bg-orange transition-all duration-500 group-hover:w-full"
+      <motion.div
+        variants={lineDraw}
+        initial={reduce ? false : 'hidden'}
+        animate={inView ? 'visible' : 'hidden'}
+        className="h-px origin-left bg-line"
         aria-hidden="true"
       />
-    </motion.article>
+
+      <button
+        type="button"
+        onClick={toggleMobile}
+        className="group relative w-full py-8 text-left sm:py-10 md:cursor-default"
+        aria-expanded={expanded}
+      >
+        <div className="flex items-start justify-between gap-6">
+          <div className="min-w-0 flex-1">
+            <motion.h3
+              animate={{
+                color: expanded ? '#111111' : '#6B7280',
+              }}
+              transition={{ duration: 0.35, ease: EASE_EXPO }}
+              className="font-heading font-semibold leading-[1.05] tracking-tight"
+              style={{ fontSize: 'clamp(2rem, 4.5vw, 3.25rem)' }}
+            >
+              {service.title[language] ?? service.title.es}
+            </motion.h3>
+          </div>
+
+          <motion.span
+            className="pointer-events-none hidden font-mono text-[clamp(3rem,8vw,5.5rem)] font-medium leading-none text-line md:block"
+            animate={{ x: expanded ? 0 : 24, opacity: expanded ? 0.9 : 0.25 }}
+            transition={{ duration: 0.45, ease: EASE_EXPO }}
+            aria-hidden="true"
+          >
+            {num}
+          </motion.span>
+
+          <motion.span
+            className="mt-2 font-mono text-lg text-cool md:hidden"
+            animate={{ rotate: expanded ? 90 : 0 }}
+            transition={{ duration: 0.3 }}
+            aria-hidden="true"
+          >
+            {'>'}
+          </motion.span>
+        </div>
+
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              key="details"
+              initial={reduce ? false : { height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={reduce ? undefined : { height: 0, opacity: 0 }}
+              transition={{ duration: 0.45, ease: EASE_EXPO }}
+              className="overflow-hidden"
+            >
+              <div className="flex flex-col gap-6 pt-6 sm:flex-row sm:items-start sm:gap-10">
+                <ServiceIcon type={service.id} active={expanded} />
+                <div className="min-w-0 flex-1">
+                  <p className="max-w-prose font-body text-base leading-relaxed text-tech">
+                    {service.description[language] ?? service.description.es}
+                  </p>
+                  <ul className="mt-5 flex flex-wrap gap-x-3 gap-y-1">
+                    {service.technologies.map((tech, i) => (
+                      <li key={tech} className="font-mono text-xs text-tech">
+                        {tech}
+                        {i < service.technologies.length - 1 && (
+                          <span className="ml-3 text-cool" aria-hidden="true">
+                            /
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <motion.span
+          className="absolute bottom-0 left-0 h-px bg-orange"
+          initial={{ width: '0%' }}
+          animate={{ width: expanded ? '100%' : '0%' }}
+          transition={{ duration: 0.5, ease: EASE_EXPO }}
+          aria-hidden="true"
+        />
+      </button>
+    </article>
   )
 }

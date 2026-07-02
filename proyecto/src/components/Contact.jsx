@@ -13,6 +13,7 @@ import {
 import { GithubMark, LinkedinMark } from './BrandIcons.jsx'
 import PageSection from './PageSection.jsx'
 import FloatingField from './FloatingField.jsx'
+import MagneticButton from './MagneticButton.jsx'
 import SectionTitle from './SectionTitle.jsx'
 import { itemVariants } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
@@ -183,18 +184,31 @@ export default function Contact() {
             </div>
 
             <div className="mt-8">
-              <button
+              <MagneticButton
                 type="submit"
                 disabled={status === 'sending'}
-                className="inline-flex items-center gap-2 rounded-lg bg-orange px-6 py-3 font-body text-sm font-semibold text-white transition-colors duration-300 hover:bg-carbon disabled:cursor-not-allowed disabled:opacity-70"
+                className="relative inline-flex items-center gap-2 overflow-hidden rounded-lg bg-orange px-6 py-3 font-body text-sm font-semibold text-white transition-colors duration-300 hover:bg-carbon disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {status === 'sending' ? (
-                  <Loader2 size={16} className="animate-spin" aria-hidden="true" />
-                ) : (
-                  <Send size={16} aria-hidden="true" />
+                {status === 'success' && (
+                  <motion.span
+                    layoutId="submit-flash"
+                    className="absolute inset-0 bg-carbon"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.35 }}
+                    style={{ originX: 0 }}
+                    aria-hidden="true"
+                  />
                 )}
-                {status === 'sending' ? c.sending : c.submit}
-              </button>
+                <span className="relative z-10 flex items-center gap-2">
+                  {status === 'sending' ? (
+                    <Loader2 size={16} className="animate-spin" aria-hidden="true" />
+                  ) : (
+                    <Send size={16} aria-hidden="true" />
+                  )}
+                  {status === 'sending' ? c.sending : c.submit}
+                </span>
+              </MagneticButton>
             </div>
 
             <div aria-live="polite" className="mt-4">
