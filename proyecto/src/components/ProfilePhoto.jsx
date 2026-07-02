@@ -21,7 +21,7 @@ export default function ProfilePhoto() {
       className="relative aspect-[4/5] w-full max-w-md lg:max-w-none"
     >
       <div className="pos-dotgrid absolute -right-4 -top-4 h-24 w-24 opacity-40" aria-hidden="true" />
-      <div className="relative h-full overflow-hidden rounded-lg border border-line bg-soft">
+      <div className="relative h-full overflow-hidden rounded-lg border border-line bg-soft dark:border-line dark:bg-soft/80">
         {!error ? (
           <img
             src={siteConfig.profileImage}

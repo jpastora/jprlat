@@ -4,17 +4,19 @@ import { useReducedMotion } from 'framer-motion'
 const INTERACTIVE =
   'a, button, [role="button"], input, textarea, select, label, [data-cursor]'
 const LERP = 0.42
+const ORANGE = '#FF6B00'
 
 export default function SignatureCursor() {
   const reduce = useReducedMotion()
   const elRef = useRef(null)
+  const glyphRef = useRef(null)
   const enabledRef = useRef(false)
   const rafRef = useRef(0)
   const targetRef = useRef({ x: -100, y: -100 })
   const posRef = useRef({ x: -100, y: -100 })
   const angleRef = useRef(0)
-  const onCtaRef = useRef(false)
-  const glyphRef = useRef(null)
+  const interactiveRef = useRef(false)
+  const ctaRef = useRef(false)
 
   useEffect(() => {
     const fine = window.matchMedia('(pointer: fine)').matches
@@ -35,8 +37,20 @@ export default function SignatureCursor() {
 
       el.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) rotate(${angleRef.current}deg)`
 
-      glyph.classList.toggle('text-orange', onCtaRef.current)
-      glyph.classList.toggle('text-carbon/50', !onCtaRef.current)
+      const onCta = ctaRef.current
+      const onInteractive = interactiveRef.current
+      const scale = onCta ? 1.28 : onInteractive ? 1.14 : 1
+      const opacity = onCta ? 1 : onInteractive ? 0.95 : 0.88
+      const shadow = onCta
+        ? 'drop-shadow(0 0 8px rgba(255,107,0,0.65))'
+        : onInteractive
+          ? 'drop-shadow(0 0 4px rgba(255,107,0,0.35))'
+          : 'drop-shadow(0 1px 2px rgba(255,107,0,0.2))'
+
+      glyph.style.color = ORANGE
+      glyph.style.opacity = String(opacity)
+      glyph.style.transform = `scale(${scale})`
+      glyph.style.filter = shadow
 
       rafRef.current = requestAnimationFrame(tick)
     }
@@ -48,11 +62,13 @@ export default function SignatureCursor() {
 
       const target = e.target.closest(INTERACTIVE)
       if (!target) {
-        onCtaRef.current = false
+        interactiveRef.current = false
+        ctaRef.current = false
         return
       }
 
-      onCtaRef.current =
+      interactiveRef.current = true
+      ctaRef.current =
         target.classList.contains('bg-orange') ||
         Boolean(target.closest('.bg-orange')) ||
         target.dataset.cursor === 'cta'
@@ -77,11 +93,15 @@ export default function SignatureCursor() {
   return (
     <span
       ref={elRef}
-      className="pointer-events-none fixed left-0 top-0 z-[100] hidden font-mono text-xs font-semibold will-change-transform md:block"
+      className="pointer-events-none fixed left-0 top-0 z-[100] hidden will-change-transform md:block"
       style={{ marginLeft: 10, marginTop: 10 }}
       aria-hidden="true"
     >
-      <span ref={glyphRef} className="text-carbon/50">
+      <span
+        ref={glyphRef}
+        className="inline-block origin-center font-mono text-sm font-bold leading-none"
+        style={{ color: ORANGE }}
+      >
         {'>'}
       </span>
     </span>

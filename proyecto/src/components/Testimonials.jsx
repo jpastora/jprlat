@@ -54,7 +54,7 @@ export default function Testimonials() {
       <h3 className="font-heading text-2xl font-semibold text-carbon">{t.testimonials.title}</h3>
       <p className="mt-2 max-w-prose font-body text-sm text-tech">{t.testimonials.subtitle}</p>
 
-      <div className="mt-8 flex items-stretch gap-6 overflow-x-auto pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] sm:grid sm:grid-cols-3 sm:gap-8 sm:overflow-visible sm:pb-0 [&::-webkit-scrollbar]:hidden">
+      <div className="mt-8 grid auto-rows-fr items-stretch gap-6 overflow-x-auto pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] sm:grid sm:grid-cols-3 sm:gap-8 sm:overflow-visible sm:pb-0 [&::-webkit-scrollbar]:hidden max-sm:flex">
         {testimonials.map((item, i) => (
           <TestimonialCard key={item.id} item={item} index={i} />
         ))}
