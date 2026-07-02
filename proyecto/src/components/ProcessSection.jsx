@@ -137,7 +137,7 @@ function ProcessTimeline({ lineProgress, nodePosition, reduce }) {
       </div>
 
       <div className="relative mt-10 lg:hidden">
-        <div className="absolute bottom-0 left-4 top-0 w-px bg-line" aria-hidden="true">
+        <div className="pointer-events-none absolute bottom-0 left-[1.125rem] top-0 w-px bg-line" aria-hidden="true">
           <motion.div
             className="absolute left-0 top-0 w-px origin-top bg-orange"
             style={{ scaleY: lineProgress, height: '100%' }}
@@ -161,10 +161,10 @@ export default function ProcessSection() {
 
   const { scrollYProgress } = useScroll({
     target: scrollRef,
-    offset: ['start start', 'end end'],
+    offset: ['start 0.92', 'end 0.08'],
   })
 
-  const lineProgress = useTransform(scrollYProgress, [0.08, 0.92], [0, 1])
+  const lineProgress = useTransform(scrollYProgress, [0.14, 0.86], [0, 1])
   const nodePosition = useTransform(lineProgress, (v) => `${Math.min(100, Math.max(0, v * 100))}%`)
 
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
@@ -177,7 +177,7 @@ export default function ProcessSection() {
   })
 
   const steps = (
-    <ol className="relative mt-10 flex flex-col gap-12 pl-0 lg:mt-14 lg:flex-row lg:gap-6">
+    <ol className="relative mt-10 flex flex-col gap-12 pl-10 lg:mt-14 lg:flex-row lg:gap-6 lg:pl-0">
       {processSteps.map((step, i) => (
         <ProcessStep
           key={step.id}
@@ -209,8 +209,8 @@ export default function ProcessSection() {
 
   return (
     <PageSection id="proceso" wide className="pb-0 pt-16 sm:pt-20">
-      <div ref={scrollRef} className="relative min-h-[200vh] lg:min-h-[180vh]">
-        <div className="sticky top-[5.5rem] pb-28 sm:pb-36">
+      <div ref={scrollRef} className="relative min-h-[140vh] lg:min-h-[120vh]">
+        <div className="sticky top-[5.5rem] pb-20 sm:pb-28">
           <MaskReveal>
             <h2 className="max-w-[18ch] font-heading text-3xl font-semibold tracking-tight text-carbon sm:text-4xl">
               {t.process.title}

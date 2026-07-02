@@ -1,5 +1,22 @@
 import { useState } from 'react'
 
+const fieldInput =
+  'contact-field-input peer w-full min-h-[2.75rem] appearance-none border-0 border-b border-line bg-transparent px-0 pb-2 pt-6 font-body text-sm text-carbon outline-none transition-colors duration-200 placeholder:text-transparent focus:border-orange disabled:opacity-60'
+
+function FieldMessage({ id, error, errorMessage }) {
+  return (
+    <p
+      id={id}
+      className={`mt-1.5 min-h-[1.125rem] font-body text-xs leading-tight ${
+        error ? 'text-orange' : 'text-transparent'
+      }`}
+      aria-live="polite"
+    >
+      {error ? errorMessage : '\u00A0'}
+    </p>
+  )
+}
+
 export default function FloatingField({
   id,
   name,
@@ -11,35 +28,25 @@ export default function FloatingField({
   errorMessage,
   as = 'input',
   options,
-  rows = 4,
+  rows = 5,
   placeholder,
 }) {
   const [focused, setFocused] = useState(false)
-  const filled = Boolean(value)
+  const filled = Boolean(value && String(value).length > 0)
   const active = focused || filled
+  const borderClass = error ? 'border-orange' : active ? 'border-orange' : 'border-line'
 
-  const base =
-    'peer w-full border-0 border-b bg-transparent px-0 pb-2 pt-6 font-body text-sm text-carbon placeholder:text-transparent transition-colors duration-200 focus:outline-none'
-  const border = error ? 'border-orange' : active ? 'border-orange' : 'border-line'
-
-  const labelClass = `pointer-events-none absolute left-0 transition-all duration-300 ${
+  const labelClass = `pointer-events-none absolute left-0 origin-left transition-all duration-200 ${
     active
-      ? 'top-0 text-xs text-orange'
-      : 'top-5 text-sm text-tech'
+      ? 'top-1 translate-y-0 text-xs text-orange'
+      : 'top-6 -translate-y-1/2 text-sm text-tech'
   }`
 
-  const underline = (
-    <span
-      className={`absolute bottom-0 left-0 h-px w-full origin-left transition-transform duration-300 ${
-        error ? 'bg-orange' : 'bg-orange'
-      } ${active ? 'scale-x-100' : 'scale-x-0'}`}
-      aria-hidden="true"
-    />
-  )
+  const wrapperClass = 'contact-field relative min-h-[4.25rem]'
 
   if (as === 'select') {
     return (
-      <div className="relative">
+      <div className={wrapperClass}>
         <select
           id={id}
           name={name}
@@ -48,10 +55,10 @@ export default function FloatingField({
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `err-${name}` : undefined}
-          className={`${base} ${border} appearance-none border-b`}
+          aria-describedby={`err-${name}`}
+          className={`${fieldInput} ${borderClass} cursor-pointer`}
         >
-          <option value="" disabled>
+          <option value="" disabled hidden>
             {placeholder}
           </option>
           {options?.map((opt) => (
@@ -63,19 +70,14 @@ export default function FloatingField({
         <label htmlFor={id} className={labelClass}>
           {label}
         </label>
-        {underline}
-        {error && (
-          <p id={`err-${name}`} className="mt-1.5 font-body text-xs text-orange">
-            {errorMessage}
-          </p>
-        )}
+        <FieldMessage id={`err-${name}`} error={error} errorMessage={errorMessage} />
       </div>
     )
   }
 
   if (as === 'textarea') {
     return (
-      <div className="relative">
+      <div className={wrapperClass}>
         <textarea
           id={id}
           name={name}
@@ -86,24 +88,19 @@ export default function FloatingField({
           onBlur={() => setFocused(false)}
           placeholder=" "
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `err-${name}` : undefined}
-          className={`${base} ${border} resize-y border-b`}
+          aria-describedby={`err-${name}`}
+          className={`${fieldInput} ${borderClass} min-h-[7.5rem] resize-y`}
         />
         <label htmlFor={id} className={labelClass}>
           {label}
         </label>
-        {underline}
-        {error && (
-          <p id={`err-${name}`} className="mt-1.5 font-body text-xs text-orange">
-            {errorMessage}
-          </p>
-        )}
+        <FieldMessage id={`err-${name}`} error={error} errorMessage={errorMessage} />
       </div>
     )
   }
 
   return (
-    <div className="relative">
+    <div className={wrapperClass}>
       <input
         id={id}
         name={name}
@@ -114,18 +111,13 @@ export default function FloatingField({
         onBlur={() => setFocused(false)}
         placeholder=" "
         aria-invalid={Boolean(error)}
-        aria-describedby={error ? `err-${name}` : undefined}
-        className={`${base} ${border} border-b`}
+        aria-describedby={`err-${name}`}
+        className={`${fieldInput} ${borderClass}`}
       />
       <label htmlFor={id} className={labelClass}>
         {label}
       </label>
-      {underline}
-      {error && (
-        <p id={`err-${name}`} className="mt-1.5 font-body text-xs text-orange">
-          {errorMessage}
-        </p>
-      )}
+      <FieldMessage id={`err-${name}`} error={error} errorMessage={errorMessage} />
     </div>
   )
 }

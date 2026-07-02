@@ -74,6 +74,12 @@ section[id] {
   scroll-margin-top: 90px;
 }
 
+@media (max-width: 767px) {
+  section[id] {
+    scroll-margin-bottom: 5.5rem;
+  }
+}
+
 ::selection {
   background: var(--color-orange);
   color: #fff;
@@ -108,4 +114,21 @@ section[id] {
   font-size: 0.7rem;
   color: var(--color-orange);
   line-height: inherit;
+}
+
+/* Contact form — autofill theming */
+.contact-field-input:-webkit-autofill,
+.contact-field-input:-webkit-autofill:hover,
+.contact-field-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-carbon);
+  caret-color: var(--color-carbon);
+  transition: background-color 9999s ease-out;
+  box-shadow: 0 0 0 1000px var(--color-white) inset;
+}
+
+.dark .contact-field-input:-webkit-autofill,
+.dark .contact-field-input:-webkit-autofill:hover,
+.dark .contact-field-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-carbon);
+  box-shadow: 0 0 0 1000px var(--color-soft) inset;
 }

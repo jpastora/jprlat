@@ -101,7 +101,7 @@ export default function Contact() {
   ]
 
   return (
-    <PageSection id="contacto" wide className="pb-32 pt-20 sm:pb-40 sm:pt-28 max-md:pb-36">
+    <PageSection id="contacto" wide className="pb-32 pt-20 max-md:pb-44 sm:pb-40 sm:pt-28">
       <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-20">
         <motion.div variants={itemVariants} className="lg:col-span-5">
           <SectionTitle title={c.title} subtitle={c.text} />
@@ -147,9 +147,9 @@ export default function Contact() {
           <form
             onSubmit={handleSubmit}
             noValidate
-            className="rounded-2xl border border-line bg-white p-6 sm:p-8"
+            className="contact-field rounded-2xl border border-line bg-white p-6 sm:p-8 dark:border-line dark:bg-soft"
           >
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-x-5 gap-y-1 sm:grid-cols-2">
               <FloatingField
                 id="name"
                 name="name"
@@ -171,7 +171,7 @@ export default function Contact() {
               />
             </div>
 
-            <div className="mt-5">
+            <div className="mt-1">
               <FloatingField
                 id="projectType"
                 name="projectType"
@@ -186,7 +186,7 @@ export default function Contact() {
               />
             </div>
 
-            <div className="mt-5">
+            <div className="mt-1">
               <FloatingField
                 id="message"
                 name="message"
@@ -203,7 +203,7 @@ export default function Contact() {
               <MagneticButton
                 type="submit"
                 disabled={status === 'sending'}
-                className="relative inline-flex items-center gap-2 overflow-hidden rounded-lg bg-orange px-6 py-3 font-body text-sm font-semibold text-white transition-colors duration-300 hover:bg-carbon disabled:cursor-not-allowed disabled:opacity-70"
+                className="relative inline-flex min-w-[10.5rem] items-center justify-center gap-2 overflow-hidden rounded-lg bg-orange px-6 py-3 font-body text-sm font-semibold text-white transition-colors duration-300 hover:bg-carbon disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {status === 'success' && (
                   <motion.span
@@ -227,16 +227,16 @@ export default function Contact() {
               </MagneticButton>
             </div>
 
-            <div aria-live="polite" className="mt-4">
+            <div aria-live="polite" className="mt-4 min-h-[1.5rem]">
               {status === 'success' && (
                 <p className="flex items-center gap-2 font-body text-sm text-carbon">
-                  <CheckCircle2 size={16} className="text-orange" aria-hidden="true" />
+                  <CheckCircle2 size={16} className="shrink-0 text-orange" aria-hidden="true" />
                   {EMAILJS_CONFIGURED ? c.success : c.notConfigured}
                 </p>
               )}
               {status === 'error' && (
                 <p className="flex items-center gap-2 font-body text-sm text-carbon">
-                  <AlertCircle size={16} className="text-orange" aria-hidden="true" />
+                  <AlertCircle size={16} className="shrink-0 text-orange" aria-hidden="true" />
                   {c.error}
                 </p>
               )}

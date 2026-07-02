@@ -53,6 +53,51 @@ function BrandMarquee({ brands }) {
   )
 }
 
+function CredibilityRail({ p }) {
+  return (
+    <>
+      <p className="font-body text-sm text-tech">{p.credibilityLabel}</p>
+      <div className="mt-4 flex items-baseline gap-1">
+        <CountUp
+          value={p.experienceValue}
+          className="font-heading text-5xl font-bold text-carbon"
+        />
+        <span className="font-heading text-4xl font-bold text-carbon">+</span>
+        <span className="ml-1 font-body text-lg text-tech">{p.experienceUnit}</span>
+      </div>
+
+      <BrandMarquee brands={p.credibility} />
+
+      <div className="mt-10 grid grid-cols-2 gap-8 border-t border-line pt-8">
+        <div>
+          <p className="font-body text-xs font-medium uppercase tracking-wide text-tech">
+            {p.roles.agencies.title}
+          </p>
+          <ul className="list-chevron mt-3 space-y-1.5">
+            {p.roles.agencies.items.map((item) => (
+              <li key={item} className="font-body text-sm text-carbon">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p className="font-body text-xs font-medium uppercase tracking-wide text-tech">
+            {p.roles.brands.title}
+          </p>
+          <ul className="list-chevron mt-3 space-y-1.5">
+            {p.roles.brands.items.map((item) => (
+              <li key={item} className="font-body text-sm text-carbon">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </>
+  )
+}
+
 export default function StrategicProfile() {
   const { t } = useLanguage()
   const p = t.profile
@@ -66,8 +111,15 @@ export default function StrategicProfile() {
     >
       <StatementLine parts={p.statement} />
 
-      <div className="mt-16 grid grid-cols-1 gap-x-20 gap-y-10 lg:grid-cols-12 lg:items-start">
-        <div className="order-2 lg:order-1 lg:col-span-7">
+      <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start lg:gap-x-20 lg:gap-y-0">
+        <aside className="flex flex-col gap-10 lg:col-span-5 lg:col-start-8">
+          <ProfilePhoto />
+          <div className="hidden lg:block">
+            <CredibilityRail p={p} />
+          </div>
+        </aside>
+
+        <div className="lg:col-span-7 lg:col-start-1 lg:row-start-1">
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -98,52 +150,9 @@ export default function StrategicProfile() {
           </div>
         </div>
 
-        <div className="order-1 w-full lg:order-2 lg:col-span-5 lg:col-start-8 lg:row-start-1">
-          <ProfilePhoto />
+        <div className="lg:hidden">
+          <CredibilityRail p={p} />
         </div>
-
-        <aside className="order-3 lg:col-span-5 lg:col-start-8 lg:row-start-2">
-          <div className="lg:sticky lg:top-28">
-            <p className="font-body text-sm text-tech">{p.credibilityLabel}</p>
-            <div className="mt-4 flex items-baseline gap-1">
-              <CountUp
-                value={p.experienceValue}
-                className="font-heading text-5xl font-bold text-carbon"
-              />
-              <span className="font-heading text-4xl font-bold text-carbon">+</span>
-              <span className="ml-1 font-body text-lg text-tech">{p.experienceUnit}</span>
-            </div>
-
-            <BrandMarquee brands={p.credibility} />
-
-            <div className="mt-10 grid grid-cols-2 gap-8 border-t border-line pt-8">
-              <div>
-                <p className="font-body text-xs font-medium uppercase tracking-wide text-tech">
-                  {p.roles.agencies.title}
-                </p>
-                <ul className="list-chevron mt-3 space-y-1.5">
-                  {p.roles.agencies.items.map((item) => (
-                    <li key={item} className="font-body text-sm text-carbon">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <p className="font-body text-xs font-medium uppercase tracking-wide text-tech">
-                  {p.roles.brands.title}
-                </p>
-                <ul className="list-chevron mt-3 space-y-1.5">
-                  {p.roles.brands.items.map((item) => (
-                    <li key={item} className="font-body text-sm text-carbon">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </aside>
       </div>
 
       <motion.div
