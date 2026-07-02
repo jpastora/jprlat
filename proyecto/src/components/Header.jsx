@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Menu, X, ChevronRight } from 'lucide-react'
 import AnimatedLogoMark from './AnimatedLogoMark.jsx'
 import LanguageToggle from './LanguageToggle.jsx'
+import SignalNode from './SignalNode.jsx'
 import { useLanguage } from '../context/LanguageContext.js'
 import { scrollToSection } from '../utils/scroll.js'
 import { SECTIONS } from '../data/navigation.js'
@@ -20,7 +21,6 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Cerrar el menú móvil con Escape
   useEffect(() => {
     if (!open) return
     const onKey = (e) => {
@@ -37,39 +37,52 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
         scrolled
-          ? 'border-line bg-white/80 backdrop-blur-md'
-          : 'border-transparent bg-white/40 backdrop-blur-sm'
+          ? 'border-line bg-white/90 shadow-[0_1px_0_0_rgba(229,231,235,1)] backdrop-blur-md'
+          : 'border-transparent bg-white/50 backdrop-blur-sm'
       }`}
     >
+      {/* Línea naranja activa al hacer scroll */}
+      <motion.div
+        className="absolute inset-x-0 bottom-0 h-px origin-left bg-orange"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: scrolled ? 1 : 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        aria-hidden="true"
+      />
+
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-        {/* Logo */}
         <button
           type="button"
           onClick={() => go('inicio')}
-          className="flex items-center gap-2.5"
+          className="group flex items-center gap-2.5"
           aria-label="Joseph Pastora — inicio"
         >
           <AnimatedLogoMark size={36} />
           <span className="hidden font-heading text-sm font-semibold tracking-tight text-carbon sm:block">
             Joseph Pastora
-            <span className="ml-1 font-mono text-[10px] font-medium uppercase tracking-widest text-tech">
+            <span className="ml-1.5 inline-flex items-center gap-1 font-mono text-[10px] font-medium uppercase tracking-widest text-tech">
+              <SignalNode active={scrolled} pulse={scrolled} size="sm" />
               Performance OS
             </span>
           </span>
         </button>
 
-        {/* Nav desktop */}
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Navegación principal">
+        <nav className="hidden items-center gap-0.5 md:flex" aria-label="Navegación principal">
           {SECTIONS.map((s) => (
             <button
               key={s.id}
               type="button"
               onClick={() => go(s.id)}
-              className="rounded-md px-3 py-2 font-body text-sm text-tech transition-colors duration-200 hover:text-orange"
+              className="group relative rounded-md px-3 py-2 font-body text-sm text-tech transition-colors duration-200 hover:text-orange"
             >
-              {t.nav[s.key]}
+              <span className="relative z-10 flex items-center gap-1.5">
+                <span className="font-mono text-[9px] text-orange opacity-0 transition-opacity group-hover:opacity-100">
+                  {'>'}
+                </span>
+                {t.nav[s.key]}
+              </span>
             </button>
           ))}
         </nav>
@@ -86,7 +99,6 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Controles móviles */}
         <div className="flex items-center gap-2 md:hidden">
           <LanguageToggle />
           <button
@@ -102,7 +114,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Menú móvil */}
       <AnimatePresence>
         {open && (
           <motion.nav
@@ -122,7 +133,7 @@ export default function Header() {
                     onClick={() => go(s.id)}
                     className="flex w-full items-center gap-2 rounded-md px-2 py-3 text-left font-body text-base text-carbon transition-colors hover:text-orange"
                   >
-                    <span className="font-mono text-orange">{'>'}</span>
+                    <SignalNode active size="sm" />
                     {t.nav[s.key]}
                   </button>
                 </li>

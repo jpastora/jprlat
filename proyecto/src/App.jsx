@@ -11,6 +11,7 @@ import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 import ScrollTop from './components/ScrollTop.jsx'
 import WhatsAppButton from './components/WhatsAppButton.jsx'
+import AnimatedDivider from './components/AnimatedDivider.jsx'
 
 export default function App() {
   // Idioma por defecto: ESPAÑOL. El usuario cambia manualmente a inglés.
@@ -63,9 +64,13 @@ export default function App() {
 
       <main>
         <Hero />
+        <AnimatedDivider />
         <StrategicProfile />
+        <AnimatedDivider />
         <Services />
+        <AnimatedDivider />
         <Projects />
+        <AnimatedDivider />
         <Contact />
       </main>
 

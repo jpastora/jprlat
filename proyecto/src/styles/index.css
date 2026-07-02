@@ -74,3 +74,48 @@ section[id] {
   background-image: radial-gradient(var(--color-cool) 1px, transparent 1px);
   background-size: 22px 22px;
 }
+
+/* Panel suave del sistema */
+.pos-panel {
+  background-color: color-mix(in srgb, var(--color-soft) 70%, transparent);
+  border: 1px solid var(--color-line);
+}
+
+/* Chip de sistema (proof points, tags) */
+.pos-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-line);
+  background-color: var(--color-white);
+  padding: 0.375rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-tech);
+}
+
+/* Consola de ejecución */
+.pos-console {
+  border: 1px solid var(--color-line);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-soft) 80%, white) 0%,
+    var(--color-white) 100%
+  );
+}
+
+/* Línea de sistema animable */
+.pos-system-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-line) 20%,
+    var(--color-orange) 50%,
+    var(--color-line) 80%,
+    transparent 100%
+  );
+}
