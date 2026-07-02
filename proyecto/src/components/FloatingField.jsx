@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 export default function FloatingField({
   id,
   name,
@@ -12,13 +14,28 @@ export default function FloatingField({
   rows = 4,
   placeholder,
 }) {
+  const [focused, setFocused] = useState(false)
   const filled = Boolean(value)
-  const base =
-    'peer w-full rounded-lg border bg-white px-3.5 pb-2.5 pt-5 font-body text-sm text-carbon transition-colors duration-200 focus:border-orange focus:outline-none focus:ring-2 focus:ring-orange/15'
-  const border = error ? 'border-orange' : 'border-line'
+  const active = focused || filled
 
-  const labelClass =
-    'pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 font-body text-sm text-tech transition-all duration-200 peer-focus:top-3 peer-focus:translate-y-0 peer-focus:text-xs peer-focus:text-orange peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:not(:placeholder-shown)]:text-xs'
+  const base =
+    'peer w-full border-0 border-b bg-transparent px-0 pb-2 pt-6 font-body text-sm text-carbon placeholder:text-transparent transition-colors duration-200 focus:outline-none'
+  const border = error ? 'border-orange' : active ? 'border-orange' : 'border-line'
+
+  const labelClass = `pointer-events-none absolute left-0 transition-all duration-300 ${
+    active
+      ? 'top-0 text-xs text-orange'
+      : 'top-5 text-sm text-tech'
+  }`
+
+  const underline = (
+    <span
+      className={`absolute bottom-0 left-0 h-px w-full origin-left transition-transform duration-300 ${
+        error ? 'bg-orange' : 'bg-orange'
+      } ${active ? 'scale-x-100' : 'scale-x-0'}`}
+      aria-hidden="true"
+    />
+  )
 
   if (as === 'select') {
     return (
@@ -28,9 +45,11 @@ export default function FloatingField({
           name={name}
           value={value}
           onChange={onChange}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           aria-invalid={Boolean(error)}
           aria-describedby={error ? `err-${name}` : undefined}
-          className={`${base} ${border} appearance-none ${filled ? 'pt-5' : ''}`}
+          className={`${base} ${border} appearance-none border-b`}
         >
           <option value="" disabled>
             {placeholder}
@@ -41,16 +60,10 @@ export default function FloatingField({
             </option>
           ))}
         </select>
-        <label
-          htmlFor={id}
-          className={`absolute left-3.5 transition-all duration-200 ${
-            filled
-              ? 'top-3 text-xs text-tech'
-              : 'top-1/2 -translate-y-1/2 text-sm text-tech'
-          }`}
-        >
+        <label htmlFor={id} className={labelClass}>
           {label}
         </label>
+        {underline}
         {error && (
           <p id={`err-${name}`} className="mt-1.5 font-body text-xs text-orange">
             {errorMessage}
@@ -69,14 +82,17 @@ export default function FloatingField({
           rows={rows}
           value={value}
           onChange={onChange}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           placeholder=" "
           aria-invalid={Boolean(error)}
           aria-describedby={error ? `err-${name}` : undefined}
-          className={`${base} ${border} resize-y`}
+          className={`${base} ${border} resize-y border-b`}
         />
-        <label htmlFor={id} className={`${labelClass} peer-focus:top-4`}>
+        <label htmlFor={id} className={labelClass}>
           {label}
         </label>
+        {underline}
         {error && (
           <p id={`err-${name}`} className="mt-1.5 font-body text-xs text-orange">
             {errorMessage}
@@ -94,14 +110,17 @@ export default function FloatingField({
         type={type}
         value={value}
         onChange={onChange}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
         placeholder=" "
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `err-${name}` : undefined}
-        className={`${base} ${border}`}
+        className={`${base} ${border} border-b`}
       />
       <label htmlFor={id} className={labelClass}>
         {label}
       </label>
+      {underline}
       {error && (
         <p id={`err-${name}`} className="mt-1.5 font-body text-xs text-orange">
           {errorMessage}

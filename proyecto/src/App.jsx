@@ -42,7 +42,7 @@ export default function App() {
   return (
     <LanguageContext.Provider value={contextValue}>
       <motion.div
-        className="fixed inset-x-0 top-0 z-[60] h-px origin-left bg-orange"
+        className="fixed inset-x-0 top-[4.25rem] z-[60] h-px origin-left bg-orange"
         style={{ scaleX: progress }}
         aria-hidden="true"
       />

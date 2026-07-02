@@ -38,9 +38,17 @@ export const translations = {
       title: 'Estrategia con experiencia real',
       subtitle:
         'Más de quince años conectando marketing, tecnología y resultados de negocio en Centroamérica.',
-      about:
-        'Soy Joseph Pastora Ramos, profesional costarricense con más de quince años de experiencia en marketing digital, performance media y estrategia de crecimiento para marcas líderes de Centroamérica. Mi formación en Ingeniería de Software complementa esta trayectoria y me permite construir soluciones digitales con una visión integral: estrategia, tecnología, datos y resultados de negocio.',
-      experience: '15+ años',
+      statement: [
+        { text: 'Quince años uniendo ' },
+        { text: 'estrategia', accent: true },
+        { text: ', ' },
+        { text: 'software', accent: true },
+        { text: ' y ' },
+        { text: 'datos', accent: true },
+        { text: ' con lógica de negocio.' },
+      ],
+      experienceValue: 15,
+      experienceUnit: 'años',
       credibilityLabel: 'Experiencia con marcas y agencias como',
       credibility: [
         'Tigo',
@@ -51,6 +59,12 @@ export const translations = {
         'Havas',
         'Y&R',
       ],
+      roles: {
+        agencies: { title: 'Agencias', items: ['McCann', 'Havas', 'Y&R'] },
+        brands: { title: 'Marcas', items: ['Tigo', 'Gollo', 'Coca-Cola', 'Nestlé'] },
+      },
+      about:
+        'Soy Joseph Pastora Ramos, profesional costarricense con más de quince años de experiencia en marketing digital, performance media y estrategia de crecimiento para marcas líderes de Centroamérica. Mi formación en Ingeniería de Software complementa esta trayectoria y me permite construir soluciones digitales con una visión integral: estrategia, tecnología, datos y resultados de negocio.',
       technical: {
         title: 'Pensamiento técnico con visión comercial',
         text: 'Conecto programación, analítica, plataformas digitales y medición para construir soluciones funcionales, medibles y escalables.',
@@ -70,6 +84,7 @@ export const translations = {
     },
     services: {
       title: 'Servicios freelance',
+      stickyTitle: 'Servicios que construyen sistemas',
       subtitle:
         'Cuatro capacidades integradas para ordenar, construir, medir y escalar tu presencia digital.',
     },
@@ -166,9 +181,17 @@ export const translations = {
       title: 'Strategy backed by real experience',
       subtitle:
         'Over fifteen years connecting marketing, technology, and business results across Central America.',
-      about:
-        'I am Joseph Pastora Ramos, a Costa Rican professional with more than fifteen years of experience in digital marketing, performance media, and growth strategy for leading brands in Central America. My Software Engineering background complements this experience and allows me to build digital solutions with an integrated vision: strategy, technology, data, and business results.',
-      experience: '15+ years',
+      statement: [
+        { text: 'Fifteen years uniting ' },
+        { text: 'strategy', accent: true },
+        { text: ', ' },
+        { text: 'software', accent: true },
+        { text: ', and ' },
+        { text: 'data', accent: true },
+        { text: ' with business logic.' },
+      ],
+      experienceValue: 15,
+      experienceUnit: 'years',
       credibilityLabel: 'Experience with brands and agencies such as',
       credibility: [
         'Tigo',
@@ -179,6 +202,12 @@ export const translations = {
         'Havas',
         'Y&R',
       ],
+      roles: {
+        agencies: { title: 'Agencies', items: ['McCann', 'Havas', 'Y&R'] },
+        brands: { title: 'Brands', items: ['Tigo', 'Gollo', 'Coca-Cola', 'Nestlé'] },
+      },
+      about:
+        'I am Joseph Pastora Ramos, a Costa Rican professional with more than fifteen years of experience in digital marketing, performance media, and growth strategy for leading brands in Central America. My Software Engineering background complements this experience and allows me to build digital solutions with an integrated vision: strategy, technology, data, and business results.',
       technical: {
         title: 'Technical thinking with business vision',
         text: 'I connect programming, analytics, digital platforms, and measurement to build functional, measurable, and scalable solutions.',
@@ -198,6 +227,7 @@ export const translations = {
     },
     services: {
       title: 'Freelance services',
+      stickyTitle: 'Services that build systems',
       subtitle:
         'Four integrated capabilities to organize, build, measure, and scale your digital presence.',
     },

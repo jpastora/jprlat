@@ -1,17 +1,28 @@
-import { motion } from 'framer-motion'
-import { itemVariants } from '../utils/motion.js'
+import { motion, useReducedMotion } from 'framer-motion'
+import { itemVariants, maskReveal } from '../utils/motion.js'
 
 export default function SectionTitle({ title, subtitle, align = 'left', className = '' }) {
+  const reduce = useReducedMotion()
   const alignment = align === 'center' ? 'items-center text-center' : 'items-start text-left'
 
-  return (
-    <header className={`flex flex-col gap-4 ${alignment} ${className}`}>
+  const reveal = reduce ? (
+    <h2 className="max-w-[22ch] font-heading text-3xl font-semibold tracking-tight text-carbon sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
+      {title}
+    </h2>
+  ) : (
+    <div className="overflow-hidden">
       <motion.h2
-        variants={itemVariants}
+        variants={maskReveal}
         className="max-w-[22ch] font-heading text-3xl font-semibold tracking-tight text-carbon sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]"
       >
         {title}
       </motion.h2>
+    </div>
+  )
+
+  return (
+    <header className={`flex flex-col gap-4 ${alignment} ${className}`}>
+      <motion.div variants={itemVariants}>{reveal}</motion.div>
       {subtitle && (
         <motion.p
           variants={itemVariants}

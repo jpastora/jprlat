@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import AnimatedLogoMark from './AnimatedLogoMark.jsx'
 import LanguageToggle from './LanguageToggle.jsx'
+import MagneticButton from './MagneticButton.jsx'
 import { useLanguage } from '../context/LanguageContext.js'
 import { scrollToSection } from '../utils/scroll.js'
 import { SECTIONS } from '../data/navigation.js'
@@ -106,13 +107,13 @@ export default function Header() {
 
         <div className="hidden items-center gap-3 md:flex">
           <LanguageToggle />
-          <button
+          <MagneticButton
             type="button"
             onClick={() => go('contacto')}
             className="rounded-lg bg-orange px-4 py-2 font-body text-sm font-medium text-white transition-colors duration-300 hover:bg-carbon"
           >
             {t.cta.talk}
-          </button>
+          </MagneticButton>
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
