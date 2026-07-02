@@ -1,16 +1,18 @@
+import { motion, useReducedMotion } from 'framer-motion'
 import { Mail, Globe, MessageCircle, Download } from 'lucide-react'
 import { GithubMark, LinkedinMark } from './BrandIcons.jsx'
 import AnimatedLogoMark from './AnimatedLogoMark.jsx'
 import PerformanceGrid from './PerformanceGrid.jsx'
+import SignalNode from './SignalNode.jsx'
 import { useLanguage } from '../context/LanguageContext.js'
 import { contactInfo } from '../data/translations.js'
 import { SECTIONS } from '../data/navigation.js'
 import { scrollToSection } from '../utils/scroll.js'
-// CV placeholder — reemplazar en src/assets/cv/joseph-pastora-cv.pdf
 import cvUrl from '../assets/cv/joseph-pastora-cv.pdf'
 
 export default function Footer() {
   const { t } = useLanguage()
+  const reduce = useReducedMotion()
   const year = new Date().getFullYear()
 
   const social = [
@@ -23,16 +25,34 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden border-t border-line bg-soft">
-      <PerformanceGrid variant="minimal" className="opacity-30" />
+      <PerformanceGrid variant="minimal" className="opacity-25" />
 
       <div className="relative mx-auto max-w-6xl px-5 py-14">
+        {/* Línea de sistema con slogan */}
+        <motion.div
+          initial={reduce ? false : { opacity: 0, scaleX: 0 }}
+          whileInView={reduce ? undefined : { opacity: 1, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-12 flex items-center gap-4"
+        >
+          <div className="h-px flex-1 bg-line" />
+          <div className="flex items-center gap-2">
+            <SignalNode active pulse />
+            <span className="font-mono text-xs uppercase tracking-[0.14em] text-carbon">
+              {t.footer.slogan}
+            </span>
+            <SignalNode active />
+          </div>
+          <div className="h-px flex-1 bg-line" />
+        </motion.div>
+
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Marca */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2.5">
-              <AnimatedLogoMark size={38} />
+              <AnimatedLogoMark size={42} />
               <div>
-                <p className="font-heading text-sm font-semibold text-carbon">
+                <p className="font-heading text-base font-semibold text-carbon">
                   Joseph Pastora
                 </p>
                 <p className="font-mono text-[10px] uppercase tracking-widest text-tech">
@@ -44,7 +64,7 @@ export default function Footer() {
               {t.footer.tagline}
             </p>
             <p className="mt-3 font-mono text-xs text-tech">
-              <span className="text-orange">{'>'}</span> {t.footer.slogan}
+              <span className="text-orange">{'>'}</span> {t.meta.secondary}
             </p>
             <a
               href={cvUrl}
@@ -56,10 +76,9 @@ export default function Footer() {
             </a>
           </div>
 
-          {/* Navegación */}
           <nav aria-label={t.footer.navTitle}>
             <h3 className="font-mono text-[11px] uppercase tracking-widest text-tech">
-              {t.footer.navTitle}
+              {'>'} {t.footer.navTitle}
             </h3>
             <ul className="mt-4 flex flex-col gap-2">
               {SECTIONS.map((s) => (
@@ -67,8 +86,12 @@ export default function Footer() {
                   <button
                     type="button"
                     onClick={() => scrollToSection(s.id)}
-                    className="font-body text-sm text-carbon transition-colors hover:text-orange"
+                    className="group flex items-center gap-2 font-body text-sm text-carbon transition-colors hover:text-orange"
                   >
+                    <SignalNode
+                      size="sm"
+                      className="opacity-0 transition-opacity group-hover:opacity-100 group-hover:bg-orange group-hover:border-orange"
+                    />
                     {t.nav[s.key]}
                   </button>
                 </li>
@@ -76,10 +99,9 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* Redes */}
           <div>
             <h3 className="font-mono text-[11px] uppercase tracking-widest text-tech">
-              {t.footer.followTitle}
+              {'>'} {t.footer.followTitle}
             </h3>
             <ul className="mt-4 flex flex-wrap gap-2">
               {social.map(({ icon: Icon, href, label }) => (

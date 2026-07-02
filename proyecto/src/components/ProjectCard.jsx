@@ -2,15 +2,54 @@ import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ExternalLink, Hammer } from 'lucide-react'
 import { GithubMark } from './BrandIcons.jsx'
+import SignalNode from './SignalNode.jsx'
 import { useLanguage } from '../context/LanguageContext.js'
 
-/*
-  ProjectCard — tarjeta de proyecto de la galería.
-  - Estado "En construcción" con indicador naranja.
-  - Tags técnicos, botones Ver demo / Repositorio.
-  - Si la imagen no existe, muestra un placeholder visual (grid + brackets).
-  - Usa layout para reordenarse suavemente al filtrar.
-*/
+function LabPlaceholder({ label }) {
+  return (
+    <div className="absolute inset-0" aria-hidden="true">
+      <div className="pos-dotgrid absolute inset-0 opacity-60" />
+      {/* Mini line chart */}
+      <svg className="absolute inset-x-4 bottom-8 h-16 w-[calc(100%-2rem)]" viewBox="0 0 200 60" fill="none">
+        <polyline
+          points="0,50 40,35 80,42 120,20 160,28 200,10"
+          stroke="#D1D5DB"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <polyline
+          points="0,50 40,35 80,42 120,20 160,28 200,10"
+          stroke="#FF6B00"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeDasharray="4 4"
+          opacity="0.6"
+        />
+        <circle cx="200" cy="10" r="3" fill="#FF6B00" />
+      </svg>
+      {/* Brackets */}
+      <span className="absolute left-3 top-3 h-6 w-6 border-l-2 border-t-2 border-cool" />
+      <span className="absolute right-3 top-3 h-6 w-6 border-r-2 border-t-2 border-cool" />
+      <span className="absolute bottom-3 left-3 h-6 w-6 border-b-2 border-l-2 border-cool" />
+      <span className="absolute bottom-3 right-3 h-6 w-6 border-b-2 border-r-2 border-orange/80" />
+      {/* Module preview */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+        <div className="flex items-center gap-2 rounded-lg border border-line bg-white/90 px-3 py-2 backdrop-blur-sm">
+          <SignalNode active pulse size="sm" />
+          <span className="font-mono text-lg font-semibold text-carbon">
+            JP<span className="text-orange">{'>'}</span>
+          </span>
+        </div>
+        <span className="rounded-md border border-line bg-white/80 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-tech backdrop-blur-sm">
+          {label}
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export default function ProjectCard({ project }) {
   const { language, t } = useLanguage()
   const reduce = useReducedMotion()
@@ -24,14 +63,13 @@ export default function ProjectCard({ project }) {
   return (
     <motion.article
       layout={!reduce}
-      initial={{ opacity: 0, scale: 0.96 }}
+      initial={{ opacity: 0, scale: 0.97 }}
       animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.96 }}
+      exit={{ opacity: 0, scale: 0.97 }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       whileHover={reduce ? undefined : { y: -6 }}
       className="group flex h-full flex-col overflow-hidden rounded-xl border border-line bg-white"
     >
-      {/* Media / placeholder */}
       <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-soft">
         {showImage ? (
           <img
@@ -42,39 +80,23 @@ export default function ProjectCard({ project }) {
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          // Placeholder visual: dot grid + brackets + chevron
-          <div className="absolute inset-0" aria-hidden="true">
-            <div className="pos-dotgrid absolute inset-0 opacity-70" />
-            <span className="absolute left-3 top-3 h-5 w-5 border-l-2 border-t-2 border-cool" />
-            <span className="absolute right-3 top-3 h-5 w-5 border-r-2 border-t-2 border-cool" />
-            <span className="absolute bottom-3 left-3 h-5 w-5 border-b-2 border-l-2 border-cool" />
-            <span className="absolute bottom-3 right-3 h-5 w-5 border-b-2 border-r-2 border-orange/70" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-1">
-              <span className="font-mono text-2xl font-semibold text-carbon">
-                JP<span className="text-orange">{'>'}</span>
-              </span>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-tech">
-                {t.projects.placeholder}
-              </span>
-            </div>
-          </div>
+          <LabPlaceholder label={t.projects.placeholder} />
         )}
 
-        {/* Categoría */}
-        <span className="absolute left-3 top-3 rounded-md border border-line bg-white/90 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-tech backdrop-blur">
+        <span className="absolute left-3 top-3 flex items-center gap-1.5 rounded-md border border-line bg-white/90 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-tech backdrop-blur">
+          <SignalNode size="sm" />
           {project.category}
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col p-5">
-        {/* Estado en construcción */}
-        <span className="mb-2 inline-flex items-center gap-1.5 self-start rounded-full border border-orange/30 bg-orange/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-orange">
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <span className="mb-2 inline-flex items-center gap-1.5 self-start rounded-full border border-orange/30 bg-orange/5 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-orange">
           <Hammer size={11} strokeWidth={2} aria-hidden="true" />
           {status}
         </span>
 
-        <h3 className="font-heading text-lg font-semibold text-carbon">{title}</h3>
-        <p className="mt-1.5 flex-1 font-body text-sm leading-relaxed text-tech">
+        <h3 className="font-heading text-xl font-semibold text-carbon">{title}</h3>
+        <p className="mt-2 flex-1 font-body text-sm leading-relaxed text-tech">
           {description}
         </p>
 
@@ -89,7 +111,7 @@ export default function ProjectCard({ project }) {
           ))}
         </ul>
 
-        <div className="mt-5 flex items-center gap-2">
+        <div className="mt-5 flex items-center gap-2 border-t border-line pt-4">
           <a
             href={project.demoUrl}
             target={project.demoUrl?.startsWith('http') ? '_blank' : undefined}

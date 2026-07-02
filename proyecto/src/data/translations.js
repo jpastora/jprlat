@@ -32,6 +32,13 @@ export const translations = {
       closeMenu: 'Cerrar menú',
       scrollTop: 'Volver arriba',
     },
+    sections: {
+      hero: { number: '01', label: 'COMMAND CENTER' },
+      profile: { number: '02', label: 'SYSTEM ARCHITECTURE' },
+      services: { number: '03', label: 'CAPABILITY STACK' },
+      projects: { number: '04', label: 'WORKBENCH / LAB' },
+      contact: { number: '05', label: 'EXECUTION CONSOLE' },
+    },
     hero: {
       eyebrow: 'Freelance estratégico en software, marketing y datos',
       title: 'Desarrollo soluciones digitales con lógica de negocio.',
@@ -39,10 +46,22 @@ export const translations = {
         'Combino ingeniería de software, marketing digital y análisis de datos para crear productos web funcionales, medibles y orientados al crecimiento.',
       systemLabel: 'Sistema activo',
       flow: { input: 'Entrada', process: 'Proceso', output: 'Salida' },
+      pipeline: ['Estrategia', 'Software', 'Datos', 'Crecimiento'],
+      proofPoints: [
+        '+15 años de experiencia',
+        'Marketing + Software',
+        'Data-driven execution',
+        'Freelance estratégico',
+      ],
       metrics: [
         { label: 'Foco', value: 'Alto' },
         { label: 'Sistema', value: 'On' },
         { label: 'Resultados', value: '↑' },
+      ],
+      kpi: [
+        { label: 'Experiencia', value: '15+' },
+        { label: 'Áreas', value: '3' },
+        { label: 'Ejecución', value: '100%' },
       ],
     },
     profile: {
@@ -50,6 +69,13 @@ export const translations = {
       title: 'Perfil estratégico',
       subtitle:
         'Ingeniería de software, marketing y datos integrados en una sola visión.',
+      systemLabels: {
+        about: 'SYSTEM INPUT',
+        technical: 'BUSINESS LOGIC',
+        human: 'EXECUTION LAYER',
+        mission: 'OUTPUT VALUE',
+        vision: 'STRATEGIC OUTPUT',
+      },
       about:
         'Soy Joseph Pastora Ramos, profesional costarricense con más de quince años de experiencia en marketing digital, performance media y estrategia de crecimiento para marcas líderes de Centroamérica. Mi formación en Ingeniería de Software complementa esta trayectoria y me permite construir soluciones digitales con una visión integral: estrategia, tecnología, datos y resultados de negocio.',
       technical: {
@@ -78,12 +104,18 @@ export const translations = {
       title: 'Servicios freelance',
       subtitle: 'Soluciones digitales diseñadas para ordenar, medir y escalar.',
       techLabel: 'Stack',
+      stackLabels: ['01 WEB', '02 API', '03 DATA', '04 OPT'],
+      operatingLogic: 'Entender → Construir → Medir → Optimizar',
     },
     projects: {
       tag: '04 · Proyectos',
       title: 'Proyectos',
       subtitle:
         'Galería en construcción con casos que integran software, experiencia y lógica de negocio.',
+      statusBadge: 'En construcción',
+      labPhrase:
+        'Casos en preparación. La estructura ya está lista para integrar demos, repositorios y resultados.',
+      filterLabel: 'Filtrar por categoría',
       all: 'Todos',
       viewDemo: 'Ver demo',
       repo: 'Repositorio',
@@ -93,6 +125,13 @@ export const translations = {
       tag: '05 · Contacto',
       title: 'Contacto',
       text: '¿Tenés una idea, proceso o proyecto digital que necesita estructura? Conversemos.',
+      console: {
+        statusReady: 'STATUS: READY',
+        statusSending: 'STATUS: PROCESSING',
+        statusSuccess: 'OUTPUT: MESSAGE SENT',
+        statusError: 'OUTPUT: ERROR',
+        inputLabel: 'INPUT: PROJECT REQUEST',
+      },
       fields: {
         name: 'Nombre',
         email: 'Correo electrónico',
@@ -166,6 +205,13 @@ export const translations = {
       closeMenu: 'Close menu',
       scrollTop: 'Back to top',
     },
+    sections: {
+      hero: { number: '01', label: 'COMMAND CENTER' },
+      profile: { number: '02', label: 'SYSTEM ARCHITECTURE' },
+      services: { number: '03', label: 'CAPABILITY STACK' },
+      projects: { number: '04', label: 'WORKBENCH / LAB' },
+      contact: { number: '05', label: 'EXECUTION CONSOLE' },
+    },
     hero: {
       eyebrow: 'Strategic freelance professional in software, marketing, and data',
       title: 'I build digital solutions with business logic.',
@@ -173,10 +219,22 @@ export const translations = {
         'I combine software engineering, digital marketing, and data analysis to create functional, measurable, growth-oriented web products.',
       systemLabel: 'System active',
       flow: { input: 'Input', process: 'Process', output: 'Output' },
+      pipeline: ['Strategy', 'Software', 'Data', 'Growth'],
+      proofPoints: [
+        '15+ years of experience',
+        'Marketing + Software',
+        'Data-driven execution',
+        'Strategic freelance',
+      ],
       metrics: [
         { label: 'Focus', value: 'High' },
         { label: 'System', value: 'On' },
         { label: 'Results', value: '↑' },
+      ],
+      kpi: [
+        { label: 'Experience', value: '15+' },
+        { label: 'Areas', value: '3' },
+        { label: 'Execution', value: '100%' },
       ],
     },
     profile: {
@@ -184,6 +242,13 @@ export const translations = {
       title: 'Strategic Profile',
       subtitle:
         'Software engineering, marketing, and data integrated into a single vision.',
+      systemLabels: {
+        about: 'SYSTEM INPUT',
+        technical: 'BUSINESS LOGIC',
+        human: 'EXECUTION LAYER',
+        mission: 'OUTPUT VALUE',
+        vision: 'STRATEGIC OUTPUT',
+      },
       about:
         'I am Joseph Pastora Ramos, a Costa Rican professional with more than fifteen years of experience in digital marketing, performance media, and growth strategy for leading brands in Central America. My Software Engineering background complements this experience and allows me to build digital solutions with an integrated vision: strategy, technology, data, and business results.',
       technical: {
@@ -212,12 +277,18 @@ export const translations = {
       title: 'Freelance Services',
       subtitle: 'Digital solutions designed to organize, measure, and scale.',
       techLabel: 'Stack',
+      stackLabels: ['01 WEB', '02 API', '03 DATA', '04 OPT'],
+      operatingLogic: 'Understand → Build → Measure → Optimize',
     },
     projects: {
       tag: '04 · Projects',
       title: 'Projects',
       subtitle:
         'Gallery under construction with cases that integrate software, experience, and business logic.',
+      statusBadge: 'Under construction',
+      labPhrase:
+        'Cases in preparation. The structure is ready to integrate demos, repositories, and results.',
+      filterLabel: 'Filter by category',
       all: 'All',
       viewDemo: 'View demo',
       repo: 'Repository',
@@ -227,6 +298,13 @@ export const translations = {
       tag: '05 · Contact',
       title: 'Contact',
       text: 'Do you have an idea, process, or digital project that needs structure? Let’s talk.',
+      console: {
+        statusReady: 'STATUS: READY',
+        statusSending: 'STATUS: PROCESSING',
+        statusSuccess: 'OUTPUT: MESSAGE SENT',
+        statusError: 'OUTPUT: ERROR',
+        inputLabel: 'INPUT: PROJECT REQUEST',
+      },
       fields: {
         name: 'Name',
         email: 'Email',

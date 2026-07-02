@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
-import AnimatedSection from './AnimatedSection.jsx'
+import SectionFrame from './SectionFrame.jsx'
 import SectionTitle from './SectionTitle.jsx'
 import ProjectCard from './ProjectCard.jsx'
-import PerformanceGrid from './PerformanceGrid.jsx'
+import SignalNode from './SignalNode.jsx'
+import { itemVariants } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 import { projects } from '../data/projects.js'
 
@@ -25,21 +26,42 @@ export default function Projects() {
   )
 
   return (
-    <AnimatedSection id="proyectos" className="relative overflow-hidden bg-soft py-20 sm:py-28">
-      <PerformanceGrid variant="minimal" className="opacity-40" />
+    <SectionFrame
+      id="proyectos"
+      number={t.sections.projects.number}
+      label={t.sections.projects.label}
+      bg="soft"
+      showGrid
+      gridVariant="default"
+      className="py-20 sm:py-28"
+    >
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <SectionTitle
+            tag={t.projects.tag}
+            title={t.projects.title}
+            subtitle={t.projects.subtitle}
+          />
+          <motion.span
+            variants={itemVariants}
+            className="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-orange/30 bg-orange/5 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-orange"
+          >
+            <SignalNode active pulse size="sm" />
+            {t.projects.statusBadge}
+          </motion.span>
+        </div>
 
-      <div className="relative mx-auto max-w-6xl px-5">
-        <SectionTitle
-          tag={t.projects.tag}
-          title={t.projects.title}
-          subtitle={t.projects.subtitle}
-        />
+        <motion.p
+          variants={itemVariants}
+          className="mt-6 max-w-2xl font-mono text-xs leading-relaxed text-tech"
+        >
+          <span className="text-orange">{'>'}</span> {t.projects.labPhrase}
+        </motion.p>
 
-        {/* Filtros por categoría */}
+        {/* Filtros como command tabs */}
         <div
-          className="mt-8 flex flex-wrap gap-2"
+          className="mt-8 flex flex-wrap gap-2 rounded-xl border border-line bg-white p-2"
           role="group"
-          aria-label={t.projects.title}
+          aria-label={t.projects.filterLabel}
         >
           {categories.map((cat) => {
             const active = filter === cat
@@ -50,23 +72,34 @@ export default function Projects() {
                 type="button"
                 onClick={() => setFilter(cat)}
                 aria-pressed={active}
-                className={`relative rounded-full border px-4 py-1.5 font-mono text-xs transition-colors duration-300 ${
+                className={`relative rounded-lg px-4 py-2 font-mono text-xs transition-all duration-300 ${
                   active
-                    ? 'border-carbon bg-carbon text-white'
-                    : 'border-line bg-white text-tech hover:border-orange hover:text-orange'
+                    ? 'bg-carbon text-white'
+                    : 'text-tech hover:bg-soft hover:text-orange'
                 }`}
               >
-                {label}
+                {active && (
+                  <motion.span
+                    layoutId="project-filter-active"
+                    className="absolute inset-0 rounded-lg border border-carbon bg-carbon"
+                    style={{ zIndex: -1 }}
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative flex items-center gap-1.5">
+                  {active && <SignalNode active size="sm" className="!bg-white" />}
+                  {label}
+                </span>
               </button>
             )
           })}
         </div>
 
-        {/* Galería animada */}
+        {/* Galería lab panels */}
         <LayoutGroup>
           <motion.div
             layout
-            className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2"
           >
             <AnimatePresence mode="popLayout">
               {filtered.map((project) => (
@@ -75,7 +108,6 @@ export default function Projects() {
             </AnimatePresence>
           </motion.div>
         </LayoutGroup>
-      </div>
-    </AnimatedSection>
+    </SectionFrame>
   )
 }
