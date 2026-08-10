@@ -13,13 +13,13 @@ export default function Footer() {
       <div className="mx-auto flex max-w-[76rem] flex-col gap-6 px-5 py-10 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-3">
           <AnimatedLogoMark size={28} />
-          <span className="font-heading text-sm font-semibold text-carbon">
+          <span className="font-heading text-base font-semibold text-carbon">
             Joseph Pastora
           </span>
           <span className="hidden text-cool sm:inline" aria-hidden="true">
             ·
           </span>
-          <span className="font-body text-sm text-tech">{t.footer.slogan}</span>
+          <span className="font-body text-base text-tech">{t.footer.slogan}</span>
         </div>
 
         <nav aria-label="Footer">
@@ -29,7 +29,7 @@ export default function Footer() {
                 <button
                   type="button"
                   onClick={() => scrollToSection(s.id)}
-                  className="font-body text-sm text-tech transition-colors hover:text-orange"
+                  className="font-body text-base text-tech transition-colors hover:text-orange"
                 >
                   {t.nav[s.key]}
                 </button>
@@ -38,7 +38,7 @@ export default function Footer() {
             <li>
               <a
                 href={`mailto:${contactInfo.email}`}
-                className="font-body text-sm text-tech transition-colors hover:text-orange"
+                className="font-body text-base text-tech transition-colors hover:text-orange"
               >
                 {contactInfo.email}
               </a>
@@ -48,7 +48,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-line">
-        <p className="mx-auto max-w-[76rem] px-5 py-4 font-body text-xs text-tech">
+        <p className="mx-auto max-w-[76rem] px-5 py-4 font-body text-[0.875rem] text-tech">
           © {year} Joseph Pastora Ramos. {t.footer.rights}
         </p>
       </div>

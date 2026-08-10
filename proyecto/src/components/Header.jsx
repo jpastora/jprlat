@@ -72,10 +72,10 @@ export default function Header() {
         >
           <AnimatedLogoMark size={32} className="shrink-0" />
           <span className="hidden flex-col items-start sm:flex">
-            <span className="font-heading text-sm font-semibold leading-none text-carbon">
+            <span className="font-heading text-base font-semibold leading-none text-carbon">
               Joseph Pastora
             </span>
-            <span className="mt-1 font-body text-xs leading-none text-tech">
+            <span className="mt-1 font-body text-[0.875rem] leading-none text-tech">
               {t.meta.role}
             </span>
           </span>
@@ -90,7 +90,7 @@ export default function Header() {
                 type="button"
                 onClick={() => go(s.id)}
                 aria-current={isActive ? 'true' : undefined}
-                className={`relative px-3.5 py-2 font-body text-sm transition-colors duration-200 ${
+                className={`relative px-3.5 py-2 font-body text-base transition-colors duration-200 ${
                   isActive ? 'text-carbon' : 'text-tech hover:text-carbon'
                 }`}
               >
@@ -117,7 +117,7 @@ export default function Header() {
               go('contacto')
             }}
             data-cursor="cta"
-            className="rounded-lg bg-orange px-4 py-2 font-body text-sm font-medium text-white transition-colors duration-300 hover:bg-carbon"
+            className="rounded-lg bg-orange px-4 py-2 font-body text-base font-medium text-white transition-colors duration-300 hover:bg-carbon"
           >
             {t.cta.talk}
           </MagneticButton>
@@ -168,7 +168,7 @@ export default function Header() {
                 <button
                   type="button"
                   onClick={() => go('contacto')}
-                  className="inline-flex w-full items-center justify-center rounded-lg bg-orange px-4 py-3 font-body text-sm font-medium text-white"
+                  className="inline-flex w-full items-center justify-center rounded-lg bg-orange px-4 py-3 font-body text-base font-medium text-white"
                 >
                   {t.cta.talk}
                 </button>

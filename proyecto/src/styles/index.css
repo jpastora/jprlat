@@ -22,12 +22,12 @@
 
 @layer theme {
   .dark {
-    --color-white: #0a0a0a;
-    --color-soft: #111111;
-    --color-carbon: #f5f5f5;
-    --color-tech: #9ca3af;
-    --color-line: #262626;
-    --color-cool: #333333;
+    --color-white: #14161a;
+    --color-soft: #1c1f24;
+    --color-carbon: #e8eaed;
+    --color-tech: #a1a7b0;
+    --color-line: #2a2e35;
+    --color-cool: #383d45;
   }
 }
 
@@ -38,7 +38,7 @@
 
 .dark {
   color-scheme: dark;
-  --dot-color: #333333;
+  --dot-color: #383d45;
 }
 
 html {
@@ -56,6 +56,8 @@ body {
   background-color: var(--color-white);
   color: var(--color-carbon);
   font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -111,7 +113,7 @@ section[id] {
   left: 0;
   top: 0.1em;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.875rem;
   color: var(--color-orange);
   line-height: inherit;
 }

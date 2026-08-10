@@ -18,8 +18,8 @@ export default function CalendlyButton({
 
   const styles =
     variant === 'primary'
-      ? 'rounded-lg bg-orange px-6 py-3 font-body text-sm font-semibold text-white transition-colors hover:bg-carbon'
-      : 'inline-flex items-center gap-2 rounded-lg border border-cool px-6 py-3 font-body text-sm font-semibold text-carbon transition-colors hover:border-orange hover:text-orange dark:border-cool dark:text-carbon dark:hover:border-orange'
+      ? 'rounded-lg bg-orange px-6 py-3 font-body text-base font-semibold text-white transition-colors hover:bg-carbon'
+      : 'inline-flex items-center gap-2 rounded-lg border border-cool px-6 py-3 font-body text-base font-semibold text-carbon transition-colors hover:border-orange hover:text-orange dark:border-cool dark:text-carbon dark:hover:border-orange'
 
   return (
     <MagneticButton
