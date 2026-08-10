@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ChevronRight } from 'lucide-react'
 import { useReducedMotion } from 'framer-motion'
-import LottieAnimation from './LottieAnimation.jsx'
+import LottieMark from './LottieMark.jsx'
 import arrowLoop from '../assets/lottie/arrow-loop.json'
 
 export default function CtaLottieArrow({ light = false }) {
@@ -20,7 +20,7 @@ export default function CtaLottieArrow({ light = false }) {
       aria-hidden="true"
     >
       {hover ? (
-        <LottieAnimation
+        <LottieMark
           animationData={arrowLoop}
           loop
           autoplay

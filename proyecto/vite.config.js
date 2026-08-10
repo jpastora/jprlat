@@ -10,8 +10,7 @@ export default defineConfig({
         manualChunks(id) {
           if (id.includes('framer-motion')) return 'motion'
           if (id.includes('@emailjs')) return 'emailjs'
-          // Do not split lottie-react — manual chunking breaks default export interop
-          // and causes React error #306 (lazy resolves to non-component).
+          // Do not split @lottiefiles/dotlottie-react — let Vite chunk automatically.
         },
       },
     },
