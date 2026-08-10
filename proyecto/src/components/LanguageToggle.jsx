@@ -18,7 +18,7 @@ export default function LanguageToggle({ className = '' }) {
     <div
       role="group"
       aria-label="Cambiar idioma / Change language"
-      className={`inline-flex items-center rounded-full border border-line bg-white p-0.5 font-mono text-xs dark:bg-soft ${className}`}
+      className={`inline-flex items-center rounded-full border border-line bg-white p-0.5 font-mono text-[0.875rem] dark:bg-soft ${className}`}
     >
       {options.map((opt) => {
         const active = language === opt.code

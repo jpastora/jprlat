@@ -37,6 +37,8 @@ export const translations = {
     },
     profile: {
       title: 'Estrategia con experiencia real',
+      intro:
+        'Quince años conectando marketing, tecnología y datos para marcas de Centroamérica — con criterio de negocio y ejecución técnica.',
       subtitle:
         'Más de quince años conectando marketing, tecnología y resultados de negocio en Centroamérica.',
       statement: [
@@ -65,7 +67,9 @@ export const translations = {
         brands: { title: 'Marcas', items: ['Tigo', 'Gollo', 'Coca-Cola', 'Nestlé'] },
       },
       about:
-        'Soy Joseph Pastora Ramos, profesional costarricense con más de quince años de experiencia en marketing digital, performance media y estrategia de crecimiento para marcas líderes de Centroamérica. Mi formación en Ingeniería de Software complementa esta trayectoria y me permite construir soluciones digitales con una visión integral: estrategia, tecnología, datos y resultados de negocio.',
+        'Soy Joseph Pastora Ramos, profesional costarricense con más de quince años en marketing digital, performance media y estrategia de crecimiento para marcas líderes de Centroamérica.',
+      aboutContinued:
+        'Mi formación en Ingeniería de Software complementa esta trayectoria y me permite construir soluciones digitales con visión integral: estrategia, tecnología, datos y resultados de negocio.',
       technical: {
         title: 'Pensamiento técnico con visión comercial',
         text: 'Conecto programación, analítica, plataformas digitales y medición para construir soluciones funcionales, medibles y escalables.',
@@ -93,7 +97,7 @@ export const translations = {
         hybridHint: 'Software, marketing y datos en un solo flujo.',
         stackLabel: 'Stack principal',
         locationLabel: 'Ubicación y disponibilidad',
-        locationValue: 'Costa Rica · remoto LATAM',
+        locationValue: 'Heredia, CR · remoto LATAM',
         availability: 'Disponible para nuevos proyectos',
         numbersTitle: 'En números',
       },
@@ -141,6 +145,8 @@ export const translations = {
       title: 'Cómo trabajo',
       subtitle:
         'Un proceso claro que conecta diagnóstico, estrategia, construcción y medición.',
+      intro:
+        'Cada proyecto avanza con foco, entregables medibles y comunicación directa en cada etapa.',
       steps: {
         diagnose: {
           title: 'Diagnóstico',
@@ -244,6 +250,8 @@ export const translations = {
     },
     profile: {
       title: 'Strategy backed by real experience',
+      intro:
+        'Fifteen years connecting marketing, technology, and data for Central American brands — with business judgment and technical execution.',
       subtitle:
         'Over fifteen years connecting marketing, technology, and business results across Central America.',
       statement: [
@@ -272,7 +280,9 @@ export const translations = {
         brands: { title: 'Brands', items: ['Tigo', 'Gollo', 'Coca-Cola', 'Nestlé'] },
       },
       about:
-        'I am Joseph Pastora Ramos, a Costa Rican professional with more than fifteen years of experience in digital marketing, performance media, and growth strategy for leading brands in Central America. My Software Engineering background complements this experience and allows me to build digital solutions with an integrated vision: strategy, technology, data, and business results.',
+        'I am Joseph Pastora Ramos, a Costa Rican professional with more than fifteen years in digital marketing, performance media, and growth strategy for leading brands in Central America.',
+      aboutContinued:
+        'My Software Engineering background complements this path and lets me build digital solutions with an integrated vision: strategy, technology, data, and business results.',
       technical: {
         title: 'Technical thinking with business vision',
         text: 'I connect programming, analytics, digital platforms, and measurement to build functional, measurable, and scalable solutions.',
@@ -300,7 +310,7 @@ export const translations = {
         hybridHint: 'Software, marketing, and data in one flow.',
         stackLabel: 'Core stack',
         locationLabel: 'Location and availability',
-        locationValue: 'Costa Rica · remote LATAM',
+        locationValue: 'Heredia, CR · remote LATAM',
         availability: 'Available for new projects',
         numbersTitle: 'By the numbers',
       },
@@ -346,6 +356,8 @@ export const translations = {
       title: 'How I work',
       subtitle:
         'A clear process connecting diagnosis, strategy, build, and measurement.',
+      intro:
+        'Every project moves forward with focus, measurable deliverables, and direct communication at each stage.',
       steps: {
         diagnose: {
           title: 'Diagnosis',

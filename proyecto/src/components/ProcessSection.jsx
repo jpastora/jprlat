@@ -156,7 +156,7 @@ function ProcessTimeline({ lineProgress, nodePosition, reduce }) {
   )
 }
 
-function ProcessHeader({ title, subtitle }) {
+function ProcessHeader({ title, subtitle, intro }) {
   return (
     <MaskReveal>
       <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
@@ -165,6 +165,9 @@ function ProcessHeader({ title, subtitle }) {
             {title}
           </h2>
           <p className="mt-4 max-w-prose font-body text-base leading-[1.5] text-tech">{subtitle}</p>
+          {intro && (
+            <p className="mt-3 max-w-prose font-body text-base leading-[1.5] text-tech">{intro}</p>
+          )}
         </div>
         <ProcessIllustration className="h-auto w-full max-w-[10rem] shrink-0 text-carbon opacity-80 sm:max-w-[12rem]" />
       </div>
@@ -225,7 +228,7 @@ export default function ProcessSection() {
     return (
       <PageSection id="proceso" wide className="relative pb-28 pt-16 sm:pb-36 sm:pt-20">
         {ambientLottie}
-        <ProcessHeader title={t.process.title} subtitle={t.process.subtitle} />
+        <ProcessHeader title={t.process.title} subtitle={t.process.subtitle} intro={t.process.intro} />
         <ProcessTimeline lineProgress={lineProgress} nodePosition={nodePosition} reduce />
         {steps}
       </PageSection>
@@ -237,7 +240,7 @@ export default function ProcessSection() {
       <div ref={scrollRef} className="relative min-h-[140vh] lg:min-h-[120vh]">
         {ambientLottie}
         <div className="sticky top-[5.5rem] pb-20 sm:pb-28">
-          <ProcessHeader title={t.process.title} subtitle={t.process.subtitle} />
+          <ProcessHeader title={t.process.title} subtitle={t.process.subtitle} intro={t.process.intro} />
 
           <ProcessTimeline
             lineProgress={lineProgress}

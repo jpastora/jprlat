@@ -4,7 +4,13 @@ import { siteConfig } from '../config/site.config.js'
 import { useLanguage } from '../context/LanguageContext.js'
 import ProfileMonogram from './ProfileMonogram.jsx'
 
-export default function ProfilePhoto() {
+/**
+ * Profile photo with gaze-direction accent.
+ * profileGaze in site.config.js controls the > motif toward adjacent copy.
+ * - 'left': photo on the left, motif points right (inward).
+ * - 'right': photo on the right, motif points left (inward).
+ */
+export default function ProfilePhoto({ compact = false, className = '' }) {
   const { t } = useLanguage()
   const reduce = useReducedMotion()
   const ref = useRef(null)
@@ -15,18 +21,20 @@ export default function ProfilePhoto() {
     target: ref,
     offset: ['start end', 'end start'],
   })
-  const yRaw = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -20])
+  const yRaw = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : compact ? -8 : -20])
   const y = useSpring(yRaw, { stiffness: 100, damping: 28 })
 
   return (
     <motion.div
       ref={ref}
-      style={{ y }}
-      className="relative aspect-[4/5] w-full max-w-md lg:max-w-none"
+      style={reduce ? undefined : { y }}
+      className={`relative h-full w-full ${compact ? 'min-h-0' : 'aspect-[4/5] max-w-md lg:max-w-none'} ${className}`}
     >
-      <div className="pos-dotgrid absolute -right-4 -top-4 h-24 w-24 opacity-40" aria-hidden="true" />
-
-      <div className="relative h-full overflow-hidden rounded-lg border border-line bg-soft dark:border-line dark:bg-soft/80">
+      <div
+        className={`relative h-full min-h-[12rem] overflow-hidden rounded-xl border border-line bg-soft dark:bg-soft/80 ${
+          compact ? 'sm:min-h-[16rem]' : ''
+        }`}
+      >
         {useFallback ? (
           <ProfileMonogram className="h-full w-full" />
         ) : (
@@ -36,26 +44,26 @@ export default function ProfilePhoto() {
             loading="lazy"
             decoding="async"
             onError={() => setUseFallback(true)}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover object-top"
           />
         )}
       </div>
 
       <div
-        className={`pointer-events-none absolute top-1/2 hidden -translate-y-1/2 lg:flex lg:items-center lg:gap-1 ${
-          gazeLeft ? '-right-8' : '-left-8'
+        className={`pointer-events-none absolute top-1/2 z-10 hidden -translate-y-1/2 md:flex md:items-center md:gap-1 ${
+          gazeLeft ? '-right-5' : '-left-5'
         }`}
         aria-hidden="true"
       >
         {gazeLeft ? (
           <>
-            <span className="h-px w-10 bg-orange" />
+            <span className="h-px w-8 bg-orange" />
             <span className="font-mono text-[0.875rem] text-orange">&gt;</span>
           </>
         ) : (
           <>
             <span className="font-mono text-[0.875rem] text-orange">&lt;</span>
-            <span className="h-px w-10 bg-orange" />
+            <span className="h-px w-8 bg-orange" />
           </>
         )}
       </div>
