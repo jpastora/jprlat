@@ -19,4 +19,7 @@ await sharp(readFileSync(join(publicDir, 'favicon.svg')))
   .png()
   .toFile(join(publicDir, 'favicon.ico'))
 
-console.log('Generated og.png, apple-touch-icon.png, favicon.ico')
+const profileSvg = readFileSync(join(__dirname, 'profile-placeholder.svg'))
+await sharp(profileSvg).jpeg({ quality: 88 }).toFile(join(publicDir, 'profile.jpg'))
+
+console.log('Generated og.png, apple-touch-icon.png, favicon.ico, profile.jpg')

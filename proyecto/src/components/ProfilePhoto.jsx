@@ -2,12 +2,13 @@ import { useState, useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { siteConfig } from '../config/site.config.js'
 import { useLanguage } from '../context/LanguageContext.js'
+import ProfileMonogram from './ProfileMonogram.jsx'
 
 export default function ProfilePhoto() {
   const { t } = useLanguage()
   const reduce = useReducedMotion()
   const ref = useRef(null)
-  const [error, setError] = useState(false)
+  const [useFallback, setUseFallback] = useState(false)
   const gazeLeft = siteConfig.profileGaze === 'left'
 
   const { scrollYProgress } = useScroll({
@@ -26,25 +27,17 @@ export default function ProfilePhoto() {
       <div className="pos-dotgrid absolute -right-4 -top-4 h-24 w-24 opacity-40" aria-hidden="true" />
 
       <div className="relative h-full overflow-hidden rounded-lg border border-line bg-soft dark:border-line dark:bg-soft/80">
-        {!error ? (
+        {useFallback ? (
+          <ProfileMonogram className="h-full w-full" />
+        ) : (
           <img
             src={siteConfig.profileImage}
             alt={t.profile.photoAlt ?? 'Joseph Pastora'}
             loading="lazy"
             decoding="async"
-            onError={() => setError(true)}
+            onError={() => setUseFallback(true)}
             className="h-full w-full object-cover"
           />
-        ) : (
-          <div
-            className="flex h-full flex-col items-center justify-center gap-2 bg-soft"
-            aria-hidden="true"
-          >
-            <span className="font-heading text-3xl font-bold text-carbon">
-              JP<span className="text-orange">{'>'}</span>
-            </span>
-            <span className="font-mono text-[0.875rem] text-tech">JP&gt;</span>
-          </div>
         )}
       </div>
 
