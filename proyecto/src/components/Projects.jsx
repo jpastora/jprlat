@@ -4,6 +4,7 @@ import PageSection from './PageSection.jsx'
 import SectionTitle from './SectionTitle.jsx'
 import ProjectCard from './ProjectCard.jsx'
 import Testimonials from './Testimonials.jsx'
+import SectionErrorBoundary from './SectionErrorBoundary.jsx'
 import ProjectsEmptyIllustration from '../assets/illustrations/ProjectsEmptyIllustration.jsx'
 import { itemVariants } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
@@ -114,10 +115,12 @@ export default function Projects() {
 
       {activeProject && (
         <Suspense fallback={null}>
-          <CaseStudyModal
-            project={activeProject}
-            onClose={() => setActiveProject(null)}
-          />
+          <SectionErrorBoundary message="El caso de estudio no pudo cargarse.">
+            <CaseStudyModal
+              project={activeProject}
+              onClose={() => setActiveProject(null)}
+            />
+          </SectionErrorBoundary>
         </Suspense>
       )}
     </PageSection>

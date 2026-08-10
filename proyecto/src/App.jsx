@@ -17,6 +17,7 @@ import PageGuide from './components/PageGuide.jsx'
 import SeoHead from './components/SeoHead.jsx'
 import SignatureCursor from './components/SignatureCursor.jsx'
 import StickyMobileCTA from './components/StickyMobileCTA.jsx'
+import SectionErrorBoundary from './components/SectionErrorBoundary.jsx'
 
 const ProcessSection = lazy(() => import('./components/ProcessSection.jsx'))
 const Contact = lazy(() => import('./components/Contact.jsx'))
@@ -79,11 +80,15 @@ function AppContent() {
         <StrategicProfile />
         <Services />
         <Suspense fallback={null}>
-          <ProcessSection />
+          <SectionErrorBoundary message="El proceso no pudo cargarse.">
+            <ProcessSection />
+          </SectionErrorBoundary>
         </Suspense>
         <Projects />
         <Suspense fallback={null}>
-          <Contact />
+          <SectionErrorBoundary message="El contacto no pudo cargarse.">
+            <Contact />
+          </SectionErrorBoundary>
         </Suspense>
       </main>
 

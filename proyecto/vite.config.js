@@ -10,7 +10,8 @@ export default defineConfig({
         manualChunks(id) {
           if (id.includes('framer-motion')) return 'motion'
           if (id.includes('@emailjs')) return 'emailjs'
-          if (id.includes('lottie-react')) return 'lottie'
+          // Do not split lottie-react — manual chunking breaks default export interop
+          // and causes React error #306 (lazy resolves to non-component).
         },
       },
     },

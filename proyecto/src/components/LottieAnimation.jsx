@@ -1,7 +1,20 @@
-import { lazy, Suspense, useEffect, useRef } from 'react'
+import { lazy, Suspense } from 'react'
 import { useReducedMotion } from 'framer-motion'
 
-const Lottie = lazy(() => import('lottie-react'))
+const Lottie = lazy(() =>
+  import('lottie-react').then((mod) => {
+    const Component =
+      typeof mod.default === 'function'
+        ? mod.default
+        : mod.default?.default ?? mod.LottiePlayer
+
+    if (typeof Component !== 'function') {
+      throw new Error('lottie-react did not provide a valid component export')
+    }
+
+    return { default: Component }
+  }),
+)
 
 export default function LottieAnimation({
   animationData,
@@ -12,11 +25,6 @@ export default function LottieAnimation({
   fallback = null,
 }) {
   const reduce = useReducedMotion()
-  const playedRef = useRef(false)
-
-  useEffect(() => {
-    if (autoplay) playedRef.current = true
-  }, [autoplay])
 
   if (reduce) return fallback
 

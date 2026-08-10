@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500">
+  <rect width="400" height="500" fill="#F8FAFC"/>
+  <rect x="24" y="24" width="352" height="452" rx="8" fill="none" stroke="#E5E7EB" stroke-width="2"/>
+  <text x="150" y="260" font-family="system-ui, sans-serif" font-size="72" font-weight="700" fill="#111111">JP</text>
+  <text x="250" y="260" font-family="ui-monospace, monospace" font-size="56" font-weight="700" fill="#FF6B00">&gt;</text>
+  <line x1="80" y1="360" x2="320" y2="360" stroke="#6B7280" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <line x1="120" y1="390" x2="280" y2="390" stroke="#6B7280" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+</svg>
