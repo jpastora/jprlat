@@ -9,7 +9,12 @@ import ProfileMonogram from './ProfileMonogram.jsx'
  * profileGaze in site.config.js: 'left' | 'right' — motif points toward adjacent headline.
  * Set showGazeAccent={false} when photo sits inside the bento grid.
  */
-export default function ProfilePhoto({ compact = false, showGazeAccent = true, className = '' }) {
+export default function ProfilePhoto({
+  compact = false,
+  showGazeAccent = true,
+  flush = false,
+  className = '',
+}) {
   const { t } = useLanguage()
   const reduce = useReducedMotion()
   const ref = useRef(null)
@@ -29,7 +34,11 @@ export default function ProfilePhoto({ compact = false, showGazeAccent = true, c
       style={reduce || compact ? undefined : { y }}
       className={`relative w-full ${compact ? 'aspect-[4/5]' : 'aspect-[4/5] max-w-md lg:max-w-none'} ${className}`}
     >
-      <div className="relative h-full w-full overflow-hidden rounded-xl border border-line bg-soft dark:bg-soft/80">
+      <div
+        className={`relative h-full w-full overflow-hidden bg-soft dark:bg-soft/80 ${
+          flush ? '' : 'rounded-xl border border-line'
+        }`}
+      >
         {useFallback ? (
           <ProfileMonogram className="h-full w-full" />
         ) : (

@@ -11,7 +11,7 @@ export default function Services() {
   return (
     <PageSection id="servicios" wide className="pb-28 pt-16 sm:pb-36 sm:pt-24">
       <div className="lg:grid lg:grid-cols-12 lg:gap-16">
-        <div className="lg:sticky lg:top-28 lg:col-span-4 lg:self-start">
+        <div className="relative z-0 lg:sticky lg:top-28 lg:col-span-4 lg:self-start">
           <MaskReveal>
             <p className="font-body text-base font-medium text-tech">{t.services.title}</p>
             <h2 className="mt-3 max-w-[14ch] font-heading text-[2rem] font-semibold leading-[1.5] tracking-tight text-carbon sm:text-[2.5rem]">
@@ -27,7 +27,7 @@ export default function Services() {
           </MaskReveal>
         </div>
 
-        <div className="mt-12 lg:col-span-8 lg:mt-0">
+        <div className="relative z-10 mt-12 lg:col-span-8 lg:mt-0">
           {services.map((service, i) => (
             <ServiceRow key={service.id} service={service} index={i} />
           ))}
