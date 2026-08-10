@@ -1,3 +1,4 @@
+import '../lib/setupDotLottie.js'
 import { useEffect, useMemo, useRef } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
@@ -19,6 +20,7 @@ export default function LottieMark({
   loop = false,
   autoplay = true,
   className = '',
+  playKey,
   onComplete,
   fallback = null,
 }) {
@@ -33,12 +35,19 @@ export default function LottieMark({
     const handler = () => onComplete()
     instance.addEventListener('complete', handler)
     return () => instance.removeEventListener('complete', handler)
-  }, [onComplete, data])
+  }, [onComplete, data, playKey])
+
+  useEffect(() => {
+    const instance = instanceRef.current
+    if (!instance || reduce) return
+    if (autoplay) instance.play()
+  }, [autoplay, data, playKey, reduce])
 
   if (reduce || !Player || !data) return fallback
 
   return (
     <Player
+      key={playKey}
       data={data}
       loop={loop}
       autoplay={autoplay}

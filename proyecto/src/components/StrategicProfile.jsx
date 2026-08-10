@@ -1,14 +1,11 @@
-import { lazy, Suspense, useRef } from 'react'
+import { useRef } from 'react'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
 import PageSection from './PageSection.jsx'
 import CountUp from './CountUp.jsx'
 import ProfilePhoto from './ProfilePhoto.jsx'
 import StackIcons from './StackIcons.jsx'
-import SectionErrorBoundary from './SectionErrorBoundary.jsx'
 import { EASE_EXPO } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
-
-const ProfileAmbientMark = lazy(() => import('./ProfileAmbientMark.jsx'))
 
 function StatementLine({ parts }) {
   const ref = useRef(null)
@@ -60,65 +57,63 @@ export default function StrategicProfile() {
         </motion.p>
       </div>
 
-      <div className="relative mt-12">
-        <Suspense fallback={null}>
-          <SectionErrorBoundary message="La animación de perfil no pudo cargarse.">
-            <ProfileAmbientMark />
-          </SectionErrorBoundary>
-        </Suspense>
+      <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:items-stretch lg:gap-12">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: EASE_EXPO }}
+          className="order-2 flex flex-col gap-8 lg:order-1 lg:col-span-7"
+        >
+          <div>
+            <p className="font-body text-base leading-[1.5] text-carbon">{p.about}</p>
+            <p className="mt-4 font-body text-base leading-[1.5] text-carbon">{p.aboutContinued}</p>
+          </div>
 
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, ease: EASE_EXPO }}
-            className="flex flex-col gap-8 lg:col-span-7"
-          >
+          <div className="grid gap-8 sm:grid-cols-2">
             <div>
-              <p className="font-body text-base leading-[1.5] text-carbon">{p.about}</p>
-              <p className="mt-4 font-body text-base leading-[1.5] text-carbon">{p.aboutContinued}</p>
+              <h3 className="font-heading text-[1.375rem] font-semibold text-carbon">
+                {p.technical.title}
+              </h3>
+              <p className="mt-3 font-body text-base leading-[1.5] text-tech">{p.technical.text}</p>
             </div>
+            <div>
+              <h3 className="font-heading text-[1.375rem] font-semibold text-carbon">
+                {p.human.title}
+              </h3>
+              <p className="mt-3 font-body text-base leading-[1.5] text-tech">{p.human.text}</p>
+            </div>
+          </div>
+        </motion.div>
 
-            <div className="grid gap-8 sm:grid-cols-2">
-              <div>
-                <h3 className="font-heading text-[1.375rem] font-semibold text-carbon">
-                  {p.technical.title}
-                </h3>
-                <p className="mt-3 font-body text-base leading-[1.5] text-tech">{p.technical.text}</p>
-              </div>
-              <div>
-                <h3 className="font-heading text-[1.375rem] font-semibold text-carbon">
-                  {p.human.title}
-                </h3>
-                <p className="mt-3 font-body text-base leading-[1.5] text-tech">{p.human.text}</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.aside
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.08, ease: EASE_EXPO }}
-            className="w-full lg:col-span-5 lg:max-w-sm lg:justify-self-end lg:self-start"
-          >
-            <div className="overflow-hidden rounded-xl border border-line bg-white dark:bg-soft/50">
-              <ProfilePhoto compact flush showGazeAccent={false} className="w-full" />
-              <div className="border-t border-line px-5 py-5 sm:px-6 sm:py-6">
-                <p className="font-body text-base text-tech">{b.experienceLabel}</p>
-                <div className="mt-2 flex items-baseline gap-1">
-                  <CountUp
-                    value={p.experienceValue}
-                    className="font-heading text-4xl font-bold text-carbon sm:text-5xl"
-                  />
-                  <span className="font-heading text-3xl font-bold text-carbon sm:text-4xl">+</span>
-                  <span className="ml-1 font-body text-base text-carbon sm:text-lg">{p.experienceUnit}</span>
-                </div>
+        <motion.aside
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.08, ease: EASE_EXPO }}
+          className="order-1 flex w-full lg:order-2 lg:col-span-5 lg:justify-self-end"
+        >
+          <div className="flex min-h-0 w-full flex-col overflow-hidden rounded-xl border border-line bg-white dark:bg-soft/50 lg:max-w-sm lg:h-full">
+            <ProfilePhoto
+              compact
+              flush
+              fillHeight
+              showGazeAccent={false}
+              className="w-full flex-1"
+            />
+            <div className="shrink-0 border-t border-line px-5 py-5 sm:px-6 sm:py-6">
+              <p className="font-body text-base text-tech">{b.experienceLabel}</p>
+              <div className="mt-2 flex items-baseline gap-1">
+                <CountUp
+                  value={p.experienceValue}
+                  className="font-heading text-4xl font-bold text-carbon sm:text-5xl"
+                />
+                <span className="font-heading text-3xl font-bold text-carbon sm:text-4xl">+</span>
+                <span className="ml-1 font-body text-base text-carbon sm:text-lg">{p.experienceUnit}</span>
               </div>
             </div>
-          </motion.aside>
-        </div>
+          </div>
+        </motion.aside>
       </div>
 
       <div className="mt-12 border-y border-line py-5 sm:py-6">

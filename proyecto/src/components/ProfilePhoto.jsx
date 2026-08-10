@@ -8,11 +8,13 @@ import ProfileMonogram from './ProfileMonogram.jsx'
  * Profile photo with optional gaze-direction accent.
  * profileGaze in site.config.js: 'left' | 'right' — motif points toward adjacent headline.
  * Set showGazeAccent={false} when the photo sits inside the profile card.
+ * fillHeight stretches the frame to match the adjacent text column on desktop.
  */
 export default function ProfilePhoto({
   compact = false,
   showGazeAccent = true,
   flush = false,
+  fillHeight = false,
   className = '',
 }) {
   const { t } = useLanguage()
@@ -28,14 +30,20 @@ export default function ProfilePhoto({
   const yRaw = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : compact ? -8 : -20])
   const y = useSpring(yRaw, { stiffness: 100, damping: 28 })
 
+  const sizeClass = fillHeight
+    ? 'min-h-[14rem] flex-1 lg:min-h-[12rem] lg:max-h-[32rem]'
+    : compact
+      ? 'aspect-[4/5]'
+      : 'aspect-[4/5] max-w-md lg:max-w-none'
+
   return (
     <motion.div
       ref={ref}
       style={reduce || compact ? undefined : { y }}
-      className={`relative w-full ${compact ? 'aspect-[4/5]' : 'aspect-[4/5] max-w-md lg:max-w-none'} ${className}`}
+      className={`relative w-full ${sizeClass} ${className}`}
     >
       <div
-        className={`relative h-full w-full overflow-hidden bg-soft dark:bg-soft/80 ${
+        className={`absolute inset-0 overflow-hidden bg-soft dark:bg-soft/80 ${
           flush ? '' : 'rounded-xl border border-line'
         }`}
       >
