@@ -5,12 +5,11 @@ import { useLanguage } from '../context/LanguageContext.js'
 import ProfileMonogram from './ProfileMonogram.jsx'
 
 /**
- * Profile photo with gaze-direction accent.
- * profileGaze in site.config.js controls the > motif toward adjacent copy.
- * - 'left': photo on the left, motif points right (inward).
- * - 'right': photo on the right, motif points left (inward).
+ * Profile photo with optional gaze-direction accent.
+ * profileGaze in site.config.js: 'left' | 'right' — motif points toward adjacent headline.
+ * Set showGazeAccent={false} when photo sits inside the bento grid.
  */
-export default function ProfilePhoto({ compact = false, className = '' }) {
+export default function ProfilePhoto({ compact = false, showGazeAccent = true, className = '' }) {
   const { t } = useLanguage()
   const reduce = useReducedMotion()
   const ref = useRef(null)
@@ -27,14 +26,10 @@ export default function ProfilePhoto({ compact = false, className = '' }) {
   return (
     <motion.div
       ref={ref}
-      style={reduce ? undefined : { y }}
-      className={`relative h-full w-full ${compact ? 'min-h-0' : 'aspect-[4/5] max-w-md lg:max-w-none'} ${className}`}
+      style={reduce || compact ? undefined : { y }}
+      className={`relative w-full ${compact ? 'aspect-[4/5]' : 'aspect-[4/5] max-w-md lg:max-w-none'} ${className}`}
     >
-      <div
-        className={`relative h-full min-h-[12rem] overflow-hidden rounded-xl border border-line bg-soft dark:bg-soft/80 ${
-          compact ? 'sm:min-h-[16rem]' : ''
-        }`}
-      >
+      <div className="relative h-full w-full overflow-hidden rounded-xl border border-line bg-soft dark:bg-soft/80">
         {useFallback ? (
           <ProfileMonogram className="h-full w-full" />
         ) : (
@@ -49,24 +44,26 @@ export default function ProfilePhoto({ compact = false, className = '' }) {
         )}
       </div>
 
-      <div
-        className={`pointer-events-none absolute top-1/2 z-10 hidden -translate-y-1/2 md:flex md:items-center md:gap-1 ${
-          gazeLeft ? '-right-5' : '-left-5'
-        }`}
-        aria-hidden="true"
-      >
-        {gazeLeft ? (
-          <>
-            <span className="h-px w-8 bg-orange" />
-            <span className="font-mono text-[0.875rem] text-orange">&gt;</span>
-          </>
-        ) : (
-          <>
-            <span className="font-mono text-[0.875rem] text-orange">&lt;</span>
-            <span className="h-px w-8 bg-orange" />
-          </>
-        )}
-      </div>
+      {showGazeAccent && !compact && (
+        <div
+          className={`pointer-events-none absolute top-1/2 z-10 hidden -translate-y-1/2 md:flex md:items-center md:gap-1 ${
+            gazeLeft ? '-right-5' : '-left-5'
+          }`}
+          aria-hidden="true"
+        >
+          {gazeLeft ? (
+            <>
+              <span className="h-px w-8 bg-orange" />
+              <span className="font-mono text-[0.875rem] text-orange">&gt;</span>
+            </>
+          ) : (
+            <>
+              <span className="font-mono text-[0.875rem] text-orange">&lt;</span>
+              <span className="h-px w-8 bg-orange" />
+            </>
+          )}
+        </div>
+      )}
     </motion.div>
   )
 }

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
 import { GithubMark } from './BrandIcons.jsx'
-import ProjectsEmptyIllustration from '../assets/illustrations/ProjectsEmptyIllustration.jsx'
+import ProjectCoverPlaceholder from './ProjectCoverPlaceholder.jsx'
 import { useLanguage } from '../context/LanguageContext.js'
 import { EASE_EXPO } from '../utils/motion.js'
 
@@ -43,12 +43,10 @@ export default function ProjectCard({ project, onOpenCaseStudy }) {
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-white dark:bg-soft/50">
-            <ProjectsEmptyIllustration className="h-24 w-32 text-tech opacity-70" />
-          </div>
+          <ProjectCoverPlaceholder category={project.category} className="text-carbon" />
         )}
         {project.todo && (
-          <span className="absolute left-3 top-3 rounded-full border border-orange/50 bg-white/90 px-2.5 py-1 font-mono text-[0.875rem] text-orange backdrop-blur-sm dark:bg-soft/90">
+          <span className="absolute left-3 top-3 rounded-full border border-orange/50 bg-white/90 px-2.5 py-1 font-mono text-base text-orange backdrop-blur-sm dark:bg-soft/90">
             TODO
           </span>
         )}
@@ -56,11 +54,11 @@ export default function ProjectCard({ project, onOpenCaseStudy }) {
 
       <div className="mt-5 flex flex-1 flex-col">
         <div className="flex items-center gap-3">
-          <span className="font-mono text-[0.875rem] text-tech">{project.category}</span>
+          <span className="font-mono text-base text-tech">{project.category}</span>
           <span className="text-cool" aria-hidden="true">
             ·
           </span>
-          <span className="font-body text-[0.875rem] text-tech">{status}</span>
+          <span className="font-body text-base text-tech">{status}</span>
         </div>
 
         <h3 className="mt-2 font-heading text-[1.375rem] font-semibold text-carbon">{title}</h3>
@@ -69,7 +67,7 @@ export default function ProjectCard({ project, onOpenCaseStudy }) {
         </p>
 
         {project.metrics?.[0] && (
-          <p className="mt-3 font-mono text-[0.875rem] text-orange">
+          <p className="mt-3 font-mono text-base text-orange">
             {tField(project.metrics[0].label, language)}: {project.metrics[0].value}
           </p>
         )}
@@ -78,14 +76,14 @@ export default function ProjectCard({ project, onOpenCaseStudy }) {
           {project.stack?.slice(0, 3).map((tech) => (
             <span
               key={tech}
-              className="rounded-md border border-line px-2 py-0.5 font-mono text-[0.875rem] text-tech"
+              className="rounded-md border border-line px-2 py-0.5 font-mono text-base text-tech"
             >
               {tech}
             </span>
           ))}
         </div>
 
-        <div className="mt-5 flex flex-wrap items-center gap-3">
+        <div className="mt-auto flex flex-wrap items-center gap-3 pt-5">
           <button
             type="button"
             onClick={() => onOpenCaseStudy?.(project)}

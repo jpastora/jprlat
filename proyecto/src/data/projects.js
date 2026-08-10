@@ -1,5 +1,5 @@
 /*
-  Casos de estudio — estructura lista para 3–5 entradas reales.
+  Casos de estudio — estructura lista para 4–5 entradas reales.
   TODO: reemplazar copy marcado antes de producción.
 */
 
@@ -169,6 +169,62 @@ export const projects = [
     metrics: [
       { label: { es: 'Conversión checkout', en: 'Checkout conversion' }, value: '+18%' },
       { label: { es: 'ROAS campañas', en: 'Campaign ROAS' }, value: '2.4x' },
+    ],
+    links: { demo: '#', repo: '#' },
+  },
+  {
+    id: 'growth-dashboard',
+    todo: true,
+    title: {
+      es: 'Dashboard de crecimiento y datos',
+      en: 'Growth and data dashboard',
+    },
+    category: 'Data',
+    status: {
+      es: 'TODO · caso de ejemplo',
+      en: 'TODO · sample case',
+    },
+    cover: null,
+    summary: {
+      es: 'Panel unificado para marketing y producto con métricas accionables, segmentación y alertas de rendimiento.',
+      en: 'Unified panel for marketing and product with actionable metrics, segmentation, and performance alerts.',
+    },
+    problem: {
+      es: 'Los equipos consultaban hojas de cálculo desactualizadas y no compartían una misma lectura del embudo ni del LTV.',
+      en: 'Teams relied on outdated spreadsheets and lacked a shared view of the funnel and LTV.',
+    },
+    decisions: {
+      es: [
+        'Modelo de datos en capas con ETL ligero y cache para consultas frecuentes.',
+        'Visualizaciones modulares por rol: marketing, producto y dirección.',
+        'Eventos de negocio estandarizados desde web, CRM y campañas.',
+      ],
+      en: [
+        'Layered data model with lightweight ETL and cache for frequent queries.',
+        'Modular visualizations per role: marketing, product, and leadership.',
+        'Standardized business events from web, CRM, and campaigns.',
+      ],
+    },
+    stack: ['React', 'Node.js', 'BigQuery', 'GA4', 'Looker Studio'],
+    architecture: {
+      es: 'Frontend con widgets configurables, API de agregación y jobs programados para sincronizar fuentes heterogéneas.',
+      en: 'Frontend with configurable widgets, aggregation API, and scheduled jobs to sync heterogeneous sources.',
+    },
+    marketingImpact: {
+      es: [
+        'Visibilidad semanal de CAC, conversión y cohortes sin exportar CSV.',
+        'Alertas cuando un canal cae por debajo del umbral acordado.',
+        'Narrativa de resultados alineada con objetivos trimestrales.',
+      ],
+      en: [
+        'Weekly visibility on CAC, conversion, and cohorts without CSV exports.',
+        'Alerts when a channel drops below the agreed threshold.',
+        'Results narrative aligned with quarterly goals.',
+      ],
+    },
+    metrics: [
+      { label: { es: 'Tiempo de reporte', en: 'Reporting time' }, value: '-60%' },
+      { label: { es: 'Decisiones basadas en datos', en: 'Data-driven decisions' }, value: '+2x' },
     ],
     links: { demo: '#', repo: '#' },
   },

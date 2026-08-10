@@ -24,7 +24,7 @@ export default function ServiceRow({ service, index }) {
   return (
     <article
       ref={ref}
-      className="relative"
+      className="relative isolate border-b border-line last:border-b-0"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -39,40 +39,37 @@ export default function ServiceRow({ service, index }) {
       <button
         type="button"
         onClick={toggleMobile}
-        className="group relative w-full py-8 text-left sm:py-10 md:cursor-default"
+        className="group relative block w-full py-10 text-left sm:py-12 md:cursor-default"
         aria-expanded={expanded}
       >
-        <div className="flex items-start justify-between gap-6">
-          <div className="min-w-0 flex-1">
+        <div className="relative isolate min-h-[4.5rem] overflow-hidden sm:min-h-[5rem]">
+          <span
+            className="pointer-events-none absolute -right-1 top-1/2 z-0 -translate-y-1/2 select-none font-mono text-[clamp(2.75rem,7vw,4.5rem)] font-medium leading-none text-line opacity-20 md:right-2"
+            aria-hidden="true"
+          >
+            {num}
+          </span>
+
+          <div className="relative z-10 flex items-start justify-between gap-6 pr-14 md:pr-20">
             <motion.h3
               animate={{
                 color: expanded ? 'var(--color-carbon)' : 'var(--color-tech)',
               }}
               transition={{ duration: 0.35, ease: EASE_EXPO }}
-              className="break-words text-balance font-heading font-semibold leading-[1.05] tracking-tight"
-              style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.25rem)' }}
+              className="max-w-[20ch] break-words text-balance font-heading text-[1.75rem] font-semibold leading-[1.2] tracking-tight sm:text-[2rem] lg:text-[2.5rem]"
             >
               {service.title[language] ?? service.title.es}
             </motion.h3>
+
+            <motion.span
+              className="mt-2 shrink-0 font-mono text-lg text-cool md:hidden"
+              animate={{ rotate: expanded ? 90 : 0 }}
+              transition={{ duration: 0.3 }}
+              aria-hidden="true"
+            >
+              {'>'}
+            </motion.span>
           </div>
-
-          <motion.span
-            className="pointer-events-none hidden font-mono text-[clamp(3rem,8vw,5.5rem)] font-medium leading-none text-line md:block"
-            animate={{ x: expanded ? 0 : 24, opacity: expanded ? 0.9 : 0.25 }}
-            transition={{ duration: 0.45, ease: EASE_EXPO }}
-            aria-hidden="true"
-          >
-            {num}
-          </motion.span>
-
-          <motion.span
-            className="mt-2 font-mono text-lg text-cool md:hidden"
-            animate={{ rotate: expanded ? 90 : 0 }}
-            transition={{ duration: 0.3 }}
-            aria-hidden="true"
-          >
-            {'>'}
-          </motion.span>
         </div>
 
         <AnimatePresence initial={false}>
@@ -83,12 +80,12 @@ export default function ServiceRow({ service, index }) {
               animate={{ height: 'auto', opacity: 1 }}
               exit={reduce ? undefined : { height: 0, opacity: 0 }}
               transition={{ duration: 0.45, ease: EASE_EXPO }}
-              className="overflow-hidden"
+              className="relative z-10 overflow-hidden"
             >
-              <div className="flex flex-col gap-6 pt-6 sm:flex-row sm:items-start sm:gap-10">
+              <div className="flex flex-col gap-6 pb-2 pt-6 sm:flex-row sm:items-start sm:gap-10">
                 <ServiceIcon type={service.id} active={expanded} />
                 <div className="min-w-0 flex-1">
-                  <p className="max-w-prose font-body text-base leading-relaxed text-tech">
+                  <p className="max-w-prose font-body text-base leading-[1.5] text-tech">
                     {service.description[language] ?? service.description.es}
                   </p>
                   <ul className="mt-5 flex flex-wrap gap-x-3 gap-y-1">
@@ -110,7 +107,7 @@ export default function ServiceRow({ service, index }) {
         </AnimatePresence>
 
         <motion.span
-          className="absolute bottom-0 left-0 h-px bg-orange"
+          className="absolute bottom-0 left-0 z-10 h-px bg-orange"
           initial={{ width: '0%' }}
           animate={{ width: expanded ? '100%' : '0%' }}
           transition={{ duration: 0.5, ease: EASE_EXPO }}

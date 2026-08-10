@@ -83,7 +83,7 @@ export default function Projects() {
       </div>
 
       <LayoutGroup>
-        <motion.div layout className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2">
+        <motion.div layout className="mt-10 grid grid-cols-1 items-stretch gap-8 md:grid-cols-2">
           <AnimatePresence mode="popLayout">
             {filtered.length === 0 ? (
               <motion.div

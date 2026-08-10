@@ -1,10 +1,10 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import {
   motion,
   useInView,
   useMotionValue,
   useSpring,
-  useTransform,
+  useMotionValueEvent,
   useReducedMotion,
   animate,
 } from 'framer-motion'
@@ -21,11 +21,16 @@ export default function CountUp({
   const inView = useInView(ref, { once: true, amount: 0.6 })
   const motionVal = useMotionValue(0)
   const spring = useSpring(motionVal, { stiffness: 80, damping: 18 })
-  const display = useTransform(spring, (v) => `${Math.round(v)}${suffix}`)
+  const [display, setDisplay] = useState(reduce ? value : 0)
+
+  useMotionValueEvent(spring, 'change', (v) => {
+    setDisplay(Math.round(v))
+  })
 
   useEffect(() => {
     if (!inView || reduce) {
       motionVal.set(value)
+      setDisplay(value)
       return
     }
     const controls = animate(motionVal, value, {
@@ -35,18 +40,10 @@ export default function CountUp({
     return () => controls.stop()
   }, [inView, reduce, value, duration, motionVal])
 
-  if (reduce) {
-    return (
-      <span ref={ref} className={className}>
-        {value}
-        {suffix}
-      </span>
-    )
-  }
-
   return (
     <motion.span ref={ref} className={className}>
       {display}
+      {suffix}
     </motion.span>
   )
 }
