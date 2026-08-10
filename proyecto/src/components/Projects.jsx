@@ -1,16 +1,20 @@
-import { useMemo, useState } from 'react'
+import { lazy, Suspense, useMemo, useState } from 'react'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 import PageSection from './PageSection.jsx'
 import SectionTitle from './SectionTitle.jsx'
 import ProjectCard from './ProjectCard.jsx'
 import Testimonials from './Testimonials.jsx'
+import ProjectsEmptyIllustration from '../assets/illustrations/ProjectsEmptyIllustration.jsx'
 import { itemVariants } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 import { projects } from '../data/projects.js'
 
+const CaseStudyModal = lazy(() => import('./CaseStudyModal.jsx'))
+
 export default function Projects() {
   const { t } = useLanguage()
   const [filter, setFilter] = useState('all')
+  const [activeProject, setActiveProject] = useState(null)
 
   const categories = useMemo(() => {
     const unique = Array.from(new Set(projects.map((p) => p.category)))
@@ -33,10 +37,13 @@ export default function Projects() {
       className="-mt-6 pb-28 pt-20 sm:pb-36 sm:pt-28"
     >
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-        <SectionTitle title={t.projects.title} subtitle={t.projects.subtitle} />
+        <SectionTitle
+          title={t.projects.title}
+          subtitle={`${t.projects.subtitle} ${t.projects.intro}`}
+        />
         <motion.span
           variants={itemVariants}
-          className="shrink-0 font-mono text-xs text-tech"
+          className="shrink-0 font-mono text-[0.875rem] text-tech"
         >
           {t.projects.statusBadge}
         </motion.span>
@@ -57,7 +64,7 @@ export default function Projects() {
               role="tab"
               aria-selected={active}
               onClick={() => setFilter(cat)}
-              className={`relative pb-3 font-body text-sm transition-colors duration-300 ${
+              className={`relative pb-3 font-body text-base transition-colors duration-300 ${
                 active ? 'text-carbon' : 'text-tech hover:text-carbon'
               }`}
             >
@@ -75,19 +82,44 @@ export default function Projects() {
       </div>
 
       <LayoutGroup>
-        <motion.div
-          layout
-          className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2"
-        >
+        <motion.div layout className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2">
           <AnimatePresence mode="popLayout">
-            {filtered.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
+            {filtered.length === 0 ? (
+              <motion.div
+                key="empty"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="col-span-full flex flex-col items-center gap-6 py-12 text-center"
+              >
+                <ProjectsEmptyIllustration className="h-36 w-48 text-tech" />
+                <p className="max-w-md font-body text-base leading-[1.5] text-tech">
+                  {t.projects.empty}
+                </p>
+              </motion.div>
+            ) : (
+              filtered.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  onOpenCaseStudy={setActiveProject}
+                />
+              ))
+            )}
           </AnimatePresence>
         </motion.div>
       </LayoutGroup>
 
       <Testimonials />
+
+      {activeProject && (
+        <Suspense fallback={null}>
+          <CaseStudyModal
+            project={activeProject}
+            onClose={() => setActiveProject(null)}
+          />
+        </Suspense>
+      )}
     </PageSection>
   )
 }

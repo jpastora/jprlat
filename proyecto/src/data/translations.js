@@ -21,10 +21,10 @@ export const translations = {
       contact: 'Contacto',
     },
     cta: {
-      talk: 'Hablemos',
-      viewProjects: 'Ver proyectos',
-      downloadCv: 'Descargar CV',
-      schedule: 'Agenda 30 min',
+      talk: 'Contactar',
+      viewProjects: 'Explorar',
+      downloadCv: 'Descargar',
+      schedule: 'Agendar',
       openMenu: 'Abrir menú',
       closeMenu: 'Cerrar menú',
       scrollTop: 'Volver arriba',
@@ -82,27 +82,59 @@ export const translations = {
         title: 'Visión',
         text: 'Consolidarme como un freelance de referencia por la integración entre ingeniería de software y marketing digital, ofreciendo un portafolio diversificado de servicios que entreguen valor real a cada cliente.',
       },
+      missionVisionIntro:
+        'Dos principios que guían cada proyecto: impacto medible y claridad desde el primer día.',
+      photoAlt: 'Joseph Pastora — retrato profesional',
+      bento: {
+        experienceLabel: 'Años de experiencia',
+        brandsLabel: 'Marcas y agencias',
+        hybridLabel: 'Perfil híbrido',
+        hybridValue: 'Tech + growth',
+        hybridHint: 'Software, marketing y datos en un solo flujo.',
+        stackLabel: 'Stack principal',
+        locationLabel: 'Ubicación y disponibilidad',
+        locationValue: 'Costa Rica · remoto LATAM',
+        availability: 'Disponible para nuevos proyectos',
+        numbersTitle: 'En números',
+      },
     },
     services: {
       title: 'Servicios freelance',
       stickyTitle: 'Servicios que construyen sistemas',
       subtitle:
         'Cuatro capacidades integradas para ordenar, construir, medir y escalar tu presencia digital.',
+      intro:
+        'Cada servicio conecta estrategia, ejecución técnica y medición para que el crecimiento sea deliberado, no accidental.',
     },
     projects: {
       title: 'Proyectos seleccionados',
       subtitle:
-        'Casos en preparación. La estructura está lista para integrar demos, repositorios y resultados.',
-      statusBadge: 'En construcción',
+        'Casos que muestran decisiones técnicas y resultados de negocio en un mismo relato.',
+      intro:
+        'Cada caso combina arquitectura, stack y métricas de crecimiento para mostrar el perfil híbrido en acción.',
+      statusBadge: 'Casos en revisión',
       filterLabel: 'Filtrar por categoría',
       all: 'Todos',
-      viewDemo: 'Ver demo',
-      repo: 'Repositorio',
+      viewCase: 'Ver caso',
+      open: 'Abrir',
+      code: 'Código',
       placeholder: 'Vista previa',
+      empty: 'No hay proyectos en esta categoría.',
+      caseStudy: {
+        problem: 'Problema',
+        decisions: 'Decisiones',
+        architecture: 'Arquitectura y código',
+        marketing: 'Estrategia y resultados',
+        close: 'Cerrar caso de estudio',
+        todo: 'TODO · caso de ejemplo',
+      },
     },
     testimonials: {
       title: 'Lo que dicen quienes han trabajado conmigo',
-      subtitle: 'Testimonios en revisión — reemplazar con citas reales.',
+      subtitle:
+        'Relatos breves de colaboración real. Reemplazar con testimonios verificados.',
+      intro:
+        'La confianza se construye con resultados medibles y comunicación clara en cada etapa.',
       todo: 'TODO · testimonio de ejemplo',
     },
     process: {
@@ -131,6 +163,8 @@ export const translations = {
     contact: {
       title: 'Hablemos de tu proyecto',
       text: '¿Tenés una idea, proceso o proyecto digital que necesita estructura? Escríbeme y lo revisamos juntos.',
+      intro:
+        'Cuéntame tu contexto y te respondo con foco, prioridades claras y un siguiente paso concreto.',
       calendlyLead: '¿Preferís agendar una llamada de 30 minutos?',
       responseNote: 'Respuesta en horario laboral (Costa Rica, GMT-6).',
       fields: {
@@ -152,7 +186,7 @@ export const translations = {
         'Optimización digital',
         'Otro',
       ],
-      submit: 'Enviar mensaje',
+      submit: 'Enviar',
       sending: 'Enviando…',
       success: '¡Mensaje enviado! Te responderé pronto.',
       error: 'No se pudo enviar el mensaje. Escríbeme directo a info@jpr.lat.',
@@ -194,10 +228,10 @@ export const translations = {
       contact: 'Contact',
     },
     cta: {
-      talk: "Let's Talk",
-      viewProjects: 'View Projects',
-      downloadCv: 'Download CV',
-      schedule: 'Book 30 min',
+      talk: 'Contact',
+      viewProjects: 'Explore',
+      downloadCv: 'Download',
+      schedule: 'Schedule',
       openMenu: 'Open menu',
       closeMenu: 'Close menu',
       scrollTop: 'Back to top',
@@ -255,27 +289,57 @@ export const translations = {
         title: 'Vision',
         text: 'To become a reference freelance professional by integrating software engineering and digital marketing, offering a diversified portfolio of services that delivers real value to each client.',
       },
+      missionVisionIntro:
+        'Two principles guide every project: measurable impact and clarity from day one.',
+      photoAlt: 'Joseph Pastora — professional portrait',
+      bento: {
+        experienceLabel: 'Years of experience',
+        brandsLabel: 'Brands and agencies',
+        hybridLabel: 'Hybrid profile',
+        hybridValue: 'Tech + growth',
+        hybridHint: 'Software, marketing, and data in one flow.',
+        stackLabel: 'Core stack',
+        locationLabel: 'Location and availability',
+        locationValue: 'Costa Rica · remote LATAM',
+        availability: 'Available for new projects',
+        numbersTitle: 'By the numbers',
+      },
     },
     services: {
       title: 'Freelance services',
       stickyTitle: 'Services that build systems',
       subtitle:
         'Four integrated capabilities to organize, build, measure, and scale your digital presence.',
+      intro:
+        'Each service connects strategy, technical execution, and measurement so growth is deliberate, not accidental.',
     },
     projects: {
       title: 'Selected projects',
       subtitle:
-        'Cases in preparation. The structure is ready to integrate demos, repositories, and results.',
-      statusBadge: 'Under construction',
+        'Cases that show technical decisions and business outcomes in one narrative.',
+      intro:
+        'Each case combines architecture, stack, and growth metrics to show the hybrid profile in action.',
+      statusBadge: 'Cases under review',
       filterLabel: 'Filter by category',
       all: 'All',
-      viewDemo: 'View demo',
-      repo: 'Repository',
+      viewCase: 'View case',
+      open: 'Open',
+      code: 'Code',
       placeholder: 'Preview',
+      empty: 'No projects in this category.',
+      caseStudy: {
+        problem: 'Problem',
+        decisions: 'Decisions',
+        architecture: 'Architecture & code',
+        marketing: 'Strategy & results',
+        close: 'Close case study',
+        todo: 'TODO · sample case',
+      },
     },
     testimonials: {
       title: 'What clients say about working with me',
-      subtitle: 'Testimonials under review — replace with real quotes.',
+      subtitle: 'Brief stories from real collaboration. Replace with verified testimonials.',
+      intro: 'Trust is built through measurable results and clear communication at every stage.',
       todo: 'TODO · sample testimonial',
     },
     process: {
@@ -304,6 +368,8 @@ export const translations = {
     contact: {
       title: "Let's talk about your project",
       text: 'Do you have an idea, process, or digital project that needs structure? Write to me and we can review it together.',
+      intro:
+        'Share your context and I will respond with focus, clear priorities, and a concrete next step.',
       calendlyLead: 'Prefer to book a 30-minute call?',
       responseNote: 'Response within business hours (Costa Rica, GMT-6).',
       fields: {

@@ -1,11 +1,14 @@
 import { useState, useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { siteConfig } from '../config/site.config.js'
+import { useLanguage } from '../context/LanguageContext.js'
 
 export default function ProfilePhoto() {
+  const { t } = useLanguage()
   const reduce = useReducedMotion()
   const ref = useRef(null)
   const [error, setError] = useState(false)
+  const gazeLeft = siteConfig.profileGaze === 'left'
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -21,11 +24,12 @@ export default function ProfilePhoto() {
       className="relative aspect-[4/5] w-full max-w-md lg:max-w-none"
     >
       <div className="pos-dotgrid absolute -right-4 -top-4 h-24 w-24 opacity-40" aria-hidden="true" />
+
       <div className="relative h-full overflow-hidden rounded-lg border border-line bg-soft dark:border-line dark:bg-soft/80">
         {!error ? (
           <img
             src={siteConfig.profileImage}
-            alt="Joseph Pastora"
+            alt={t.profile.photoAlt ?? 'Joseph Pastora'}
             loading="lazy"
             decoding="async"
             onError={() => setError(true)}
@@ -39,15 +43,28 @@ export default function ProfilePhoto() {
             <span className="font-heading text-3xl font-bold text-carbon">
               JP<span className="text-orange">{'>'}</span>
             </span>
-            <span className="font-mono text-[10px] text-tech">JP&gt;</span>
+            <span className="font-mono text-[0.875rem] text-tech">JP&gt;</span>
           </div>
         )}
-        <span
-          className="pointer-events-none absolute bottom-3 right-3 font-mono text-lg text-orange/80"
-          aria-hidden="true"
-        >
-          {'>'}
-        </span>
+      </div>
+
+      <div
+        className={`pointer-events-none absolute top-1/2 hidden -translate-y-1/2 lg:flex lg:items-center lg:gap-1 ${
+          gazeLeft ? '-right-8' : '-left-8'
+        }`}
+        aria-hidden="true"
+      >
+        {gazeLeft ? (
+          <>
+            <span className="h-px w-10 bg-orange" />
+            <span className="font-mono text-[0.875rem] text-orange">&gt;</span>
+          </>
+        ) : (
+          <>
+            <span className="font-mono text-[0.875rem] text-orange">&lt;</span>
+            <span className="h-px w-10 bg-orange" />
+          </>
+        )}
       </div>
     </motion.div>
   )
