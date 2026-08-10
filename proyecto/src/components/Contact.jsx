@@ -16,6 +16,9 @@ import FloatingField from './FloatingField.jsx'
 import MagneticButton from './MagneticButton.jsx'
 import CalendlyButton from './CalendlyButton.jsx'
 import SectionTitle from './SectionTitle.jsx'
+import LottieAnimation from './LottieAnimation.jsx'
+import ContactIllustration from '../assets/illustrations/ContactIllustration.jsx'
+import successCheck from '../assets/lottie/success-check.json'
 import { itemVariants } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 import { contactInfo } from '../data/translations.js'
@@ -104,10 +107,14 @@ export default function Contact() {
     <PageSection id="contacto" wide className="pb-32 pt-20 max-md:pb-44 sm:pb-40 sm:pt-28">
       <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-20">
         <motion.div variants={itemVariants} className="lg:col-span-5">
-          <SectionTitle title={c.title} subtitle={c.text} />
+          <SectionTitle title={c.title} subtitle={c.intro} />
+
+          <ContactIllustration className="mt-8 h-auto w-full max-w-[10rem] text-carbon opacity-80" />
+
+          <p className="mt-6 max-w-prose font-body text-base leading-[1.5] text-tech">{c.text}</p>
 
           <div className="mt-10">
-            <p className="font-body text-sm text-tech">{c.directLabel}</p>
+            <p className="font-body text-[0.875rem] text-tech">{c.directLabel}</p>
             <ul className="mt-4 space-y-1">
               {channels.map(({ icon: Icon, label, href, trackLabel }) => (
                 <li key={label}>
@@ -120,7 +127,7 @@ export default function Contact() {
                         track('whatsapp_click', { source: 'contact' })
                       }
                     }}
-                    className="group inline-flex items-center gap-2 py-2 font-body text-sm text-carbon transition-colors hover:text-orange"
+                    className="group inline-flex items-center gap-2 py-2 font-body text-base text-carbon transition-colors hover:text-orange"
                   >
                     <Icon size={15} strokeWidth={1.6} aria-hidden="true" />
                     {label}
@@ -134,12 +141,12 @@ export default function Contact() {
               ))}
             </ul>
             <div className="mt-8 border-t border-line pt-8">
-              <p className="font-body text-sm text-tech">{c.calendlyLead}</p>
+              <p className="font-body text-base text-tech">{c.calendlyLead}</p>
               <div className="mt-4">
                 <CalendlyButton variant="primary" source="contact" />
               </div>
             </div>
-            <p className="mt-8 font-body text-sm text-tech">{c.responseNote}</p>
+            <p className="mt-8 font-body text-[0.875rem] text-tech">{c.responseNote}</p>
           </div>
         </motion.div>
 
@@ -203,7 +210,7 @@ export default function Contact() {
               <MagneticButton
                 type="submit"
                 disabled={status === 'sending'}
-                className="relative inline-flex min-w-[10.5rem] items-center justify-center gap-2 overflow-hidden rounded-lg bg-orange px-6 py-3 font-body text-sm font-semibold text-white transition-colors duration-300 hover:bg-carbon disabled:cursor-not-allowed disabled:opacity-70"
+                className="relative inline-flex min-w-[10.5rem] items-center justify-center gap-2 overflow-hidden rounded-lg bg-orange px-6 py-3 font-body text-base font-semibold text-white transition-colors duration-300 hover:bg-carbon disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {status === 'success' && (
                   <motion.span
@@ -229,13 +236,19 @@ export default function Contact() {
 
             <div aria-live="polite" className="mt-4 min-h-[1.5rem]">
               {status === 'success' && (
-                <p className="flex items-center gap-2 font-body text-sm text-carbon">
-                  <CheckCircle2 size={16} className="shrink-0 text-orange" aria-hidden="true" />
+                <p className="flex items-center gap-2 font-body text-base text-carbon">
+                  <LottieAnimation
+                    animationData={successCheck}
+                    className="h-5 w-5 shrink-0"
+                    fallback={
+                      <CheckCircle2 size={20} className="shrink-0 text-orange" aria-hidden="true" />
+                    }
+                  />
                   {EMAILJS_CONFIGURED ? c.success : c.notConfigured}
                 </p>
               )}
               {status === 'error' && (
-                <p className="flex items-center gap-2 font-body text-sm text-carbon">
+                <p className="flex items-center gap-2 font-body text-base text-carbon">
                   <AlertCircle size={16} className="shrink-0 text-orange" aria-hidden="true" />
                   {c.error}
                 </p>

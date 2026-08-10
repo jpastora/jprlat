@@ -10,6 +10,7 @@ export default defineConfig({
         manualChunks(id) {
           if (id.includes('framer-motion')) return 'motion'
           if (id.includes('@emailjs')) return 'emailjs'
+          if (id.includes('lottie-react')) return 'lottie'
         },
       },
     },

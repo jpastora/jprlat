@@ -93,7 +93,7 @@ export default function ServiceRow({ service, index }) {
                   </p>
                   <ul className="mt-5 flex flex-wrap gap-x-3 gap-y-1">
                     {service.technologies.map((tech, i) => (
-                      <li key={tech} className="font-mono text-xs text-tech">
+                      <li key={tech} className="font-mono text-[0.875rem] text-tech">
                         {tech}
                         {i < service.technologies.length - 1 && (
                           <span className="ml-3 text-cool" aria-hidden="true">

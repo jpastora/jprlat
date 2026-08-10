@@ -6,12 +6,13 @@ import {
   useTransform,
   useSpring,
 } from 'framer-motion'
-import { ArrowRight, Download } from 'lucide-react'
+import { Download } from 'lucide-react'
 import HeroDiagram from './HeroDiagram.jsx'
 import MagneticButton from './MagneticButton.jsx'
 import RevealText from './RevealText.jsx'
 import CalendlyButton from './CalendlyButton.jsx'
 import ScrollChevron from './ScrollChevron.jsx'
+import CtaLottieArrow from './CtaLottieArrow.jsx'
 import { EASE_EXPO, fadeUp } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 import { scrollToSection } from '../utils/scroll.js'
@@ -42,12 +43,12 @@ export default function Hero() {
             initial={reduce ? false : { opacity: 0, y: 8 }}
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: EASE_EXPO }}
-            className="font-body text-sm font-medium text-tech"
+            className="font-body text-[0.875rem] font-medium text-tech"
           >
             {t.hero.eyebrow}
           </motion.p>
 
-          <h1 className="mt-4 min-h-[2.65em] max-w-[16ch] font-heading text-[2.75rem] font-bold leading-[1.02] tracking-tight text-carbon sm:min-h-[2.5em] sm:text-5xl lg:text-[3.5rem]">
+          <h1 className="mt-4 min-h-[3rem] max-w-[16ch] font-heading text-[3rem] font-bold leading-[1.02] tracking-tight text-carbon sm:min-h-[2.5em] sm:text-5xl lg:text-[3.5rem]">
             <RevealText text={t.hero.title} mode="words" delay={0.08} />
           </h1>
 
@@ -55,7 +56,7 @@ export default function Hero() {
             initial={reduce ? false : { opacity: 0, y: 8 }}
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ delay: 0.42, duration: 0.5, ease: EASE_EXPO }}
-            className="mt-6 max-w-prose font-body text-lg leading-relaxed text-tech"
+            className="mt-6 max-w-prose font-body text-base leading-[1.5] text-tech"
           >
             {t.hero.subtitle}
           </motion.p>
@@ -77,14 +78,10 @@ export default function Hero() {
                   scrollToSection('contacto')
                 }}
                 data-cursor="cta"
-                className="group inline-flex items-center gap-2 rounded-lg bg-orange px-6 py-3 font-body text-sm font-semibold text-white transition-colors duration-300 hover:bg-carbon"
+                className="group inline-flex items-center gap-2 rounded-lg bg-orange px-6 py-3 font-body text-base font-semibold text-white transition-colors duration-300 hover:bg-carbon"
               >
                 {t.cta.talk}
-                <ArrowRight
-                  size={16}
-                  className="transition-transform duration-300 group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                />
+                <CtaLottieArrow light />
               </MagneticButton>
             </motion.div>
             <motion.div variants={fadeUp}>
@@ -94,7 +91,7 @@ export default function Hero() {
                   track('cta_click', { label: 'projects', source: 'hero' })
                   scrollToSection('proyectos')
                 }}
-                className="inline-flex items-center gap-2 rounded-lg border border-cool px-6 py-3 font-body text-sm font-semibold text-carbon transition-colors duration-300 hover:border-carbon"
+                className="inline-flex items-center gap-2 rounded-lg border border-cool px-6 py-3 font-body text-base font-semibold text-carbon transition-colors duration-300 hover:border-carbon"
               >
                 {t.cta.viewProjects}
               </MagneticButton>
@@ -107,7 +104,7 @@ export default function Hero() {
               href={cvUrl}
               download="joseph-pastora-cv.pdf"
               onClick={() => track('cv_download', { source: 'hero' })}
-              className="inline-flex items-center gap-2 px-2 py-3 font-body text-sm font-medium text-tech transition-colors duration-300 hover:text-orange"
+              className="inline-flex items-center gap-2 px-2 py-3 font-body text-base font-medium text-tech transition-colors duration-300 hover:text-orange"
             >
               <Download size={15} aria-hidden="true" />
               {t.cta.downloadCv}

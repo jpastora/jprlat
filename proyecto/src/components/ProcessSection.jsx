@@ -8,6 +8,9 @@ import {
 } from 'framer-motion'
 import PageSection from './PageSection.jsx'
 import MaskReveal from './MaskReveal.jsx'
+import LottieAnimation from './LottieAnimation.jsx'
+import ProcessIllustration from '../assets/illustrations/ProcessIllustration.jsx'
+import flowAmbient from '../assets/lottie/flow-ambient.json'
 import { processSteps } from '../data/process.js'
 import { EASE_EXPO } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
@@ -72,7 +75,7 @@ function ProcessStep({ step, copy, index, activeIndex, reduce, staticAll = false
             key={staticAll ? step.number : `${step.number}-${isActive}`}
             initial={reduce || staticAll || !isActive ? false : { opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-block font-mono text-xs text-tech"
+            className="inline-block font-mono text-[0.875rem] text-tech"
           >
             {step.number}
           </motion.span>
@@ -85,7 +88,7 @@ function ProcessStep({ step, copy, index, activeIndex, reduce, staticAll = false
                 color: isLit ? 'var(--color-carbon)' : '#6B7280',
               }}
               transition={{ duration: 0.5, ease: EASE_EXPO }}
-              className="mt-1 font-heading text-lg font-medium"
+              className="mt-1 font-heading text-[1.375rem] font-medium leading-[1.5]"
             >
               {copy.title}
             </motion.h3>
@@ -94,7 +97,7 @@ function ProcessStep({ step, copy, index, activeIndex, reduce, staticAll = false
           <motion.p
             animate={{ color: isLit ? 'var(--color-tech)' : '#6B7280' }}
             transition={{ duration: 0.35 }}
-            className="mt-2 font-body text-sm leading-relaxed"
+            className="mt-2 font-body text-base leading-[1.5]"
           >
             {copy.text}
           </motion.p>
@@ -153,6 +156,22 @@ function ProcessTimeline({ lineProgress, nodePosition, reduce }) {
   )
 }
 
+function ProcessHeader({ title, subtitle }) {
+  return (
+    <MaskReveal>
+      <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h2 className="max-w-[18ch] font-heading text-[2rem] font-semibold leading-[1.5] tracking-tight text-carbon sm:text-[2.5rem]">
+            {title}
+          </h2>
+          <p className="mt-4 max-w-prose font-body text-base leading-[1.5] text-tech">{subtitle}</p>
+        </div>
+        <ProcessIllustration className="h-auto w-full max-w-[10rem] shrink-0 text-carbon opacity-80 sm:max-w-[12rem]" />
+      </div>
+    </MaskReveal>
+  )
+}
+
 export default function ProcessSection() {
   const { t } = useLanguage()
   const reduce = useReducedMotion()
@@ -192,15 +211,21 @@ export default function ProcessSection() {
     </ol>
   )
 
+  const ambientLottie = (
+    <LottieAnimation
+      animationData={flowAmbient}
+      loop
+      autoplay
+      className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-[0.07]"
+      fallback={null}
+    />
+  )
+
   if (reduce) {
     return (
-      <PageSection id="proceso" wide className="pb-28 pt-16 sm:pb-36 sm:pt-20">
-        <MaskReveal>
-          <h2 className="max-w-[18ch] font-heading text-3xl font-semibold tracking-tight text-carbon sm:text-4xl">
-            {t.process.title}
-          </h2>
-          <p className="mt-4 max-w-prose font-body text-base text-tech">{t.process.subtitle}</p>
-        </MaskReveal>
+      <PageSection id="proceso" wide className="relative pb-28 pt-16 sm:pb-36 sm:pt-20">
+        {ambientLottie}
+        <ProcessHeader title={t.process.title} subtitle={t.process.subtitle} />
         <ProcessTimeline lineProgress={lineProgress} nodePosition={nodePosition} reduce />
         {steps}
       </PageSection>
@@ -208,15 +233,11 @@ export default function ProcessSection() {
   }
 
   return (
-    <PageSection id="proceso" wide className="pb-0 pt-16 sm:pt-20">
+    <PageSection id="proceso" wide className="relative pb-0 pt-16 sm:pt-20">
       <div ref={scrollRef} className="relative min-h-[140vh] lg:min-h-[120vh]">
+        {ambientLottie}
         <div className="sticky top-[5.5rem] pb-20 sm:pb-28">
-          <MaskReveal>
-            <h2 className="max-w-[18ch] font-heading text-3xl font-semibold tracking-tight text-carbon sm:text-4xl">
-              {t.process.title}
-            </h2>
-            <p className="mt-4 max-w-prose font-body text-base text-tech">{t.process.subtitle}</p>
-          </MaskReveal>
+          <ProcessHeader title={t.process.title} subtitle={t.process.subtitle} />
 
           <ProcessTimeline
             lineProgress={lineProgress}

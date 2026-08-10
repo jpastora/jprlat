@@ -1,10 +1,11 @@
 import { useRef } from 'react'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
 import PageSection from './PageSection.jsx'
-import CountUp from './CountUp.jsx'
 import ProfilePhoto from './ProfilePhoto.jsx'
+import ProfileBento from './ProfileBento.jsx'
 import { EASE_EXPO } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
+import { siteConfig } from '../config/site.config.js'
 
 function StatementLine({ parts }) {
   const ref = useRef(null)
@@ -14,8 +15,7 @@ function StatementLine({ parts }) {
   return (
     <p
       ref={ref}
-      className="max-w-[20ch] font-heading font-semibold leading-[1.12] tracking-tight text-carbon"
-      style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)' }}
+      className="max-w-[20ch] font-heading text-[2rem] font-semibold leading-[1.12] tracking-tight text-carbon sm:text-[2.5rem] lg:text-[3rem]"
     >
       {parts.map((part, i) => (
         <motion.span
@@ -32,75 +32,10 @@ function StatementLine({ parts }) {
   )
 }
 
-function BrandMarquee({ brands }) {
-  const reduce = useReducedMotion()
-
-  return (
-    <ul className="mt-6 flex flex-wrap gap-x-4 gap-y-2">
-      {brands.map((brand, i) => (
-        <motion.li
-          key={brand}
-          initial={reduce ? false : { opacity: 0, y: 6 }}
-          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.15 + i * 0.06, duration: 0.4, ease: EASE_EXPO }}
-          className="font-body text-sm text-carbon"
-        >
-          {brand}
-        </motion.li>
-      ))}
-    </ul>
-  )
-}
-
-function CredibilityRail({ p }) {
-  return (
-    <>
-      <p className="font-body text-sm text-tech">{p.credibilityLabel}</p>
-      <div className="mt-4 flex items-baseline gap-1">
-        <CountUp
-          value={p.experienceValue}
-          className="font-heading text-5xl font-bold text-carbon"
-        />
-        <span className="font-heading text-4xl font-bold text-carbon">+</span>
-        <span className="ml-1 font-body text-lg text-tech">{p.experienceUnit}</span>
-      </div>
-
-      <BrandMarquee brands={p.credibility} />
-
-      <div className="mt-10 grid grid-cols-2 gap-8 border-t border-line pt-8">
-        <div>
-          <p className="font-body text-xs font-medium uppercase tracking-wide text-tech">
-            {p.roles.agencies.title}
-          </p>
-          <ul className="list-chevron mt-3 space-y-1.5">
-            {p.roles.agencies.items.map((item) => (
-              <li key={item} className="font-body text-sm text-carbon">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p className="font-body text-xs font-medium uppercase tracking-wide text-tech">
-            {p.roles.brands.title}
-          </p>
-          <ul className="list-chevron mt-3 space-y-1.5">
-            {p.roles.brands.items.map((item) => (
-              <li key={item} className="font-body text-sm text-carbon">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </>
-  )
-}
-
 export default function StrategicProfile() {
   const { t } = useLanguage()
   const p = t.profile
+  const gazeLeft = siteConfig.profileGaze === 'left'
 
   return (
     <PageSection
@@ -112,47 +47,55 @@ export default function StrategicProfile() {
       <StatementLine parts={p.statement} />
 
       <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start lg:gap-x-20 lg:gap-y-0">
-        <aside className="flex flex-col gap-10 lg:col-span-5 lg:col-start-8">
+        <aside
+          className={`flex flex-col gap-10 lg:col-span-5 ${
+            gazeLeft ? 'lg:order-1 lg:col-start-1' : 'lg:order-2 lg:col-start-8'
+          }`}
+        >
           <ProfilePhoto />
-          <div className="hidden lg:block">
-            <CredibilityRail p={p} />
-          </div>
         </aside>
 
-        <div className="lg:col-span-7 lg:col-start-1 lg:row-start-1">
+        <div
+          className={`lg:col-span-7 ${
+            gazeLeft
+              ? 'lg:order-2 lg:col-start-7 lg:row-start-1'
+              : 'lg:order-1 lg:col-start-1 lg:row-start-1'
+          }`}
+        >
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.5, ease: EASE_EXPO }}
-            className="max-w-prose font-body text-base leading-[1.8] text-carbon sm:text-lg"
+            className="max-w-prose font-body text-base leading-[1.5] text-carbon"
           >
             {p.about}
           </motion.p>
 
           <div className="mt-12 space-y-10 border-t border-line pt-10">
             <div>
-              <h3 className="font-heading text-lg font-medium text-carbon">
+              <h3 className="font-heading text-[1.375rem] font-semibold text-carbon">
                 {p.technical.title}
               </h3>
-              <p className="mt-3 max-w-prose font-body text-sm leading-relaxed text-tech">
+              <p className="mt-3 max-w-prose font-body text-base leading-[1.5] text-tech">
                 {p.technical.text}
               </p>
             </div>
             <div>
-              <h3 className="font-heading text-lg font-medium text-carbon">
+              <h3 className="font-heading text-[1.375rem] font-semibold text-carbon">
                 {p.human.title}
               </h3>
-              <p className="mt-3 max-w-prose font-body text-sm leading-relaxed text-tech">
+              <p className="mt-3 max-w-prose font-body text-base leading-[1.5] text-tech">
                 {p.human.text}
               </p>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="lg:hidden">
-          <CredibilityRail p={p} />
-        </div>
+      <div className="mt-14">
+        <p className="mb-6 font-mono text-[0.875rem] text-tech">{p.bento.numbersTitle}</p>
+        <ProfileBento profile={p} />
       </div>
 
       <motion.div
@@ -162,18 +105,21 @@ export default function StrategicProfile() {
         transition={{ duration: 0.55, ease: EASE_EXPO }}
         className="mt-20 border-t-2 border-orange pt-10"
       >
+        <p className="mb-8 max-w-prose font-body text-base leading-[1.5] text-tech">
+          {p.missionVisionIntro}
+        </p>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-16">
           <blockquote className="max-w-prose">
-            <p className="font-heading text-xl font-medium leading-snug text-carbon sm:text-2xl">
-              “{p.mission.text}”
+            <p className="font-heading text-[1.375rem] font-semibold leading-[1.5] text-carbon sm:text-[1.5rem]">
+              {p.mission.text}
             </p>
-            <footer className="mt-4 font-body text-sm text-tech">— {p.mission.title}</footer>
+            <footer className="mt-4 font-body text-[0.875rem] text-tech">— {p.mission.title}</footer>
           </blockquote>
           <blockquote className="max-w-prose">
-            <p className="font-heading text-xl font-medium leading-snug text-carbon sm:text-2xl">
-              “{p.vision.text}”
+            <p className="font-heading text-[1.375rem] font-semibold leading-[1.5] text-carbon sm:text-[1.5rem]">
+              {p.vision.text}
             </p>
-            <footer className="mt-4 font-body text-sm text-tech">— {p.vision.title}</footer>
+            <footer className="mt-4 font-body text-[0.875rem] text-tech">— {p.vision.title}</footer>
           </blockquote>
         </div>
       </motion.div>

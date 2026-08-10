@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
 const fieldInput =
-  'contact-field-input peer w-full min-h-[2.75rem] appearance-none border-0 border-b border-line bg-transparent px-0 pb-2 pt-6 font-body text-sm text-carbon outline-none transition-colors duration-200 placeholder:text-transparent focus:border-orange disabled:opacity-60'
+  'contact-field-input peer w-full min-h-[2.75rem] appearance-none border-0 border-b border-line bg-transparent px-0 pb-2 pt-6 font-body text-base text-carbon outline-none transition-colors duration-200 placeholder:text-transparent focus:border-orange disabled:opacity-60'
 
 function FieldMessage({ id, error, errorMessage }) {
   return (
     <p
       id={id}
-      className={`mt-1.5 min-h-[1.125rem] font-body text-xs leading-tight ${
+      className={`mt-1.5 min-h-[1.125rem] font-body text-[0.875rem] leading-tight ${
         error ? 'text-orange' : 'text-transparent'
       }`}
       aria-live="polite"
@@ -38,8 +38,8 @@ export default function FloatingField({
 
   const labelClass = `pointer-events-none absolute left-0 origin-left transition-all duration-200 ${
     active
-      ? 'top-1 translate-y-0 text-xs text-orange'
-      : 'top-6 -translate-y-1/2 text-sm text-tech'
+      ? 'top-1 translate-y-0 text-[0.875rem] text-orange'
+      : 'top-6 -translate-y-1/2 text-base text-tech'
   }`
 
   const wrapperClass = 'contact-field relative min-h-[4.25rem]'

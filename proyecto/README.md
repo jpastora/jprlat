@@ -85,10 +85,21 @@ Eventos instrumentados: `cta_click`, `whatsapp_click`, `calendly_open`, `cv_down
 
 | Archivo | Qué editar |
 |---------|------------|
-| `src/config/site.config.js` | URL del sitio, foto de perfil (`/public/profile.jpg`), URL de Calendly |
+| `src/config/site.config.js` | URL del sitio, foto de perfil (`profileImage`), dirección de mirada (`profileGaze`), URL de Calendly |
 | `src/data/testimonials.js` | Citas de testimonios (ES/EN) |
 | `src/data/translations.js` | Todo el copy del sitio |
 | `public/profile.jpg` | Foto de perfil (fallback: monograma JP>) |
+
+### Foto de perfil y dirección de mirada (`profileGaze`)
+
+La persona en la foto debe mirar hacia el titular/headline adyacente en la sección de perfil estratégico.
+
+1. Coloca tu imagen en `public/profile.jpg` (o actualiza `profileImage` en `site.config.js`).
+2. Ajusta `profileGaze` según la dirección de la mirada en la foto:
+   - **`left`** — la foto va a la izquierda y el texto a la derecha (la persona mira hacia el titular).
+   - **`right`** — la foto va a la derecha y el texto a la izquierda.
+
+`StrategicProfile.jsx` y `ProfilePhoto.jsx` leen `siteConfig.profileGaze` para ordenar el grid y mostrar el indicador visual de mirada.
 
 ---
 
