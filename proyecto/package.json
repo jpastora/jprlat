@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "generate:assets": "node scripts/generate-assets.mjs",
-    "prebuild": "npm run generate:assets",
+    "fetch:lottie": "node scripts/fetch-lottie-calendar.mjs",
+    "prebuild": "npm run generate:assets && npm run fetch:lottie",
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint",

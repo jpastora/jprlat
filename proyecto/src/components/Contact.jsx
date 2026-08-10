@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import {
@@ -8,7 +8,6 @@ import {
   Loader2,
   AlertCircle,
   ArrowUpRight,
-  CheckCircle2,
 } from 'lucide-react'
 import { GithubMark, LinkedinMark } from './BrandIcons.jsx'
 import PageSection from './PageSection.jsx'
@@ -16,14 +15,16 @@ import FloatingField, { HoneypotField } from './FloatingField.jsx'
 import MagneticButton from './MagneticButton.jsx'
 import CalendlyButton from './CalendlyButton.jsx'
 import SectionTitle from './SectionTitle.jsx'
-import LottieMark from './LottieMark.jsx'
+import SectionErrorBoundary from './SectionErrorBoundary.jsx'
 import ContactIllustration from '../assets/illustrations/ContactIllustration.jsx'
-import successCheck from '../assets/lottie/success-check.json'
 import { itemVariants } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 import { contactInfo } from '../data/translations.js'
 import { validateContactForm } from '../utils/validation.js'
 import { track } from '../lib/analytics.js'
+
+const ContactSuccessMark = lazy(() => import('./ContactSuccessMark.jsx'))
+const ContactCalendarMark = lazy(() => import('./ContactCalendarMark.jsx'))
 
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
@@ -39,6 +40,7 @@ export default function Contact() {
   const [form, setForm] = useState(EMPTY)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle')
+  const [successKey, setSuccessKey] = useState(0)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -50,6 +52,7 @@ export default function Contact() {
     e.preventDefault()
 
     if (form.website) {
+      setSuccessKey((k) => k + 1)
       setStatus('success')
       setForm(EMPTY)
       return
@@ -73,6 +76,7 @@ export default function Contact() {
 
     if (!EMAILJS_CONFIGURED) {
       setTimeout(() => {
+        setSuccessKey((k) => k + 1)
         setStatus('success')
         setForm(EMPTY)
         track('form_submit', { mode: 'demo' })
@@ -82,6 +86,7 @@ export default function Contact() {
 
     try {
       await emailjs.send(SERVICE_ID, TEMPLATE_ID, params, { publicKey: PUBLIC_KEY })
+      setSuccessKey((k) => k + 1)
       setStatus('success')
       setForm(EMPTY)
       track('form_submit', { mode: 'emailjs' })
@@ -114,7 +119,7 @@ export default function Contact() {
           <p className="mt-6 max-w-prose font-body text-base leading-[1.5] text-tech">{c.text}</p>
 
           <div className="mt-10">
-            <p className="font-body text-[0.875rem] text-tech">{c.directLabel}</p>
+            <p className="font-body text-base text-tech">{c.directLabel}</p>
             <ul className="mt-4 space-y-1">
               {channels.map(({ icon: Icon, label, href, trackLabel }) => (
                 <li key={label}>
@@ -141,12 +146,21 @@ export default function Contact() {
               ))}
             </ul>
             <div className="mt-8 border-t border-line pt-8">
-              <p className="font-body text-base leading-[1.5] text-tech">{c.calendlyLead}</p>
-              <div className="mt-4">
-                <CalendlyButton variant="primary" source="contact" />
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6">
+                <Suspense fallback={null}>
+                  <SectionErrorBoundary message="La animación de calendario no pudo cargarse.">
+                    <ContactCalendarMark />
+                  </SectionErrorBoundary>
+                </Suspense>
+                <div className="min-w-0 flex-1">
+                  <p className="font-body text-base leading-[1.5] text-tech">{c.calendlyLead}</p>
+                  <div className="mt-4">
+                    <CalendlyButton variant="primary" source="contact" />
+                  </div>
+                </div>
               </div>
             </div>
-            <p className="mt-8 font-body text-[0.875rem] text-tech">{c.responseNote}</p>
+            <p className="mt-8 font-body text-base text-tech">{c.responseNote}</p>
           </div>
         </motion.div>
 
@@ -228,17 +242,15 @@ export default function Contact() {
               </MagneticButton>
             </div>
 
-            <div aria-live="polite" className="min-h-[1.5rem]">
+            <div aria-live="polite" className="min-h-[4.5rem] pt-2">
               {status === 'success' && (
-                <p className="flex items-center gap-2 font-body text-base leading-[1.5] text-carbon">
-                  <LottieMark
-                    animationData={successCheck}
-                    className="h-5 w-5 shrink-0"
-                    fallback={
-                      <CheckCircle2 size={20} className="shrink-0 text-orange" aria-hidden="true" />
-                    }
-                  />
-                  {EMAILJS_CONFIGURED ? c.success : c.notConfigured}
+                <p className="flex items-start gap-3 font-body text-base leading-[1.5] text-carbon">
+                  <Suspense fallback={<span className="inline-block h-12 w-12 shrink-0" aria-hidden="true" />}>
+                    <SectionErrorBoundary message="La animación de éxito no pudo cargarse.">
+                      <ContactSuccessMark playKey={successKey} />
+                    </SectionErrorBoundary>
+                  </Suspense>
+                  <span className="pt-3">{EMAILJS_CONFIGURED ? c.success : c.notConfigured}</span>
                 </p>
               )}
               {status === 'error' && (

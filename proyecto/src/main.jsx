@@ -7,7 +7,6 @@ import '@fontsource/geist-sans/700.css'
 import '@fontsource/geist-mono/400.css'
 import '@fontsource/geist-mono/500.css'
 import '@fontsource-variable/source-sans-3/wght.css'
-import './lib/setupDotLottie.js'
 import './styles/index.css'
 import App from './App.jsx'
 

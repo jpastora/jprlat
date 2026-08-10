@@ -8,9 +8,7 @@ import {
 } from 'framer-motion'
 import PageSection from './PageSection.jsx'
 import MaskReveal from './MaskReveal.jsx'
-import LottieMark from './LottieMark.jsx'
 import ProcessIllustration from '../assets/illustrations/ProcessIllustration.jsx'
-import flowAmbient from '../assets/lottie/flow-ambient.json'
 import { processSteps } from '../data/process.js'
 import { EASE_EXPO } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
@@ -214,20 +212,9 @@ export default function ProcessSection() {
     </ol>
   )
 
-  const ambientLottie = (
-    <LottieMark
-      animationData={flowAmbient}
-      loop
-      autoplay
-      className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-[0.07]"
-      fallback={null}
-    />
-  )
-
   if (reduce) {
     return (
       <PageSection id="proceso" wide className="relative pb-28 pt-16 sm:pb-36 sm:pt-20">
-        {ambientLottie}
         <ProcessHeader title={t.process.title} subtitle={t.process.subtitle} intro={t.process.intro} />
         <ProcessTimeline lineProgress={lineProgress} nodePosition={nodePosition} reduce />
         {steps}
@@ -238,7 +225,6 @@ export default function ProcessSection() {
   return (
     <PageSection id="proceso" wide className="relative pb-0 pt-16 sm:pt-20">
       <div ref={scrollRef} className="relative min-h-[140vh] lg:min-h-[120vh]">
-        {ambientLottie}
         <div className="sticky top-[5.5rem] pb-20 sm:pb-28">
           <ProcessHeader title={t.process.title} subtitle={t.process.subtitle} intro={t.process.intro} />
 
