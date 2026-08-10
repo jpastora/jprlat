@@ -13,7 +13,7 @@ function TestimonialCard({ item, index }) {
       whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.35 }}
       transition={{ delay: index * 0.08, duration: 0.5, ease: EASE_EXPO }}
-      className="flex h-full min-w-[min(100%,20rem)] shrink-0 snap-center flex-col sm:min-w-0"
+      className="flex h-full min-w-[min(100%,20rem)] shrink-0 snap-center flex-col rounded-xl border border-line bg-white p-5 dark:bg-soft/50 sm:min-w-0"
     >
       <span className="font-mono text-3xl leading-none text-orange" aria-hidden="true">
         {'>'}
@@ -33,7 +33,7 @@ function TestimonialCard({ item, index }) {
             <cite className="not-italic font-heading text-base font-medium text-carbon">
               {item.name}
             </cite>
-            <p className="font-body text-[0.875rem] text-tech">
+            <p className="font-body text-base text-tech">
               {item.role[language] ?? item.role.es}
             </p>
           </div>

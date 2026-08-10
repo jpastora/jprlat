@@ -13,7 +13,7 @@ export default function Services() {
       <div className="lg:grid lg:grid-cols-12 lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:col-span-4 lg:self-start">
           <MaskReveal>
-            <p className="font-body text-[0.875rem] font-medium text-tech">{t.services.title}</p>
+            <p className="font-body text-base font-medium text-tech">{t.services.title}</p>
             <h2 className="mt-3 max-w-[14ch] font-heading text-[2rem] font-semibold leading-[1.5] tracking-tight text-carbon sm:text-[2.5rem]">
               {t.services.stickyTitle}
             </h2>

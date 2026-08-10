@@ -89,7 +89,7 @@ export default function StrategicProfile() {
       </div>
 
       <div className="mt-12">
-        <p className="mb-4 font-mono text-[0.875rem] text-tech">{p.bento.numbersTitle}</p>
+        <p className="mb-4 font-mono text-base text-tech">{p.bento.numbersTitle}</p>
         <ProfileBento profile={p} />
       </div>
 
@@ -108,13 +108,13 @@ export default function StrategicProfile() {
             <p className="font-heading text-[1.375rem] font-semibold leading-[1.5] text-carbon sm:text-[1.5rem]">
               {p.mission.text}
             </p>
-            <footer className="mt-4 font-body text-[0.875rem] text-tech">— {p.mission.title}</footer>
+            <footer className="mt-4 font-body text-base text-tech">— {p.mission.title}</footer>
           </blockquote>
           <blockquote className="max-w-prose">
             <p className="font-heading text-[1.375rem] font-semibold leading-[1.5] text-carbon sm:text-[1.5rem]">
               {p.vision.text}
             </p>
-            <footer className="mt-4 font-body text-[0.875rem] text-tech">— {p.vision.title}</footer>
+            <footer className="mt-4 font-body text-base text-tech">— {p.vision.title}</footer>
           </blockquote>
         </div>
       </motion.div>
