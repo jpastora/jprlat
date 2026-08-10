@@ -6,13 +6,13 @@ import {
   MessageCircle,
   Send,
   Loader2,
-  CheckCircle2,
   AlertCircle,
   ArrowUpRight,
+  CheckCircle2,
 } from 'lucide-react'
 import { GithubMark, LinkedinMark } from './BrandIcons.jsx'
 import PageSection from './PageSection.jsx'
-import FloatingField from './FloatingField.jsx'
+import FloatingField, { HoneypotField } from './FloatingField.jsx'
 import MagneticButton from './MagneticButton.jsx'
 import CalendlyButton from './CalendlyButton.jsx'
 import SectionTitle from './SectionTitle.jsx'
@@ -30,13 +30,7 @@ const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
 const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 const EMAILJS_CONFIGURED = Boolean(SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY)
 
-if (!EMAILJS_CONFIGURED) {
-  console.warn(
-    '[Contacto] EmailJS no está configurado. El formulario funciona en modo demo.',
-  )
-}
-
-const EMPTY = { name: '', email: '', projectType: '', message: '' }
+const EMPTY = { name: '', email: '', projectType: '', message: '', website: '' }
 
 export default function Contact() {
   const { t } = useLanguage()
@@ -54,6 +48,13 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (form.website) {
+      setStatus('success')
+      setForm(EMPTY)
+      return
+    }
+
     const validation = validateContactForm(form)
     if (Object.keys(validation).length > 0) {
       setErrors(validation)
@@ -71,7 +72,6 @@ export default function Contact() {
     }
 
     if (!EMAILJS_CONFIGURED) {
-      console.info('[Contacto] (modo demo) Datos del formulario:', params)
       setTimeout(() => {
         setStatus('success')
         setForm(EMPTY)
@@ -129,7 +129,7 @@ export default function Contact() {
                     }}
                     className="group inline-flex items-center gap-2 py-2 font-body text-base text-carbon transition-colors hover:text-orange"
                   >
-                    <Icon size={15} strokeWidth={1.6} aria-hidden="true" />
+                    <Icon size={16} strokeWidth={1.6} aria-hidden="true" />
                     {label}
                     <ArrowUpRight
                       size={14}
@@ -141,7 +141,7 @@ export default function Contact() {
               ))}
             </ul>
             <div className="mt-8 border-t border-line pt-8">
-              <p className="font-body text-base text-tech">{c.calendlyLead}</p>
+              <p className="font-body text-base leading-[1.5] text-tech">{c.calendlyLead}</p>
               <div className="mt-4">
                 <CalendlyButton variant="primary" source="contact" />
               </div>
@@ -151,12 +151,10 @@ export default function Contact() {
         </motion.div>
 
         <motion.div variants={itemVariants} className="lg:col-span-7">
-          <form
-            onSubmit={handleSubmit}
-            noValidate
-            className="contact-field rounded-2xl border border-line bg-white p-6 sm:p-8 dark:border-line dark:bg-soft"
-          >
-            <div className="grid grid-cols-1 gap-x-5 gap-y-1 sm:grid-cols-2">
+          <form onSubmit={handleSubmit} noValidate className="contact-field space-y-4">
+            <HoneypotField value={form.website} onChange={handleChange} />
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FloatingField
                 id="name"
                 name="name"
@@ -178,39 +176,35 @@ export default function Contact() {
               />
             </div>
 
-            <div className="mt-1">
-              <FloatingField
-                id="projectType"
-                name="projectType"
-                as="select"
-                label={c.fields.projectType}
-                value={form.projectType}
-                onChange={handleChange}
-                placeholder={c.placeholders.projectType}
-                options={c.projectTypes}
-                error={errors.projectType}
-                errorMessage={c.errors[errors.projectType]}
-              />
-            </div>
+            <FloatingField
+              id="projectType"
+              name="projectType"
+              as="select"
+              label={c.fields.projectType}
+              value={form.projectType}
+              onChange={handleChange}
+              placeholder={c.placeholders.projectType}
+              options={c.projectTypes}
+              error={errors.projectType}
+              errorMessage={c.errors[errors.projectType]}
+            />
 
-            <div className="mt-1">
-              <FloatingField
-                id="message"
-                name="message"
-                as="textarea"
-                label={c.fields.message}
-                value={form.message}
-                onChange={handleChange}
-                error={errors.message}
-                errorMessage={c.errors[errors.message]}
-              />
-            </div>
+            <FloatingField
+              id="message"
+              name="message"
+              as="textarea"
+              label={c.fields.message}
+              value={form.message}
+              onChange={handleChange}
+              error={errors.message}
+              errorMessage={c.errors[errors.message]}
+            />
 
-            <div className="mt-8">
+            <div className="pt-2">
               <MagneticButton
                 type="submit"
                 disabled={status === 'sending'}
-                className="relative inline-flex min-w-[10.5rem] items-center justify-center gap-2 overflow-hidden rounded-lg bg-orange px-6 py-3 font-body text-base font-semibold text-white transition-colors duration-300 hover:bg-carbon disabled:cursor-not-allowed disabled:opacity-70"
+                className="relative inline-flex min-w-[11rem] items-center justify-center gap-2 overflow-hidden rounded-lg bg-orange px-6 py-3 font-body text-base font-semibold text-white transition-colors duration-300 hover:bg-carbon disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {status === 'success' && (
                   <motion.span
@@ -234,9 +228,9 @@ export default function Contact() {
               </MagneticButton>
             </div>
 
-            <div aria-live="polite" className="mt-4 min-h-[1.5rem]">
+            <div aria-live="polite" className="min-h-[1.5rem]">
               {status === 'success' && (
-                <p className="flex items-center gap-2 font-body text-base text-carbon">
+                <p className="flex items-center gap-2 font-body text-base leading-[1.5] text-carbon">
                   <LottieAnimation
                     animationData={successCheck}
                     className="h-5 w-5 shrink-0"
@@ -248,7 +242,7 @@ export default function Contact() {
                 </p>
               )}
               {status === 'error' && (
-                <p className="flex items-center gap-2 font-body text-base text-carbon">
+                <p className="flex items-center gap-2 font-body text-base leading-[1.5] text-carbon">
                   <AlertCircle size={16} className="shrink-0 text-orange" aria-hidden="true" />
                   {c.error}
                 </p>

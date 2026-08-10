@@ -57,13 +57,36 @@ cp .env.example .env
 
 ### EmailJS (formulario de contacto)
 
+Crea un servicio y plantilla en [emailjs.com](https://www.emailjs.com) y agrega:
+
 ```txt
-VITE_EMAILJS_SERVICE_ID=
-VITE_EMAILJS_TEMPLATE_ID=
-VITE_EMAILJS_PUBLIC_KEY=
+VITE_EMAILJS_SERVICE_ID=tu_service_id
+VITE_EMAILJS_TEMPLATE_ID=tu_template_id
+VITE_EMAILJS_PUBLIC_KEY=tu_public_key
 ```
 
-Consigue estos valores en [emailjs.com](https://www.emailjs.com). Si faltan, el formulario funciona en **modo demo**.
+#### Configuración de la plantilla EmailJS
+
+En el panel de EmailJS, crea una plantilla de email con estas variables (nombres exactos):
+
+| Variable en plantilla | Origen en el formulario |
+|----------------------|-------------------------|
+| `{{from_name}}` | Nombre del remitente |
+| `{{reply_to}}` | Correo para responder |
+| `{{project_type}}` | Tipo de proyecto seleccionado |
+| `{{message}}` | Cuerpo del mensaje |
+
+El formulario envía estos campos automáticamente vía `@emailjs/browser`. Si las tres variables de entorno están definidas, el envío es real; si faltan, funciona en **modo demo** (simula éxito sin enviar).
+
+Pasos rápidos:
+
+1. Regístrate en EmailJS y crea un **Email Service** (Gmail, Outlook, etc.).
+2. Crea un **Email Template** con las variables de la tabla.
+3. Copia Service ID, Template ID y Public Key a tu `.env`.
+4. En Vercel, agrega las mismas variables en **Settings → Environment Variables**.
+5. Redeploy.
+
+Si faltan, el formulario funciona en **modo demo**.
 
 ### Google Analytics 4 (opcional)
 

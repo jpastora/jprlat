@@ -125,12 +125,12 @@ section[id] {
   -webkit-text-fill-color: var(--color-carbon);
   caret-color: var(--color-carbon);
   transition: background-color 9999s ease-out;
-  box-shadow: 0 0 0 1000px var(--color-white) inset;
+  box-shadow: 0 0 0 1000px #f8fafc inset;
 }
 
 .dark .contact-field-input:-webkit-autofill,
 .dark .contact-field-input:-webkit-autofill:hover,
 .dark .contact-field-input:-webkit-autofill:focus {
   -webkit-text-fill-color: var(--color-carbon);
-  box-shadow: 0 0 0 1000px var(--color-soft) inset;
+  box-shadow: 0 0 0 1000px #1c1f24 inset;
 }

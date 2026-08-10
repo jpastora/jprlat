@@ -67,7 +67,7 @@ function AppContent() {
 
       <a
         href="#inicio"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-lg focus:bg-carbon focus:px-4 focus:py-2 focus:font-body focus:text-sm focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-lg focus:bg-carbon focus:px-4 focus:py-2 focus:font-body focus:text-base focus:text-white"
       >
         {language === 'en' ? 'Skip to content' : 'Saltar al contenido'}
       </a>
