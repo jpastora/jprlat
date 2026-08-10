@@ -8,7 +8,7 @@ import {
 } from 'framer-motion'
 import PageSection from './PageSection.jsx'
 import MaskReveal from './MaskReveal.jsx'
-import LottieAnimation from './LottieAnimation.jsx'
+import LottieMark from './LottieMark.jsx'
 import ProcessIllustration from '../assets/illustrations/ProcessIllustration.jsx'
 import flowAmbient from '../assets/lottie/flow-ambient.json'
 import { processSteps } from '../data/process.js'
@@ -215,7 +215,7 @@ export default function ProcessSection() {
   )
 
   const ambientLottie = (
-    <LottieAnimation
+    <LottieMark
       animationData={flowAmbient}
       loop
       autoplay

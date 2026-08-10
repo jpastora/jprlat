@@ -7,7 +7,7 @@ import ProfileMonogram from './ProfileMonogram.jsx'
 /**
  * Profile photo with optional gaze-direction accent.
  * profileGaze in site.config.js: 'left' | 'right' — motif points toward adjacent headline.
- * Set showGazeAccent={false} when photo sits inside the bento grid.
+ * Set showGazeAccent={false} when the photo sits inside the profile card.
  */
 export default function ProfilePhoto({
   compact = false,

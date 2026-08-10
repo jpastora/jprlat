@@ -16,7 +16,7 @@ import FloatingField, { HoneypotField } from './FloatingField.jsx'
 import MagneticButton from './MagneticButton.jsx'
 import CalendlyButton from './CalendlyButton.jsx'
 import SectionTitle from './SectionTitle.jsx'
-import LottieAnimation from './LottieAnimation.jsx'
+import LottieMark from './LottieMark.jsx'
 import ContactIllustration from '../assets/illustrations/ContactIllustration.jsx'
 import successCheck from '../assets/lottie/success-check.json'
 import { itemVariants } from '../utils/motion.js'
@@ -231,7 +231,7 @@ export default function Contact() {
             <div aria-live="polite" className="min-h-[1.5rem]">
               {status === 'success' && (
                 <p className="flex items-center gap-2 font-body text-base leading-[1.5] text-carbon">
-                  <LottieAnimation
+                  <LottieMark
                     animationData={successCheck}
                     className="h-5 w-5 shrink-0"
                     fallback={
