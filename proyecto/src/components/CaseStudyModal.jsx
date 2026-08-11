@@ -7,7 +7,8 @@ import { EASE_EXPO } from '../utils/motion.js'
 
 function tField(obj, language) {
   if (!obj) return ''
-  return obj[language] ?? obj.es ?? obj
+  if (typeof obj === 'string') return obj
+  return obj[language] ?? obj.es ?? ''
 }
 
 export default function CaseStudyModal({ project, onClose }) {
@@ -58,7 +59,9 @@ export default function CaseStudyModal({ project, onClose }) {
   const problem = tField(project.problem, language)
   const architecture = tField(project.architecture, language)
   const decisions = project.decisions?.[language] ?? project.decisions?.es ?? []
-  const marketingImpact = project.marketingImpact?.[language] ?? project.marketingImpact?.es ?? []
+  const businessImpact = project.businessImpact?.[language] ?? project.businessImpact?.es ?? []
+  const hasRepo = Boolean(project.links?.repo)
+  const hasSite = Boolean(project.links?.site)
 
   return (
     <AnimatePresence>
@@ -89,7 +92,14 @@ export default function CaseStudyModal({ project, onClose }) {
         >
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="font-mono text-[0.875rem] text-tech">{project.category}</p>
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="font-mono text-[0.875rem] text-tech">{project.category}</p>
+                {project.confidential && (
+                  <span className="rounded-md border border-orange/40 bg-orange/5 px-2 py-0.5 font-body text-[0.875rem] text-orange">
+                    {t.projects.confidential}
+                  </span>
+                )}
+              </div>
               <h2 id="case-study-title" className="mt-1 font-heading text-[2rem] font-semibold text-carbon">
                 {title}
               </h2>
@@ -105,10 +115,6 @@ export default function CaseStudyModal({ project, onClose }) {
               <X size={18} />
             </button>
           </div>
-
-          {project.todo && (
-            <p className="mt-4 font-mono text-[0.875rem] text-tech">{labels.todo}</p>
-          )}
 
           <div className="mt-8 space-y-8">
             <section>
@@ -127,74 +133,67 @@ export default function CaseStudyModal({ project, onClose }) {
               </ul>
             </section>
 
-            <section className="grid gap-6 md:grid-cols-2">
-              <div className="rounded-xl border border-line p-5">
-                <h3 className="font-heading text-[1.375rem] font-semibold text-carbon">
-                  {labels.architecture}
-                </h3>
-                <p className="mt-3 font-body text-base leading-[1.5] text-carbon">{architecture}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.stack?.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-md border border-line px-2 py-1 font-mono text-[0.875rem] text-tech"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="rounded-xl border border-orange/40 bg-orange/5 p-5">
-                <h3 className="font-heading text-[1.375rem] font-semibold text-carbon">
-                  {labels.marketing}
-                </h3>
-                <ul className="mt-3 space-y-2">
-                  {marketingImpact.map((item) => (
-                    <li key={item} className="font-body text-base leading-[1.5] text-carbon">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                {project.metrics?.length > 0 && (
-                  <dl className="mt-5 grid grid-cols-2 gap-3">
-                    {project.metrics.map((m) => (
-                      <div key={tField(m.label, language)}>
-                        <dt className="font-body text-[0.875rem] text-tech">
-                          {tField(m.label, language)}
-                        </dt>
-                        <dd className="font-heading text-xl font-semibold text-orange">{m.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                )}
+            <section>
+              <h3 className="font-heading text-[1.375rem] font-semibold text-carbon">
+                {labels.architecture}
+              </h3>
+              <p className="mt-3 font-body text-base leading-[1.5] text-carbon">{architecture}</p>
+            </section>
+
+            <section className="rounded-xl border border-orange/40 bg-orange/5 p-5">
+              <h3 className="font-heading text-[1.375rem] font-semibold text-carbon">
+                {labels.businessFocus}
+              </h3>
+              <ul className="mt-3 space-y-2">
+                {businessImpact.map((item) => (
+                  <li key={item} className="font-body text-base leading-[1.5] text-carbon">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section>
+              <h3 className="font-heading text-[1.375rem] font-semibold text-carbon">{labels.stack}</h3>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {project.stack?.map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded-md border border-line px-2 py-1 font-mono text-[0.875rem] text-tech"
+                  >
+                    {tech}
+                  </span>
+                ))}
               </div>
             </section>
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-3 border-t border-line pt-6">
-            {project.links?.demo && (
-              <a
-                href={project.links.demo}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg bg-orange px-5 py-2.5 font-body text-base font-semibold text-white hover:bg-carbon"
-              >
-                <ExternalLink size={16} aria-hidden="true" />
-                {t.projects.open}
-              </a>
-            )}
-            {project.links?.repo && (
-              <a
-                href={project.links.repo}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-line px-5 py-2.5 font-body text-base font-semibold text-carbon hover:border-orange hover:text-orange"
-              >
-                <GithubMark size={16} />
-                {t.projects.code}
-              </a>
-            )}
-          </div>
+          {(hasRepo || hasSite) && (
+            <div className="mt-8 flex flex-wrap gap-3 border-t border-line pt-6">
+              {hasRepo && (
+                <a
+                  href={project.links.repo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg border border-line px-5 py-2.5 font-body text-base font-semibold text-carbon hover:border-orange hover:text-orange"
+                >
+                  <GithubMark size={16} />
+                  {t.projects.code}
+                </a>
+              )}
+              {hasSite && (
+                <a
+                  href={project.links.site}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-orange px-5 py-2.5 font-body text-base font-semibold text-white hover:bg-carbon"
+                >
+                  <ExternalLink size={16} aria-hidden="true" />
+                  {t.projects.visitSite}
+                </a>
+              )}
+            </div>
+          )}
         </motion.div>
       </motion.div>
     </AnimatePresence>

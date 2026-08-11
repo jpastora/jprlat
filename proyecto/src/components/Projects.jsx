@@ -6,7 +6,6 @@ import ProjectCard from './ProjectCard.jsx'
 import Testimonials from './Testimonials.jsx'
 import SectionErrorBoundary from './SectionErrorBoundary.jsx'
 import ProjectsEmptyIllustration from '../assets/illustrations/ProjectsEmptyIllustration.jsx'
-import { itemVariants } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 import { projects } from '../data/projects.js'
 
@@ -37,18 +36,10 @@ export default function Projects() {
       wide
       className="-mt-6 pb-28 pt-20 sm:pb-36 sm:pt-28"
     >
-      <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-        <SectionTitle
-          title={t.projects.title}
-          subtitle={`${t.projects.subtitle} ${t.projects.intro}`}
-        />
-        <motion.span
-          variants={itemVariants}
-          className="shrink-0 font-mono text-[0.875rem] text-tech"
-        >
-          {t.projects.statusBadge}
-        </motion.span>
-      </div>
+      <SectionTitle
+        title={t.projects.title}
+        subtitle={`${t.projects.subtitle} ${t.projects.intro}`}
+      />
 
       <div
         className="mt-10 flex flex-wrap gap-6 border-b border-line pb-1"
