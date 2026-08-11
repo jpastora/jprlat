@@ -1,4 +1,19 @@
 const MOTIFS = {
+  Fintech: (
+    <>
+      <rect x="28" y="28" width="56" height="40" rx="6" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M40 48 H72 M40 56 H64" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+      <circle cx="72" cy="40" r="6" stroke="#FF6B00" strokeWidth="1.5" />
+      <path d="M70 40 H74 M72 38 V42" stroke="#FF6B00" strokeWidth="1.5" strokeLinecap="round" />
+    </>
+  ),
+  Estrategia: (
+    <>
+      <circle cx="56" cy="44" r="20" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M56 24 V32 M56 56 V64 M36 44 H44 M68 44 H76" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+      <circle cx="56" cy="44" r="4" fill="#FF6B00" />
+    </>
+  ),
   Web: (
     <>
       <rect x="20" y="24" width="72" height="52" rx="4" stroke="currentColor" strokeWidth="1.5" />
