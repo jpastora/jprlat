@@ -4,6 +4,8 @@ import { useReducedMotion } from 'framer-motion'
 import LottieMark from './LottieMark.jsx'
 import calendarSchedule from '../assets/lottie/calendar-schedule.json'
 
+const MARK_SIZE = 'h-[7.5rem] w-[7.5rem]'
+
 export default function ContactCalendarMark() {
   const reduce = useReducedMotion()
   const ref = useRef(null)
@@ -30,8 +32,11 @@ export default function ContactCalendarMark() {
 
   if (reduce) {
     return (
-      <span className="inline-flex h-28 w-28 shrink-0 items-center justify-center text-orange" aria-hidden="true">
-        <Calendar size={72} strokeWidth={1.5} />
+      <span
+        className={`inline-flex ${MARK_SIZE} shrink-0 items-center justify-center text-orange`}
+        aria-hidden="true"
+      >
+        <Calendar size={80} strokeWidth={1.5} />
       </span>
     )
   }
@@ -39,7 +44,7 @@ export default function ContactCalendarMark() {
   return (
     <span
       ref={ref}
-      className="inline-flex h-28 w-28 shrink-0 items-center justify-center"
+      className={`inline-flex ${MARK_SIZE} shrink-0 items-center justify-center`}
       aria-hidden="true"
     >
       {active ? (
@@ -47,11 +52,11 @@ export default function ContactCalendarMark() {
           animationData={calendarSchedule}
           loop
           autoplay
-          className="h-28 w-28"
-          fallback={<Calendar size={72} className="text-orange" strokeWidth={1.5} />}
+          className={MARK_SIZE}
+          fallback={<Calendar size={80} className="text-orange" strokeWidth={1.5} />}
         />
       ) : (
-        <Calendar size={72} className="text-tech" strokeWidth={1.5} />
+        <Calendar size={80} className="text-tech" strokeWidth={1.5} />
       )}
     </span>
   )

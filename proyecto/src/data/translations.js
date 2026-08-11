@@ -315,7 +315,7 @@ export const translations = {
       photoAlt: 'Joseph Pastora — professional portrait',
       bento: {
         experienceLabel: 'Years of experience',
-        brandsLabel: 'Brands and agencies',
+        brandsLabel: 'Brands & agencies',
         hybridLabel: 'Hybrid profile',
         hybridValue: 'Tech + growth',
         hybridHint: 'Software, marketing, and data in one flow.',
