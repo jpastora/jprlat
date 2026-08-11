@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { Download } from 'lucide-react'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
 import PageSection from './PageSection.jsx'
 import CountUp from './CountUp.jsx'
@@ -6,6 +7,8 @@ import ProfilePhoto from './ProfilePhoto.jsx'
 import StackIcons from './StackIcons.jsx'
 import { EASE_EXPO } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
+import { track } from '../lib/analytics.js'
+import cvUrl from '../assets/cv/joseph-pastora-cv.pdf'
 
 function StatementLine({ parts }) {
   const ref = useRef(null)
@@ -57,13 +60,13 @@ export default function StrategicProfile() {
         </motion.p>
       </div>
 
-      <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
+      <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:items-stretch lg:gap-12">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5, ease: EASE_EXPO }}
-          className="order-2 flex flex-col gap-8 lg:order-1 lg:col-span-7"
+          className="order-2 flex h-full flex-col gap-8 lg:order-1 lg:col-span-7"
         >
           <div>
             <p className="font-body text-base leading-[1.5] text-carbon">{p.about}</p>
@@ -84,6 +87,36 @@ export default function StrategicProfile() {
               <p className="mt-3 font-body text-base leading-[1.5] text-tech">{p.human.text}</p>
             </div>
           </div>
+
+          <a
+            href={cvUrl}
+            download="joseph-pastora-cv.pdf"
+            onClick={() => track('cv_download', { source: 'profile' })}
+            className="inline-flex w-fit items-center gap-2 rounded-lg border border-line px-4 py-2.5 font-body text-base font-medium text-carbon transition-colors hover:border-orange hover:text-orange"
+          >
+            <Download size={16} strokeWidth={1.6} aria-hidden="true" />
+            {t.cta.downloadCv}
+          </a>
+
+          <div className="mt-auto border-t border-line pt-8">
+            <p className="font-body text-[0.875rem] font-medium uppercase tracking-wide text-tech">
+              {b.brandsLabel}
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {p.credibility.map((brand) => (
+                <span
+                  key={brand}
+                  className="rounded-md border border-line bg-white px-2.5 py-1 font-body text-base text-carbon dark:bg-soft/50"
+                >
+                  {brand}
+                </span>
+              ))}
+            </div>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <span className="font-body text-base text-tech">{b.stackPrefix}</span>
+              <StackIcons className="gap-2" />
+            </div>
+          </div>
         </motion.div>
 
         <motion.aside
@@ -91,9 +124,9 @@ export default function StrategicProfile() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5, delay: 0.08, ease: EASE_EXPO }}
-          className="order-1 mx-auto w-full max-w-sm lg:order-2 lg:col-span-5 lg:mx-0 lg:justify-self-end lg:self-center"
+          className="order-1 mx-auto w-full max-w-sm lg:order-2 lg:col-span-5 lg:mx-0 lg:h-full lg:justify-self-end"
         >
-          <div className="flex w-full flex-col overflow-hidden rounded-xl border border-line bg-white dark:bg-soft/50">
+          <div className="flex h-full w-full flex-col overflow-hidden rounded-xl border border-line bg-white dark:bg-soft/50">
             <ProfilePhoto compact flush showGazeAccent={false} className="mx-auto" />
             <div className="shrink-0 border-t border-line px-5 py-5 sm:px-6 sm:py-6">
               <p className="font-body text-base text-tech">{b.experienceLabel}</p>
@@ -110,29 +143,7 @@ export default function StrategicProfile() {
         </motion.aside>
       </div>
 
-      <div className="mt-12 border-y border-line py-8 sm:py-10">
-        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-          <p className="font-body text-[0.875rem] font-medium uppercase tracking-wide text-tech">
-            {b.brandsLabel}
-          </p>
-          <div className="mt-4 flex flex-wrap justify-center gap-2">
-            {p.credibility.map((brand) => (
-              <span
-                key={brand}
-                className="rounded-md border border-line bg-white px-2.5 py-1 font-body text-base text-carbon dark:bg-soft/50"
-              >
-                {brand}
-              </span>
-            ))}
-          </div>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-            <span className="font-body text-base text-tech">{b.stackPrefix}</span>
-            <StackIcons className="justify-center gap-2" />
-          </div>
-        </div>
-      </div>
-
-      <p className="mt-6 font-body text-base leading-[1.5] text-tech">
+      <p className="mt-10 font-body text-base leading-[1.5] text-tech">
         {b.locationValue} · {b.availability}
       </p>
 
