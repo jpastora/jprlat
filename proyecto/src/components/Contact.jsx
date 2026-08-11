@@ -321,7 +321,7 @@ export default function Contact() {
               <ContactCalendarMark />
             </SectionErrorBoundary>
           </Suspense>
-          <p className="mt-6 max-w-md font-heading text-[1.375rem] font-semibold leading-[1.35] text-carbon sm:text-[1.5rem]">
+          <p className="mt-6 w-full text-balance font-heading text-[1.375rem] font-semibold leading-[1.35] text-carbon text-pretty sm:text-[1.5rem]">
             {c.schedulerLead}
           </p>
           <div className="mt-6">

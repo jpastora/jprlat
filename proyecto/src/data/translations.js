@@ -136,11 +136,8 @@ export const translations = {
     },
     testimonials: {
       title: 'Lo que dicen quienes han trabajado conmigo',
-      subtitle:
-        'Relatos breves de colaboración real. Reemplazar con testimonios verificados.',
       intro:
         'La confianza se construye con resultados medibles y comunicación clara en cada etapa.',
-      todo: 'TODO · testimonio de ejemplo',
     },
     process: {
       title: 'Cómo trabajo',
@@ -360,9 +357,8 @@ export const translations = {
     },
     testimonials: {
       title: 'What clients say about working with me',
-      subtitle: 'Brief stories from real collaboration. Replace with verified testimonials.',
-      intro: 'Trust is built through measurable results and clear communication at every stage.',
-      todo: 'TODO · sample testimonial',
+      intro:
+        'Trust is built through measurable results and clear communication at every stage.',
     },
     process: {
       title: 'How I work',

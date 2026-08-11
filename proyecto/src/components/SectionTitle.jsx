@@ -10,7 +10,7 @@ export default function SectionTitle({ title, subtitle, align = 'left', classNam
       {title}
     </h2>
   ) : (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden pb-[0.12em]">
       <motion.h2
         variants={maskReveal}
         className="max-w-[22ch] font-heading text-[2rem] font-semibold leading-[1.5] tracking-tight text-carbon sm:text-[2.5rem]"

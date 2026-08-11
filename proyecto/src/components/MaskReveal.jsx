@@ -10,7 +10,7 @@ export default function MaskReveal({ children, className = '' }) {
 
   return (
     <motion.div
-      className={`overflow-hidden ${className}`}
+      className={`overflow-hidden pb-[0.12em] ${className}`}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.35 }}

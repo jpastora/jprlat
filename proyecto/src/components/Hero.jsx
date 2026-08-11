@@ -46,7 +46,7 @@ export default function Hero() {
             {t.hero.eyebrow}
           </motion.p>
 
-          <h1 className="mt-4 min-h-[3rem] max-w-[16ch] font-heading text-[3rem] font-bold leading-[1.02] tracking-tight text-carbon sm:min-h-[2.5em] sm:text-5xl lg:text-[3.5rem]">
+          <h1 className="mt-4 max-w-[16ch] font-heading text-[3rem] font-bold leading-[1.2] tracking-tight text-carbon sm:text-5xl lg:text-[3.5rem]">
             <RevealText text={t.hero.title} mode="words" delay={0.08} />
           </h1>
 

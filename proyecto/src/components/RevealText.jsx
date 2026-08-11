@@ -28,7 +28,7 @@ export default function RevealText({
         if (isSpace) return unit
 
         return (
-          <span key={`${unit}-${i}`} className="inline-block overflow-hidden">
+          <span key={`${unit}-${i}`} className="inline-block overflow-hidden pb-[0.14em]">
             <motion.span
               className="inline-block"
               initial={{ y: '110%', opacity: 0 }}
