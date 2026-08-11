@@ -41,6 +41,7 @@ export default function FloatingField({
   options,
   rows = 5,
   placeholder,
+  inputClassName = '',
 }) {
   const [focused, setFocused] = useState(false)
   const filled = Boolean(value && String(value).length > 0)
@@ -103,7 +104,7 @@ export default function FloatingField({
           placeholder=" "
           aria-invalid={Boolean(error)}
           aria-describedby={`err-${name}`}
-          className={`${fieldInput} ${borderClass} min-h-[8rem] resize-y`}
+          className={`${fieldInput} ${borderClass} min-h-[8rem] resize-y ${inputClassName}`}
         />
         <label htmlFor={id} className={labelClass}>
           {label}
