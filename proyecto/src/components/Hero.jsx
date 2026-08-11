@@ -6,7 +6,6 @@ import {
   useTransform,
   useSpring,
 } from 'framer-motion'
-import { Download } from 'lucide-react'
 import HeroDiagram from './HeroDiagram.jsx'
 import MagneticButton from './MagneticButton.jsx'
 import RevealText from './RevealText.jsx'
@@ -17,7 +16,6 @@ import { EASE_EXPO, fadeUp } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 import { scrollToSection } from '../utils/scroll.js'
 import { track } from '../lib/analytics.js'
-import cvUrl from '../assets/cv/joseph-pastora-cv.pdf'
 
 export default function Hero() {
   const { t } = useLanguage()
@@ -99,16 +97,6 @@ export default function Hero() {
             <motion.div variants={fadeUp}>
               <SchedulerButton source="hero" />
             </motion.div>
-            <motion.a
-              variants={fadeUp}
-              href={cvUrl}
-              download="joseph-pastora-cv.pdf"
-              onClick={() => track('cv_download', { source: 'hero' })}
-              className="inline-flex items-center gap-2 px-2 py-3 font-body text-base font-medium text-tech transition-colors duration-300 hover:text-orange"
-            >
-              <Download size={15} aria-hidden="true" />
-              {t.cta.downloadCv}
-            </motion.a>
           </motion.div>
         </div>
 

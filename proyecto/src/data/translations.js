@@ -23,7 +23,7 @@ export const translations = {
     cta: {
       talk: 'Contactar',
       viewProjects: 'Explorar',
-      downloadCv: 'Descargar',
+      downloadCv: 'Descargar CV',
       schedule: 'Agendar',
       openMenu: 'Abrir menú',
       closeMenu: 'Cerrar menú',
@@ -247,7 +247,7 @@ export const translations = {
     cta: {
       talk: 'Contact',
       viewProjects: 'Explore',
-      downloadCv: 'Download',
+      downloadCv: 'Download CV',
       schedule: 'Schedule',
       openMenu: 'Open menu',
       closeMenu: 'Close menu',

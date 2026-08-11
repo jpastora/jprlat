@@ -138,60 +138,15 @@ export default function Contact() {
   return (
     <PageSection id="contacto" wide className="pb-32 pt-20 max-md:pb-44 sm:pb-40 sm:pt-28">
       <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-20">
-        <motion.div variants={itemVariants} className="lg:col-span-5">
+        <motion.div variants={itemVariants} className="order-1 lg:col-span-5 lg:row-start-1">
           <SectionTitle title={c.title} subtitle={c.intro} />
 
           <ContactIllustration className="mt-8 h-auto w-full max-w-[10rem] text-carbon opacity-80" />
 
           <p className="mt-6 max-w-prose font-body text-base leading-[1.5] text-tech">{c.text}</p>
-
-          <div className="mt-10">
-            <p className="font-body text-base text-tech">{c.directLabel}</p>
-            <ul className="mt-4 space-y-1">
-              {channels.map(({ icon: Icon, label, href, trackLabel }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    target={href.startsWith('http') ? '_blank' : undefined}
-                    rel="noreferrer"
-                    onClick={() => {
-                      if (trackLabel === 'whatsapp') {
-                        track('whatsapp_click', { source: 'contact' })
-                      }
-                    }}
-                    className="group inline-flex items-center gap-2 py-2 font-body text-base text-carbon transition-colors hover:text-orange"
-                  >
-                    <Icon size={16} strokeWidth={1.6} aria-hidden="true" />
-                    {label}
-                    <ArrowUpRight
-                      size={14}
-                      className="opacity-0 transition-opacity group-hover:opacity-100"
-                      aria-hidden="true"
-                    />
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-10 w-full border-t border-line pt-10">
-              <div className="flex flex-col items-center text-center">
-                <Suspense fallback={<span className="inline-block h-[7.5rem] w-[7.5rem]" aria-hidden="true" />}>
-                  <SectionErrorBoundary message="La animación de calendario no pudo cargarse.">
-                    <ContactCalendarMark />
-                  </SectionErrorBoundary>
-                </Suspense>
-                <p className="mt-6 max-w-md font-heading text-[1.375rem] font-semibold leading-[1.35] text-carbon sm:text-[1.5rem]">
-                  {c.schedulerLead}
-                </p>
-                <div className="mt-6">
-                  <SchedulerButton variant="primary" source="contact" />
-                </div>
-              </div>
-            </div>
-            <p className="mt-8 font-body text-base text-tech">{c.responseNote}</p>
-          </div>
         </motion.div>
 
-        <motion.div variants={itemVariants} className="lg:col-span-7">
+        <motion.div variants={itemVariants} className="order-2 lg:col-span-7 lg:row-span-2 lg:row-start-1">
           <form onSubmit={handleSubmit} noValidate className="contact-field space-y-4">
             <HoneypotField value={form.website} onChange={handleChange} />
 
@@ -323,6 +278,52 @@ export default function Contact() {
             </div>
           </form>
         </motion.div>
+
+        <motion.div variants={itemVariants} className="order-3 lg:col-span-5 lg:row-start-2">
+          <p className="font-body text-base text-tech">{c.directLabel}</p>
+          <ul className="mt-4 space-y-1">
+            {channels.map(({ icon: Icon, label, href, trackLabel }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target={href.startsWith('http') ? '_blank' : undefined}
+                  rel="noreferrer"
+                  onClick={() => {
+                    if (trackLabel === 'whatsapp') {
+                      track('whatsapp_click', { source: 'contact' })
+                    }
+                  }}
+                  className="group inline-flex items-center gap-2 py-2 font-body text-base text-carbon transition-colors hover:text-orange"
+                >
+                  <Icon size={16} strokeWidth={1.6} aria-hidden="true" />
+                  {label}
+                  <ArrowUpRight
+                    size={14}
+                    className="opacity-0 transition-opacity group-hover:opacity-100"
+                    aria-hidden="true"
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-8 font-body text-base text-tech">{c.responseNote}</p>
+        </motion.div>
+      </div>
+
+      <div className="mt-16 w-full border-t border-line pt-12 sm:mt-20 sm:pt-14">
+        <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+          <Suspense fallback={<span className="inline-block h-[7.5rem] w-[7.5rem]" aria-hidden="true" />}>
+            <SectionErrorBoundary message="La animación de calendario no pudo cargarse.">
+              <ContactCalendarMark />
+            </SectionErrorBoundary>
+          </Suspense>
+          <p className="mt-6 max-w-md font-heading text-[1.375rem] font-semibold leading-[1.35] text-carbon sm:text-[1.5rem]">
+            {c.schedulerLead}
+          </p>
+          <div className="mt-6">
+            <SchedulerButton variant="primary" source="contact" />
+          </div>
+        </div>
       </div>
     </PageSection>
   )
