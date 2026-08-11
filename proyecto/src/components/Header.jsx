@@ -117,13 +117,25 @@ export default function Header() {
               go('contacto')
             }}
             data-cursor="cta"
-            className="rounded-lg bg-orange px-4 py-2 font-body text-base font-medium text-white transition-colors duration-300 hover:bg-carbon"
+            className="rounded-lg bg-orange px-5 py-2.5 font-body text-base font-medium text-white transition-colors duration-300 hover:bg-carbon"
           >
             {t.cta.talk}
           </MagneticButton>
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
+          <MagneticButton
+            type="button"
+            onClick={() => {
+              track('cta_click', { label: 'talk', source: 'header_mobile' })
+              go('contacto')
+            }}
+            data-cursor="cta"
+            wrapperClassName="shrink-0"
+            className="inline-flex min-w-[6.75rem] items-center justify-center whitespace-nowrap rounded-lg bg-orange px-4 py-2 font-body text-base font-medium text-white transition-colors hover:bg-carbon"
+          >
+            {t.cta.talk}
+          </MagneticButton>
           <ThemeToggle />
           <LanguageToggle />
           <button
@@ -168,7 +180,7 @@ export default function Header() {
                 <button
                   type="button"
                   onClick={() => go('contacto')}
-                  className="inline-flex w-full items-center justify-center rounded-lg bg-orange px-4 py-3 font-body text-base font-medium text-white"
+                  className="inline-flex w-full min-w-0 items-center justify-center whitespace-nowrap rounded-lg bg-orange px-6 py-3 font-body text-base font-medium text-white"
                 >
                   {t.cta.talk}
                 </button>

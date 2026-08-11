@@ -10,6 +10,7 @@ import { springMagnetic } from '../utils/motion.js'
 export default function MagneticButton({
   children,
   className = '',
+  wrapperClassName = '',
   strength = 0.28,
   as: Tag = 'button',
   ...props
@@ -41,7 +42,7 @@ export default function MagneticButton({
       style={reduce ? undefined : { x: sx, y: sy }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      className="inline-block"
+      className={`inline-block ${wrapperClassName}`}
     >
       <Tag className={className} {...props}>
         {children}

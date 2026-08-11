@@ -148,7 +148,8 @@ export default function StickyMobileCTA() {
                 track('cta_click', { label: 'talk', source: 'sticky_mobile' })
                 scrollToSection('contacto')
               }}
-              className="flex-1 rounded-lg bg-carbon py-3 font-body text-base font-semibold text-white"
+              wrapperClassName="block min-w-0 flex-1"
+              className="inline-flex w-full min-w-0 items-center justify-center whitespace-nowrap rounded-lg bg-carbon px-5 py-3 font-body text-base font-semibold text-white"
             >
               {t.cta.talk}
             </MagneticButton>

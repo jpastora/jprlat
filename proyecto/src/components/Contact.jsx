@@ -137,7 +137,7 @@ export default function Contact() {
 
   return (
     <PageSection id="contacto" wide className="pb-32 pt-20 max-md:pb-44 sm:pb-40 sm:pt-28">
-      <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-20">
+      <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:items-stretch lg:gap-20">
         <motion.div variants={itemVariants} className="order-1 lg:col-span-5 lg:row-start-1">
           <SectionTitle title={c.title} subtitle={c.intro} />
 
@@ -146,8 +146,11 @@ export default function Contact() {
           <p className="mt-6 max-w-prose font-body text-base leading-[1.5] text-tech">{c.text}</p>
         </motion.div>
 
-        <motion.div variants={itemVariants} className="order-2 lg:col-span-7 lg:row-span-2 lg:row-start-1">
-          <form onSubmit={handleSubmit} noValidate className="contact-field space-y-4">
+        <motion.div
+          variants={itemVariants}
+          className="order-2 flex lg:col-span-7 lg:row-span-2 lg:row-start-1"
+        >
+          <form onSubmit={handleSubmit} noValidate className="contact-field flex h-full w-full flex-col gap-4">
             <HoneypotField value={form.website} onChange={handleChange} />
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -194,9 +197,11 @@ export default function Contact() {
               onChange={handleChange}
               error={errors.message}
               errorMessage={c.errors[errors.message]}
+              rows={8}
+              inputClassName="lg:min-h-[12rem]"
             />
 
-            <div className="pt-2">
+            <div className="mt-auto space-y-4 pt-2">
               <MagneticButton
                 type="submit"
                 disabled={isSending || isThrottled}
@@ -279,7 +284,7 @@ export default function Contact() {
           </form>
         </motion.div>
 
-        <motion.div variants={itemVariants} className="order-3 lg:col-span-5 lg:row-start-2">
+        <motion.div variants={itemVariants} className="order-3 lg:col-span-5 lg:row-start-2 lg:self-end">
           <p className="font-body text-base text-tech">{c.directLabel}</p>
           <ul className="mt-4 space-y-1">
             {channels.map(({ icon: Icon, label, href, trackLabel }) => (
@@ -306,7 +311,6 @@ export default function Contact() {
               </li>
             ))}
           </ul>
-          <p className="mt-8 font-body text-base text-tech">{c.responseNote}</p>
         </motion.div>
       </div>
 
@@ -324,6 +328,9 @@ export default function Contact() {
             <SchedulerButton variant="primary" source="contact" />
           </div>
         </div>
+        <p className="mx-auto mt-8 max-w-2xl text-center font-body text-base leading-[1.5] text-tech">
+          {c.responseNote}
+        </p>
       </div>
     </PageSection>
   )
