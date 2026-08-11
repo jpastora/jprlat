@@ -23,7 +23,7 @@ export const siteConfig = {
   /** 'cal' | 'calendly' — proveedor del embed de agendamiento */
   schedulerProvider: 'cal',
   /** Solo se usa cuando schedulerProvider === 'calendly' */
-  calendlyUrl: 'https://calendly.com/TODO',
+  calendlyUrl: 'https://cal.com/joseph-pastora-efc6wa/30min',
 }
 
 /** URL activa según el proveedor configurado. */
