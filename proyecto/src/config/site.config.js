@@ -19,7 +19,7 @@ export const siteConfig = {
    * Agendamiento — Cal.com (primario) o Calendly (fallback vía schedulerProvider).
    * Si schedulerUrl contiene "TODO", el botón abre WhatsApp.
    */
-  schedulerUrl: 'https://cal.com/TODO/30min',
+  schedulerUrl: 'https://cal.com/joseph-pastora-efc6wa/30min',
   /** 'cal' | 'calendly' — proveedor del embed de agendamiento */
   schedulerProvider: 'cal',
   /** Solo se usa cuando schedulerProvider === 'calendly' */
