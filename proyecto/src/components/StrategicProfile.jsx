@@ -57,7 +57,7 @@ export default function StrategicProfile() {
         </motion.p>
       </div>
 
-      <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:items-stretch lg:gap-12">
+      <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -91,16 +91,10 @@ export default function StrategicProfile() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5, delay: 0.08, ease: EASE_EXPO }}
-          className="order-1 flex w-full lg:order-2 lg:col-span-5 lg:justify-self-end"
+          className="order-1 mx-auto w-full max-w-sm lg:order-2 lg:col-span-5 lg:mx-0 lg:justify-self-end lg:self-center"
         >
-          <div className="flex min-h-0 w-full flex-col overflow-hidden rounded-xl border border-line bg-white dark:bg-soft/50 lg:max-w-sm lg:h-full">
-            <ProfilePhoto
-              compact
-              flush
-              fillHeight
-              showGazeAccent={false}
-              className="w-full flex-1"
-            />
+          <div className="flex w-full flex-col overflow-hidden rounded-xl border border-line bg-white dark:bg-soft/50">
+            <ProfilePhoto compact flush showGazeAccent={false} className="mx-auto" />
             <div className="shrink-0 border-t border-line px-5 py-5 sm:px-6 sm:py-6">
               <p className="font-body text-base text-tech">{b.experienceLabel}</p>
               <div className="mt-2 flex items-baseline gap-1">
@@ -116,20 +110,25 @@ export default function StrategicProfile() {
         </motion.aside>
       </div>
 
-      <div className="mt-12 border-y border-line py-5 sm:py-6">
-        <div className="flex flex-wrap items-center gap-2">
-          {p.credibility.map((brand) => (
-            <span
-              key={brand}
-              className="rounded-md border border-line bg-white px-2.5 py-1 font-body text-base text-carbon dark:bg-soft/50"
-            >
-              {brand}
-            </span>
-          ))}
-        </div>
-        <div className="mt-4 flex flex-wrap items-center gap-3">
-          <span className="font-body text-base text-tech">{b.stackPrefix}</span>
-          <StackIcons className="gap-2" />
+      <div className="mt-12 border-y border-line py-8 sm:py-10">
+        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+          <p className="font-body text-[0.875rem] font-medium uppercase tracking-wide text-tech">
+            {b.brandsLabel}
+          </p>
+          <div className="mt-4 flex flex-wrap justify-center gap-2">
+            {p.credibility.map((brand) => (
+              <span
+                key={brand}
+                className="rounded-md border border-line bg-white px-2.5 py-1 font-body text-base text-carbon dark:bg-soft/50"
+              >
+                {brand}
+              </span>
+            ))}
+          </div>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <span className="font-body text-base text-tech">{b.stackPrefix}</span>
+            <StackIcons className="justify-center gap-2" />
+          </div>
         </div>
       </div>
 

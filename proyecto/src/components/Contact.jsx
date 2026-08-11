@@ -172,18 +172,18 @@ export default function Contact() {
                 </li>
               ))}
             </ul>
-            <div className="mt-8 border-t border-line pt-8">
-              <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6">
-                <Suspense fallback={null}>
+            <div className="mt-10 w-full border-t border-line pt-10">
+              <div className="flex flex-col items-center text-center">
+                <Suspense fallback={<span className="inline-block h-[7.5rem] w-[7.5rem]" aria-hidden="true" />}>
                   <SectionErrorBoundary message="La animación de calendario no pudo cargarse.">
                     <ContactCalendarMark />
                   </SectionErrorBoundary>
                 </Suspense>
-                <div className="min-w-0 flex-1">
-                  <p className="font-body text-base leading-[1.5] text-tech">{c.schedulerLead}</p>
-                  <div className="mt-4">
-                    <SchedulerButton variant="primary" source="contact" />
-                  </div>
+                <p className="mt-6 max-w-md font-heading text-[1.375rem] font-semibold leading-[1.35] text-carbon sm:text-[1.5rem]">
+                  {c.schedulerLead}
+                </p>
+                <div className="mt-6">
+                  <SchedulerButton variant="primary" source="contact" />
                 </div>
               </div>
             </div>
