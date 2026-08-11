@@ -19,7 +19,7 @@ export const siteConfig = {
    * Agendamiento vía Cal.com.
    * Si schedulerUrl contiene "TODO", el botón Agendar abre WhatsApp.
    */
-  schedulerUrl: 'https://cal.com/TODO/30min',
+  schedulerUrl: 'https://cal.com/joseph-pastora-efc6wa/30min',
 }
 
 /** true cuando schedulerUrl está listo (no vacío y sin placeholder TODO). */
