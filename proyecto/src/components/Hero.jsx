@@ -10,7 +10,7 @@ import { Download } from 'lucide-react'
 import HeroDiagram from './HeroDiagram.jsx'
 import MagneticButton from './MagneticButton.jsx'
 import RevealText from './RevealText.jsx'
-import CalendlyButton from './CalendlyButton.jsx'
+import SchedulerButton from './SchedulerButton.jsx'
 import ScrollChevron from './ScrollChevron.jsx'
 import CtaLottieArrow from './CtaLottieArrow.jsx'
 import { EASE_EXPO, fadeUp } from '../utils/motion.js'
@@ -97,7 +97,7 @@ export default function Hero() {
               </MagneticButton>
             </motion.div>
             <motion.div variants={fadeUp}>
-              <CalendlyButton source="hero" />
+              <SchedulerButton source="hero" />
             </motion.div>
             <motion.a
               variants={fadeUp}

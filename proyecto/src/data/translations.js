@@ -172,7 +172,7 @@ export const translations = {
       text: '¿Tenés una idea, proceso o proyecto digital que necesita estructura? Escríbeme y lo revisamos juntos.',
       intro:
         'Cuéntame tu contexto y te respondo con foco, prioridades claras y un siguiente paso concreto.',
-      calendlyLead: '¿Preferís agendar una llamada de 30 minutos?',
+      schedulerLead: '¿Preferís agendar una llamada de 30 minutos?',
       responseNote: 'Respuesta en horario laboral (Costa Rica, GMT-6).',
       fields: {
         name: 'Nombre',
@@ -196,9 +196,19 @@ export const translations = {
       submit: 'Enviar',
       sending: 'Enviando…',
       success: '¡Mensaje enviado! Te responderé pronto.',
-      error: 'No se pudo enviar el mensaje. Escríbeme directo a info@jpr.lat.',
+      error: 'No se pudo enviar el mensaje.',
+      demoBadge: 'Modo demo',
       notConfigured:
-        'Formulario en modo demo: falta configurar EmailJS. Puedes escribir a info@jpr.lat.',
+        'El formulario no envía correos reales hasta configurar EmailJS. Puedes escribir a info@jpr.lat.',
+      submitFallback: 'También puedes escribirme a',
+      submitFallbackOr: 'o por',
+      submitErrors: {
+        network:
+          'No hay conexión o el servicio no responde. Revisa tu red e inténtalo de nuevo.',
+        rateLimit: 'Demasiados intentos seguidos. Espera un momento e inténtalo de nuevo.',
+        client: 'Los datos del formulario no pudieron procesarse. Revisa los campos e inténtalo.',
+        server: 'El servicio de correo no está disponible ahora. Inténtalo más tarde.',
+      },
       directLabel: 'También puedes contactarme por',
       errors: {
         nameRequired: 'Ingresa tu nombre.',
@@ -384,7 +394,7 @@ export const translations = {
       text: 'Do you have an idea, process, or digital project that needs structure? Write to me and we can review it together.',
       intro:
         'Share your context and I will respond with focus, clear priorities, and a concrete next step.',
-      calendlyLead: 'Prefer to book a 30-minute call?',
+      schedulerLead: 'Prefer to book a 30-minute call?',
       responseNote: 'Response within business hours (Costa Rica, GMT-6).',
       fields: {
         name: 'Name',
@@ -408,9 +418,19 @@ export const translations = {
       submit: 'Send message',
       sending: 'Sending…',
       success: "Message sent! I'll get back to you soon.",
-      error: 'The message could not be sent. Write to me directly at info@jpr.lat.',
+      error: 'The message could not be sent.',
+      demoBadge: 'Demo mode',
       notConfigured:
-        'Form in demo mode: EmailJS is not configured. You can email info@jpr.lat.',
+        'The form does not send real emails until EmailJS is configured. You can email info@jpr.lat.',
+      submitFallback: 'You can also email me at',
+      submitFallbackOr: 'or reach me on',
+      submitErrors: {
+        network:
+          'No connection or the service is not responding. Check your network and try again.',
+        rateLimit: 'Too many attempts in a row. Wait a moment and try again.',
+        client: 'The form data could not be processed. Check the fields and try again.',
+        server: 'The email service is unavailable right now. Please try again later.',
+      },
       directLabel: 'You can also reach me via',
       errors: {
         nameRequired: 'Please enter your name.',

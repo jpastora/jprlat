@@ -1,6 +1,4 @@
-import { siteConfig, isCalendlyConfigured } from '../config/site.config.js'
-import { contactInfo } from '../data/translations.js'
-import { track } from './analytics.js'
+import { siteConfig } from '../config/site.config.js'
 
 let loadPromise = null
 
@@ -25,21 +23,17 @@ function loadCalendlyScript() {
   return loadPromise
 }
 
-/**
- * Abre Calendly popup o WhatsApp si la URL es placeholder.
- * @param {string} [whatsappMessage]
- */
-export async function openCalendly(whatsappMessage) {
-  track('calendly_open', { source: 'cta' })
-
-  if (!isCalendlyConfigured()) {
-    const msg = encodeURIComponent(whatsappMessage ?? '')
-    window.open(`https://wa.me/${contactInfo.whatsappDigits}?text=${msg}`, '_blank', 'noopener')
-    track('whatsapp_click', { source: 'calendly_fallback' })
-    return false
-  }
-
+/** Lazy-load Calendly assets and open the popup. Analytics run in scheduler.js. */
+export async function loadCalendlyAndOpen() {
   await loadCalendlyScript()
   window.Calendly.initPopupWidget({ url: siteConfig.calendlyUrl })
-  return true
+}
+
+/**
+ * @deprecated Use openScheduler from scheduler.js
+ * @param {string} [_whatsappMessage]
+ */
+export async function openCalendly(_whatsappMessage) {
+  const { openScheduler } = await import('./scheduler.js')
+  return openScheduler({ whatsappMessage: _whatsappMessage })
 }

@@ -15,6 +15,7 @@ El sitio carga **en español por defecto**; el inglés aparece solo al usar el s
 - **TailwindCSS v4** (plugin `@tailwindcss/vite`)
 - **Framer Motion** (sistema de movimiento)
 - **@emailjs/browser** (formulario de contacto)
+- **@calcom/embed-react** (agendamiento Cal.com; Calendly como fallback)
 - **lucide-react** (íconos de línea)
 - Tipografías self-hosted vía **@fontsource**
 - Despliegue en **Vercel**
@@ -57,7 +58,7 @@ cp .env.example .env
 
 ### EmailJS (formulario de contacto)
 
-Crea un servicio y plantilla en [emailjs.com](https://www.emailjs.com) y agrega:
+El formulario lee tres variables de entorno. Si **alguna falta**, funciona en **modo demo** (simula éxito con un aviso visible; no envía correo real).
 
 ```txt
 VITE_EMAILJS_SERVICE_ID=tu_service_id
@@ -65,28 +66,67 @@ VITE_EMAILJS_TEMPLATE_ID=tu_template_id
 VITE_EMAILJS_PUBLIC_KEY=tu_public_key
 ```
 
-#### Configuración de la plantilla EmailJS
+#### Configuración paso a paso (EmailJS)
 
-En el panel de EmailJS, crea una plantilla de email con estas variables (nombres exactos):
+1. **Crear cuenta** en [emailjs.com](https://www.emailjs.com).
+2. **Agregar un Email Service** (recomendado: Gmail) en **Email Services → Add New Service**.
+3. **Crear un Email Template** en **Email Templates → Create New Template** con estas variables exactas:
 
-| Variable en plantilla | Origen en el formulario |
-|----------------------|-------------------------|
-| `{{from_name}}` | Nombre del remitente |
-| `{{reply_to}}` | Correo para responder |
-| `{{project_type}}` | Tipo de proyecto seleccionado |
-| `{{message}}` | Cuerpo del mensaje |
+   | Variable en plantilla | Origen en el formulario |
+   |----------------------|-------------------------|
+   | `{{from_name}}` | Nombre del remitente |
+   | `{{reply_to}}` | Correo para responder |
+   | `{{project_type}}` | Tipo de proyecto seleccionado |
+   | `{{message}}` | Cuerpo del mensaje |
 
-El formulario envía estos campos automáticamente vía `@emailjs/browser`. Si las tres variables de entorno están definidas, el envío es real; si faltan, funciona en **modo demo** (simula éxito sin enviar).
+4. En la plantilla, configura **Reply-To** como `{{reply_to}}`.
+5. Copia **Service ID**, **Template ID** y **Public Key** (Account → API Keys).
+6. En EmailJS → **Account → API Keys → Allowed Origins**, restringe la Public Key al dominio de producción (p. ej. `https://jpr.lat`).
+7. Agrega las tres variables en **Vercel → Settings → Environment Variables** y en tu `.env` local.
+8. Redeploy en Vercel para que tome las variables.
 
-Pasos rápidos:
+**Cuerpo de plantilla de ejemplo:**
 
-1. Regístrate en EmailJS y crea un **Email Service** (Gmail, Outlook, etc.).
-2. Crea un **Email Template** con las variables de la tabla.
-3. Copia Service ID, Template ID y Public Key a tu `.env`.
-4. En Vercel, agrega las mismas variables en **Settings → Environment Variables**.
-5. Redeploy.
+```txt
+Nuevo mensaje desde jpr.lat
 
-Si faltan, el formulario funciona en **modo demo**.
+Nombre: {{from_name}}
+Correo: {{reply_to}}
+Tipo de proyecto: {{project_type}}
+
+Mensaje:
+{{message}}
+```
+
+El formulario envía exactamente esas claves (`from_name`, `reply_to`, `project_type`, `message`) vía `@emailjs/browser`. Incluye un campo honeypot oculto (`website`) que aborta el envío en silencio si se rellena.
+
+---
+
+### Cal.com (agendamiento)
+
+La URL y el proveedor se configuran en `src/config/site.config.js` (no en `.env`):
+
+```js
+schedulerUrl: 'https://cal.com/tu-usuario/30min',
+schedulerProvider: 'cal', // 'cal' | 'calendly'
+```
+
+#### Configuración paso a paso (Cal.com)
+
+1. **Crear cuenta** en [cal.com](https://cal.com).
+2. **Crear un event type** de 30 minutos (p. ej. “Consulta inicial”).
+3. **Conectar Google Calendar** en **Settings → Calendars**.
+4. Copia el **booking link** del event type (formato `https://cal.com/tu-usuario/30min`).
+5. Pégalo en `schedulerUrl` dentro de `src/config/site.config.js`.
+6. Commit y deploy.
+
+Si `schedulerUrl` contiene `TODO`, el botón **Agendar** abre WhatsApp con un mensaje precargado en lugar del embed.
+
+#### Volver a Calendly
+
+Cambia `schedulerProvider` a `'calendly'` y configura `calendlyUrl` con tu enlace de Calendly. El embed de Calendly se carga solo al primer clic (igual que Cal.com).
+
+---
 
 ### Google Analytics 4 (opcional)
 
@@ -100,7 +140,7 @@ El wrapper en `src/lib/analytics.js` expone `track(event, params)`:
 - En **producción sin `VITE_GA4_ID`**: no-op (sin vendor lock).
 - Con **`VITE_GA4_ID`**: inyecta gtag y reenvía eventos.
 
-Eventos instrumentados: `cta_click`, `whatsapp_click`, `calendly_open`, `cv_download`, `form_submit`, `section_view`, `lang_toggle`, `theme_toggle`.
+Eventos instrumentados: `cta_click`, `whatsapp_click`, `scheduler_open`, `calendly_open` (alias), `cv_download`, `form_submit`, `section_view`, `lang_toggle`, `theme_toggle`.
 
 ---
 
@@ -108,7 +148,7 @@ Eventos instrumentados: `cta_click`, `whatsapp_click`, `calendly_open`, `cv_down
 
 | Archivo | Qué editar |
 |---------|------------|
-| `src/config/site.config.js` | URL del sitio, foto de perfil (`profileImage`), dirección de mirada (`profileGaze`), URL de Calendly |
+| `src/config/site.config.js` | URL del sitio, foto de perfil, `profileGaze`, `schedulerUrl`, `schedulerProvider`, `calendlyUrl` |
 | `src/data/testimonials.js` | Citas de testimonios (ES/EN) |
 | `src/data/translations.js` | Todo el copy del sitio |
 | `public/profile.jpg` | Foto de perfil (fallback: monograma JP>) |
@@ -136,7 +176,8 @@ La persona en la foto debe mirar hacia el titular/headline adyacente en la secci
    - **Build Command**: `npm run build`
    - **Output Directory**: `dist`
 4. Agrega las variables `VITE_EMAILJS_*` y opcionalmente `VITE_GA4_ID` en **Settings → Environment Variables**.
-5. Deploy.
+5. Configura `schedulerUrl` en `site.config.js` antes del deploy (o en un commit previo).
+6. Deploy.
 
 ---
 
@@ -154,7 +195,7 @@ proyecto/
     generate-assets.mjs  # OG + iconos desde SVG
   src/
     config/site.config.js
-    lib/analytics.js, calendly.js
+    lib/analytics.js, emailjs.js, scheduler.js, calendly.js
     data/testimonials.js, process.js, translations.js
     hooks/useTheme.jsx, useSectionTracking.js
     components/          # secciones + cursor, testimonios, proceso, etc.
