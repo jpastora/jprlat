@@ -16,30 +16,13 @@ export const siteConfig = {
   /** 'left' | 'right' — controla orden del grid según dirección de mirada */
   profileGaze: 'left',
   /**
-   * Agendamiento — Cal.com (primario) o Calendly (fallback vía schedulerProvider).
-   * Si schedulerUrl contiene "TODO", el botón abre WhatsApp.
+   * Agendamiento vía Cal.com.
+   * Si schedulerUrl contiene "TODO", el botón Agendar abre WhatsApp.
    */
-  schedulerUrl: 'https://cal.com/joseph-pastora-efc6wa/30min',
-  /** 'cal' | 'calendly' — proveedor del embed de agendamiento */
-  schedulerProvider: 'cal',
-  /** Solo se usa cuando schedulerProvider === 'calendly' */
-  calendlyUrl: 'https://cal.com/joseph-pastora-efc6wa/30min',
+  schedulerUrl: 'https://cal.com/TODO/30min',
 }
 
-/** URL activa según el proveedor configurado. */
-export function getActiveSchedulerUrl() {
-  return siteConfig.schedulerProvider === 'calendly'
-    ? siteConfig.calendlyUrl
-    : siteConfig.schedulerUrl
-}
-
-/** true cuando la URL del proveedor activo está lista (sin placeholder TODO). */
+/** true cuando schedulerUrl está listo (no vacío y sin placeholder TODO). */
 export function isSchedulerConfigured() {
-  const url = getActiveSchedulerUrl()
-  return Boolean(url) && !url.includes('TODO')
-}
-
-/** @deprecated Usar isSchedulerConfigured() */
-export function isCalendlyConfigured() {
-  return isSchedulerConfigured()
+  return Boolean(siteConfig.schedulerUrl) && !siteConfig.schedulerUrl.includes('TODO')
 }

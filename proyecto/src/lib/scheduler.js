@@ -1,4 +1,4 @@
-import { siteConfig, isSchedulerConfigured, getActiveSchedulerUrl } from '../config/site.config.js'
+import { siteConfig, isSchedulerConfigured } from '../config/site.config.js'
 import { contactInfo } from '../data/translations.js'
 import { track } from './analytics.js'
 
@@ -6,16 +6,10 @@ const BRAND_COLOR = '#FF6B00'
 
 let calApiPromise = null
 
-function trackSchedulerOpen(source) {
-  const provider = siteConfig.schedulerProvider
-  track('scheduler_open', { source, provider })
-  track('calendly_open', { source })
-}
-
-function openWhatsAppFallback(whatsappMessage) {
+function openWhatsAppFallback(whatsappMessage, source) {
   const msg = encodeURIComponent(whatsappMessage ?? '')
   window.open(`https://wa.me/${contactInfo.whatsappDigits}?text=${msg}`, '_blank', 'noopener')
-  track('whatsapp_click', { source: 'scheduler_fallback' })
+  track('scheduler_fallback', { source })
 }
 
 /** @param {string} url */
@@ -55,45 +49,29 @@ function buildCalUiConfig(theme) {
   }
 }
 
-/** @param {{ theme: 'light' | 'dark' }} opts */
-async function openCalModal({ theme }) {
+/** @param {{ theme: 'light' | 'dark', source: string }} opts */
+async function openCalModal({ theme, source }) {
   const cal = await loadCalApi()
   const calLink = getCalLinkFromUrl(siteConfig.schedulerUrl)
   cal('ui', buildCalUiConfig(theme))
   cal('modal', { calLink })
-}
-
-async function openCalendlyModal() {
-  const { loadCalendlyAndOpen } = await import('./calendly.js')
-  await loadCalendlyAndOpen()
+  track('scheduler_open', { source })
 }
 
 /**
- * Open scheduling modal (Cal.com or Calendly) or WhatsApp when unconfigured.
- * @param {{ source?: string, theme?: 'light' | 'dark', whatsappMessage?: string }} [opts]
+ * Open Cal.com booking modal or WhatsApp when schedulerUrl is not configured.
+ * @param {string} [whatsappMessage]
+ * @param {{ source?: string, theme?: 'light' | 'dark' }} [opts]
  */
-export async function openScheduler({
-  source = 'unknown',
-  theme = 'light',
+export async function openScheduler(
   whatsappMessage,
-} = {}) {
-  trackSchedulerOpen(source)
-
+  { source = 'unknown', theme = 'light' } = {},
+) {
   if (!isSchedulerConfigured()) {
-    openWhatsAppFallback(whatsappMessage)
+    openWhatsAppFallback(whatsappMessage, source)
     return false
   }
 
-  if (siteConfig.schedulerProvider === 'calendly') {
-    await openCalendlyModal()
-    return true
-  }
-
-  await openCalModal({ theme })
+  await openCalModal({ theme, source })
   return true
-}
-
-/** @returns {string} Active scheduler URL for the current provider. */
-export function getSchedulerUrl() {
-  return getActiveSchedulerUrl()
 }

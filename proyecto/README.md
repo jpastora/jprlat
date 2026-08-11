@@ -15,7 +15,7 @@ El sitio carga **en español por defecto**; el inglés aparece solo al usar el s
 - **TailwindCSS v4** (plugin `@tailwindcss/vite`)
 - **Framer Motion** (sistema de movimiento)
 - **@emailjs/browser** (formulario de contacto)
-- **@calcom/embed-react** (agendamiento Cal.com; Calendly como fallback)
+- **@calcom/embed-react** (agendamiento con Cal.com)
 - **lucide-react** (íconos de línea)
 - Tipografías self-hosted vía **@fontsource**
 - Despliegue en **Vercel**
@@ -104,11 +104,10 @@ El formulario envía exactamente esas claves (`from_name`, `reply_to`, `project_
 
 ### Cal.com (agendamiento)
 
-La URL y el proveedor se configuran en `src/config/site.config.js` (no en `.env`):
+El agendamiento usa **Cal.com**. La URL se configura en `src/config/site.config.js` (no en `.env`):
 
 ```js
 schedulerUrl: 'https://cal.com/tu-usuario/30min',
-schedulerProvider: 'cal', // 'cal' | 'calendly'
 ```
 
 #### Configuración paso a paso (Cal.com)
@@ -121,10 +120,6 @@ schedulerProvider: 'cal', // 'cal' | 'calendly'
 6. Commit y deploy.
 
 Si `schedulerUrl` contiene `TODO`, el botón **Agendar** abre WhatsApp con un mensaje precargado en lugar del embed.
-
-#### Volver a Calendly
-
-Cambia `schedulerProvider` a `'calendly'` y configura `calendlyUrl` con tu enlace de Calendly. El embed de Calendly se carga solo al primer clic (igual que Cal.com).
 
 ---
 
@@ -140,7 +135,7 @@ El wrapper en `src/lib/analytics.js` expone `track(event, params)`:
 - En **producción sin `VITE_GA4_ID`**: no-op (sin vendor lock).
 - Con **`VITE_GA4_ID`**: inyecta gtag y reenvía eventos.
 
-Eventos instrumentados: `cta_click`, `whatsapp_click`, `scheduler_open`, `calendly_open` (alias), `cv_download`, `form_submit`, `section_view`, `lang_toggle`, `theme_toggle`.
+Eventos instrumentados: `cta_click`, `whatsapp_click`, `scheduler_open`, `scheduler_fallback`, `cv_download`, `form_submit`, `section_view`, `lang_toggle`, `theme_toggle`.
 
 ---
 
@@ -148,7 +143,7 @@ Eventos instrumentados: `cta_click`, `whatsapp_click`, `scheduler_open`, `calend
 
 | Archivo | Qué editar |
 |---------|------------|
-| `src/config/site.config.js` | URL del sitio, foto de perfil, `profileGaze`, `schedulerUrl`, `schedulerProvider`, `calendlyUrl` |
+| `src/config/site.config.js` | URL del sitio, foto de perfil, `profileGaze`, `schedulerUrl` |
 | `src/data/testimonials.js` | Citas de testimonios (ES/EN) |
 | `src/data/translations.js` | Todo el copy del sitio |
 | `public/profile.jpg` | Foto de perfil (fallback: monograma JP>) |
@@ -195,7 +190,7 @@ proyecto/
     generate-assets.mjs  # OG + iconos desde SVG
   src/
     config/site.config.js
-    lib/analytics.js, emailjs.js, scheduler.js, calendly.js
+    lib/analytics.js, emailjs.js, scheduler.js
     data/testimonials.js, process.js, translations.js
     hooks/useTheme.jsx, useSectionTracking.js
     components/          # secciones + cursor, testimonios, proceso, etc.
