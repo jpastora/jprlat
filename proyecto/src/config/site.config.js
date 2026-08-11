@@ -12,7 +12,7 @@
 export const siteConfig = {
   url: 'https://jpr.lat',
   /** Ruta pública de la foto de perfil (colocar archivo en /public/profile.jpg) */
-  profileImage: '/profile.jpg',
+  profileImage: '/profile-photo.jpg',
   /** 'left' | 'right' — controla orden del grid según dirección de mirada */
   profileGaze: 'left',
   /**
