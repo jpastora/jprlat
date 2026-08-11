@@ -4,7 +4,7 @@ import { EASE_EXPO } from '../utils/motion.js'
 import { useLanguage } from '../context/LanguageContext.js'
 
 function TestimonialCard({ item, index }) {
-  const { language, t } = useLanguage()
+  const { language } = useLanguage()
   const reduce = useReducedMotion()
 
   return (
@@ -39,11 +39,6 @@ function TestimonialCard({ item, index }) {
           </div>
         </footer>
       </blockquote>
-      {item.todo && (
-        <p className="mt-2 break-words font-mono text-[0.875rem] text-tech [overflow-wrap:anywhere]">
-          {t.testimonials.todo}
-        </p>
-      )}
     </motion.article>
   )
 }
@@ -56,9 +51,6 @@ export default function Testimonials() {
       <h3 className="font-heading text-[2rem] font-semibold leading-[1.5] text-carbon">
         {t.testimonials.title}
       </h3>
-      <p className="mt-2 max-w-prose font-body text-base leading-[1.5] text-tech">
-        {t.testimonials.subtitle}
-      </p>
       <p className="mt-3 max-w-prose font-body text-base leading-[1.5] text-tech">
         {t.testimonials.intro}
       </p>
