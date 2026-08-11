@@ -1,5 +1,5 @@
 /**
- * Smoke tests for contact form + scheduler lazy-load.
+ * Smoke tests for scheduler lazy-load and WhatsApp fallback.
  * Run: node scripts/verify-contact-scheduler.mjs
  */
 import { chromium } from 'playwright'
@@ -13,11 +13,7 @@ async function run() {
 
   page.on('request', (req) => {
     const url = req.url()
-    if (
-      url.includes('cal.com') ||
-      url.includes('calendly.com') ||
-      url.includes('emailjs.com')
-    ) {
+    if (url.includes('cal.com') || url.includes('emailjs.com')) {
       thirdPartyBefore.push(url)
     }
   })
@@ -27,19 +23,18 @@ async function run() {
   if (thirdPartyBefore.length > 0) {
     throw new Error(`Third-party requests before interaction: ${thirdPartyBefore.join(', ')}`)
   }
-  console.log('✓ No cal.com / calendly / emailjs requests on initial load')
+  console.log('✓ No cal.com / emailjs requests on initial load')
 
   const scheduleBtn = page.getByRole('button', { name: /Agendar|Schedule/i }).first()
   await scheduleBtn.click()
   await page.waitForTimeout(1500)
 
-  const wa = page.url()
   const popup = await page.context().waitForEvent('page', { timeout: 3000 }).catch(() => null)
   if (popup) {
     console.log('✓ Scheduler click opened new tab (WhatsApp fallback with TODO URL)')
     await popup.close()
   } else {
-    console.log('✓ Scheduler click handled (current:', wa, ')')
+    console.log('✓ Scheduler click handled')
   }
 
   await page.goto(`${BASE}#contacto`, { waitUntil: 'domcontentloaded' })

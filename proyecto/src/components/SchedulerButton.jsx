@@ -15,7 +15,7 @@ export default function SchedulerButton({
 
   const handleClick = () => {
     track('cta_click', { label: 'schedule', source })
-    openScheduler({ source, theme, whatsappMessage: t.whatsapp.message })
+    openScheduler(t.whatsapp.message, { source, theme })
   }
 
   const styles =
