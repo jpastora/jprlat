@@ -1,19 +1,21 @@
 import { Calendar } from 'lucide-react'
 import MagneticButton from './MagneticButton.jsx'
-import { openCalendly } from '../lib/calendly.js'
+import { openScheduler } from '../lib/scheduler.js'
 import { track } from '../lib/analytics.js'
 import { useLanguage } from '../context/LanguageContext.js'
+import { useTheme } from '../hooks/useTheme.jsx'
 
-export default function CalendlyButton({
+export default function SchedulerButton({
   className = '',
   variant = 'secondary',
   source = 'unknown',
 }) {
   const { t } = useLanguage()
+  const { theme } = useTheme()
 
   const handleClick = () => {
-    track('cta_click', { label: 'calendly', source })
-    openCalendly(t.whatsapp.message)
+    track('cta_click', { label: 'schedule', source })
+    openScheduler({ source, theme, whatsappMessage: t.whatsapp.message })
   }
 
   const styles =

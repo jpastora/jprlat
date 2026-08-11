@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from 'react'
+import { useState, lazy, Suspense, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import {
@@ -7,13 +7,14 @@ import {
   Send,
   Loader2,
   AlertCircle,
+  Info,
   ArrowUpRight,
 } from 'lucide-react'
 import { GithubMark, LinkedinMark } from './BrandIcons.jsx'
 import PageSection from './PageSection.jsx'
 import FloatingField, { HoneypotField } from './FloatingField.jsx'
 import MagneticButton from './MagneticButton.jsx'
-import CalendlyButton from './CalendlyButton.jsx'
+import SchedulerButton from './SchedulerButton.jsx'
 import SectionTitle from './SectionTitle.jsx'
 import SectionErrorBoundary from './SectionErrorBoundary.jsx'
 import ContactIllustration from '../assets/illustrations/ContactIllustration.jsx'
@@ -22,41 +23,57 @@ import { useLanguage } from '../context/LanguageContext.js'
 import { contactInfo } from '../data/translations.js'
 import { validateContactForm } from '../utils/validation.js'
 import { track } from '../lib/analytics.js'
+import {
+  classifyEmailjsError,
+  getEmailjsConfig,
+  isEmailjsConfigured,
+} from '../lib/emailjs.js'
 
 const ContactSuccessMark = lazy(() => import('./ContactSuccessMark.jsx'))
 const ContactCalendarMark = lazy(() => import('./ContactCalendarMark.jsx'))
 
-const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
-const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
-const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-const EMAILJS_CONFIGURED = Boolean(SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY)
-
+const SUBMIT_THROTTLE_MS = 30_000
 const EMPTY = { name: '', email: '', projectType: '', message: '', website: '' }
 
 export default function Contact() {
   const { t } = useLanguage()
   const c = t.contact
+  const emailjsConfigured = isEmailjsConfigured()
+  const { serviceId, templateId, publicKey } = getEmailjsConfig()
 
   const [form, setForm] = useState(EMPTY)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle')
+  const [errorType, setErrorType] = useState(null)
   const [successKey, setSuccessKey] = useState(0)
+  const [throttledUntil, setThrottledUntil] = useState(0)
+
+  useEffect(() => {
+    if (!throttledUntil || Date.now() >= throttledUntil) return undefined
+    const delay = throttledUntil - Date.now()
+    const id = window.setTimeout(() => setThrottledUntil(0), delay)
+    return () => window.clearTimeout(id)
+  }, [throttledUntil])
+
+  const isThrottled = throttledUntil > 0 && Date.now() < throttledUntil
+  const isSending = status === 'sending'
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: undefined }))
+    if (status === 'error') {
+      setStatus('idle')
+      setErrorType(null)
+    }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (form.website) {
-      setSuccessKey((k) => k + 1)
-      setStatus('success')
-      setForm(EMPTY)
-      return
-    }
+    if (form.website) return
+
+    if (Date.now() < throttledUntil) return
 
     const validation = validateContactForm(form)
     if (Object.keys(validation).length > 0) {
@@ -64,7 +81,9 @@ export default function Contact() {
       setStatus('idle')
       return
     }
+
     setErrors({})
+    setErrorType(null)
     setStatus('sending')
 
     const params = {
@@ -74,34 +93,42 @@ export default function Contact() {
       message: form.message,
     }
 
-    if (!EMAILJS_CONFIGURED) {
-      setTimeout(() => {
-        setSuccessKey((k) => k + 1)
-        setStatus('success')
-        setForm(EMPTY)
-        track('form_submit', { mode: 'demo' })
-      }, 800)
-      return
-    }
-
     try {
-      await emailjs.send(SERVICE_ID, TEMPLATE_ID, params, { publicKey: PUBLIC_KEY })
+      if (!emailjsConfigured) {
+        await new Promise((resolve) => setTimeout(resolve, 800))
+        setSuccessKey((k) => k + 1)
+        setStatus('demo-success')
+        setForm(EMPTY)
+        setThrottledUntil(Date.now() + SUBMIT_THROTTLE_MS)
+        track('form_submit', { mode: 'demo', status: 'success' })
+        return
+      }
+
+      await emailjs.send(serviceId, templateId, params, { publicKey })
       setSuccessKey((k) => k + 1)
       setStatus('success')
       setForm(EMPTY)
-      track('form_submit', { mode: 'emailjs' })
+      setThrottledUntil(Date.now() + SUBMIT_THROTTLE_MS)
+      track('form_submit', { mode: 'emailjs', status: 'success' })
     } catch (err) {
       console.error('[Contacto] Error al enviar con EmailJS:', err)
+      const type = classifyEmailjsError(err)
+      setErrorType(type)
       setStatus('error')
+      track('form_submit', { mode: 'emailjs', status: 'error', error_type: type })
     }
   }
 
+  const errorMessage = errorType ? c.submitErrors[errorType] : c.error
+  const whatsappHref = `https://wa.me/${contactInfo.whatsappDigits}`
+  const mailtoHref = `mailto:${contactInfo.email}`
+
   const channels = [
-    { icon: Mail, label: contactInfo.email, href: `mailto:${contactInfo.email}`, trackLabel: 'email' },
+    { icon: Mail, label: contactInfo.email, href: mailtoHref, trackLabel: 'email' },
     {
       icon: MessageCircle,
       label: 'WhatsApp',
-      href: `https://wa.me/${contactInfo.whatsappDigits}`,
+      href: whatsappHref,
       trackLabel: 'whatsapp',
     },
     { icon: LinkedinMark, label: 'LinkedIn', href: contactInfo.linkedin, trackLabel: 'linkedin' },
@@ -153,9 +180,9 @@ export default function Contact() {
                   </SectionErrorBoundary>
                 </Suspense>
                 <div className="min-w-0 flex-1">
-                  <p className="font-body text-base leading-[1.5] text-tech">{c.calendlyLead}</p>
+                  <p className="font-body text-base leading-[1.5] text-tech">{c.schedulerLead}</p>
                   <div className="mt-4">
-                    <CalendlyButton variant="primary" source="contact" />
+                    <SchedulerButton variant="primary" source="contact" />
                   </div>
                 </div>
               </div>
@@ -217,7 +244,7 @@ export default function Contact() {
             <div className="pt-2">
               <MagneticButton
                 type="submit"
-                disabled={status === 'sending'}
+                disabled={isSending || isThrottled}
                 className="relative inline-flex min-w-[11rem] items-center justify-center gap-2 overflow-hidden rounded-lg bg-orange px-6 py-3 font-body text-base font-semibold text-white transition-colors duration-300 hover:bg-carbon disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {status === 'success' && (
@@ -232,12 +259,12 @@ export default function Contact() {
                   />
                 )}
                 <span className="relative z-10 flex items-center gap-2">
-                  {status === 'sending' ? (
+                  {isSending ? (
                     <Loader2 size={16} className="animate-spin" aria-hidden="true" />
                   ) : (
                     <Send size={16} aria-hidden="true" />
                   )}
-                  {status === 'sending' ? c.sending : c.submit}
+                  {isSending ? c.sending : c.submit}
                 </span>
               </MagneticButton>
             </div>
@@ -250,14 +277,48 @@ export default function Contact() {
                       <ContactSuccessMark playKey={successKey} />
                     </SectionErrorBoundary>
                   </Suspense>
-                  <span className="pt-3">{EMAILJS_CONFIGURED ? c.success : c.notConfigured}</span>
+                  <span className="pt-3">{c.success}</span>
                 </p>
               )}
+              {status === 'demo-success' && (
+                <div
+                  role="status"
+                  className="rounded-lg border border-dashed border-tech/40 bg-soft/60 px-4 py-3 dark:bg-soft/20"
+                >
+                  <p className="flex items-start gap-3 font-body text-base leading-[1.5] text-tech">
+                    <Info size={18} className="mt-0.5 shrink-0 text-orange" aria-hidden="true" />
+                    <span>
+                      <span className="mb-1 block font-semibold uppercase tracking-wide text-orange">
+                        {c.demoBadge}
+                      </span>
+                      {c.notConfigured}
+                    </span>
+                  </p>
+                </div>
+              )}
               {status === 'error' && (
-                <p className="flex items-center gap-2 font-body text-base leading-[1.5] text-carbon">
-                  <AlertCircle size={16} className="shrink-0 text-orange" aria-hidden="true" />
-                  {c.error}
-                </p>
+                <div className="space-y-2">
+                  <p className="flex items-start gap-2 font-body text-base leading-[1.5] text-carbon">
+                    <AlertCircle size={16} className="mt-1 shrink-0 text-orange" aria-hidden="true" />
+                    <span>{errorMessage}</span>
+                  </p>
+                  <p className="font-body text-[0.875rem] leading-[1.5] text-tech">
+                    {c.submitFallback}{' '}
+                    <a href={mailtoHref} className="text-orange underline-offset-2 hover:underline">
+                      {contactInfo.email}
+                    </a>{' '}
+                    {c.submitFallbackOr}{' '}
+                    <a
+                      href={whatsappHref}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-orange underline-offset-2 hover:underline"
+                    >
+                      WhatsApp
+                    </a>
+                    .
+                  </p>
+                </div>
               )}
             </div>
           </form>
